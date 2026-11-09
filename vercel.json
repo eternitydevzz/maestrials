@@ -1,5 +1,11 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "",
-  "outputDirectory": "public"
+  "outputDirectory": "public",
+  "functions": {
+    "api/panel.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{public/**,fase1/**,fase2/**,fase3/**,herramientas/**}"
+    }
+  }
 }

@@ -43,12 +43,15 @@ UMBRAL_HUELLA = 8                # distancia media (0-64) para decir "mismo víd
 class Publicacion:
     id: str
     fecha: str
+    momento: str                  # fecha y hora completas (ISO, UTC) de Instagram
     en_feed: bool
     visitas: int
     comentarios: int
     pie: str
     enlace: str
     huella: tuple[int, ...] | None
+    tiempo_medio_s: float | None  # tiempo medio visto (ig_reels_avg_watch_time)
+    duracion_s: float | None
 
 
 @dataclass(frozen=True)
@@ -62,6 +65,10 @@ class Video:
     alguna_en_feed: bool
     pie: str
     ganador: bool
+    ids: tuple[str, ...]          # todas las publicaciones de este vídeo
+    ultima_publicacion: str       # ISO, UTC
+    duracion_s: float | None
+    retencion: float | None       # tiempo medio visto / duración, de la mejor publicación
 
 
 def leer_env() -> dict[str, str]:
@@ -94,11 +101,24 @@ def listar_reels(env: dict[str, str]) -> list[dict]:
     return [m for m in todos if m.get("media_product_type") == "REELS"]
 
 
-def visitas_de(env: dict[str, str], media_id: str) -> int:
-    params = urllib.parse.urlencode({"metric": "views", "access_token": env["IG_TOKEN"]})
+def metricas_de(env: dict[str, str], media_id: str) -> tuple[int, float | None]:
+    """Visitas y tiempo medio visto (en segundos) de una publicación."""
+    params = urllib.parse.urlencode({"metric": "views,ig_reels_avg_watch_time", "access_token": env["IG_TOKEN"]})
     resp = pedir(f"{env['GRAPH_BASE']}/{media_id}/insights?{params}")
-    datos = resp.get("data") or [{}]
-    return int((datos[0].get("values") or [{}])[0].get("value") or 0)
+    valores = {d["name"]: (d.get("values") or [{}])[0].get("value") for d in resp.get("data", [])}
+    medio_ms = valores.get("ig_reels_avg_watch_time")
+    return int(valores.get("views") or 0), (medio_ms / 1000 if medio_ms else None)
+
+
+def duracion_de(url: str | None) -> float | None:
+    if not url:
+        return None
+    salida = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", url],
+                            capture_output=True, text=True, check=False).stdout.strip()
+    try:
+        return round(float(salida), 1)
+    except ValueError:
+        return None
 
 
 def dhash_fotograma(url: str, segundo: int) -> int | None:
@@ -124,9 +144,13 @@ def distancia(a: tuple[int, ...], b: tuple[int, ...]) -> float:
 
 
 def publicados_por_maestrials() -> set[str]:
+    """Trials publicados por MaesTrials: no son reels de Jose y no cuentan para elegir ganadores."""
     ids: set[str] = set()
-    for f in TRABAJO.glob("*/publicado.json"):
+    for f in TRABAJO.glob("*/publicado.json"):                      # Fase 1
         ids.add(json.loads(f.read_text(encoding="utf-8"))["publicacion"])
+    registro = TRABAJO / "publicaciones.json"                       # Fase 3 en adelante
+    if registro.exists():
+        ids.update(p["publicacion"] for p in json.loads(registro.read_text(encoding="utf-8")))
     return ids
 
 
@@ -145,11 +169,14 @@ def candidatas(env: dict[str, str]) -> list[Publicacion]:
         fecha = datetime.strptime(m["timestamp"], "%Y-%m-%dT%H:%M:%S%z")
         if m["id"] in excluir or not (desde <= fecha <= hasta):
             continue
+        visitas, tiempo_medio_s = metricas_de(env, m["id"])
         lista.append(Publicacion(
-            id=m["id"], fecha=m["timestamp"][:10], en_feed=bool(m.get("is_shared_to_feed")),
-            visitas=visitas_de(env, m["id"]), comentarios=int(m.get("comments_count") or 0),
+            id=m["id"], fecha=m["timestamp"][:10], momento=fecha.astimezone(timezone.utc).isoformat(),
+            en_feed=bool(m.get("is_shared_to_feed")), visitas=visitas,
+            comentarios=int(m.get("comments_count") or 0),
             pie=(m.get("caption") or "").replace("\n", " ")[:80], enlace=m["permalink"],
-            huella=huella_de(m.get("media_url"))))
+            huella=huella_de(m.get("media_url")), tiempo_medio_s=tiempo_medio_s,
+            duracion_s=duracion_de(m.get("media_url"))))
     return lista
 
 
@@ -187,10 +214,14 @@ def decidir(grupos: dict[str, list[Publicacion]]) -> tuple[list[Video], float]:
     videos = []
     for clave, mejor in mejores.items():
         gana = mejor.visitas >= corte or (UMBRAL_FIJO is not None and mejor.visitas >= UMBRAL_FIJO)
+        retencion = (round(mejor.tiempo_medio_s / mejor.duracion_s, 3)
+                     if mejor.tiempo_medio_s and mejor.duracion_s else None)
         videos.append(Video(
             clave=clave, mejor_id=mejor.id, mejor_enlace=mejor.enlace, mejores_visitas=mejor.visitas,
             comentarios_mejor=mejor.comentarios, publicaciones=len(grupos[clave]),
-            alguna_en_feed=any(p.en_feed for p in grupos[clave]), pie=mejor.pie, ganador=gana))
+            alguna_en_feed=any(p.en_feed for p in grupos[clave]), pie=mejor.pie, ganador=gana,
+            ids=tuple(p.id for p in grupos[clave]), ultima_publicacion=max(p.momento for p in grupos[clave]),
+            duracion_s=mejor.duracion_s, retencion=retencion))
     return sorted(videos, key=lambda v: v.mejores_visitas, reverse=True), corte
 
 

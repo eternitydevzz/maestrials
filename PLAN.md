@@ -167,6 +167,23 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - Hallazgo: la huella de la Fase 2 no reconoce como "el mismo vídeo" la versión zoom 1,10 de la bolsa. La regla de 4 días se cuenta con el registro propio (`trabajo/publicaciones.json` + `publicado.json` de la Fase 1), no con la huella.
 - Para la Fase 4: la regla de 4 días no ve las publicaciones que Jose suba a mano; habrá que cruzarla también con la huella.
 
+### Panel web + autopilot (Fases 4 y 5 juntas) — decisiones de Jose (9-nov)
+- **Cambio de orden pedido por Jose:** el panel (Fase 5) se hace junto con la publicación automática (Fase 4).
+- Panel **web en Vercel** (`maestrials.vercel.app`), con contraseña (`PANEL_PASSWORD` en `.env` y en Vercel), estilo **claro y limpio**.
+- Pantallas: **Ganadores**, **Versiones** (ver, editar gancho y pie, rehacer, aprobar y publicar), **Resultados** y **Añadir ganador a mano**.
+- Botón **Publicar** con confirmación + interruptor de **autopilot**: con él encendido **publica sin pedir aprobación**, solo de **9:00 a 22:00 hora de Nueva York** (America/New_York, con cambio de hora), 3 al día, ≥ 45 min entre subidas, 4 días entre publicaciones del mismo vídeo y aviso del feed 6:1.
+- Técnica: páginas HTML ligeras + funciones Python en Vercel que reutilizan el código de las fases 1-3; base de datos Neon Postgres; vídeos en Vercel Blob; montaje (ffmpeg + Whisper + Claude) en GitHub Actions (D1).
+- **Paso 0 (Jose):** `VERCEL_TOKEN` en `.env` (equipo Eternity Group) y permiso `workflow` en `gh` (`gh auth refresh -h github.com -s workflow`).
+- Pasos: 1) Ganadores + Resultados con datos reales y contraseña (primer entregable, se comprueba desde el móvil) → 2) Versiones con GitHub Actions + Blob + publicar → 3) Añadir ganador a mano → 4) Autopilot (comprobación: 3 días seguidos sin tocar nada).
+
+**Paso 1, estado (9-nov, 17:45 h de España):** hecho y probado **en local** (`python -I -X utf8 herramientas/servidor_local.py` → http://localhost:8787), sin subir.
+- Archivos: `api/panel.py` (función de Vercel), `api/_panel/` (config, auth, instagram, datos, rutas), `public/index.html`, `entrar.html`, `panel.css`, `panel.js`.
+- Probado: contraseña mala → "Contraseña incorrecta"; sin sesión → te manda a Entrar; Ganadores (12, 9 disponibles, con miniaturas) y Resultados (3 trials) con datos reales, en 1,8-1,9 s.
+- `fase2/ganadores.py` ahora guarda también retención, duración, fecha de la última publicación e ids de cada vídeo (mismas cifras: 63 vídeos, P80 = 3.120, 12 ganadores).
+- La API de Instagram ya no admite `?ids=` (retirado en la v26): se pide un reel por llamada, en paralelo.
+- Falta para tenerlo en Vercel: el Paso 0 de Jose (token de Vercel y permiso `workflow`), la base de datos y subir los datos de `trabajo/` a ella.
+- **Fallo encontrado (sin arreglar, pendiente de Jose):** `ganadores.py` solo excluye como "de MaesTrials" la publicación de la Fase 1; las de la Fase 3 (`trabajo/publicaciones.json`) las contaría como reels de Jose pasadas 48 h.
+
 ### Fase 4 — Publicación automática en Vercel
 - Schedules cada 15 min, N al día, separación de 45 min o más, **mínimo 4 días entre publicaciones del mismo vídeo** (decisión de Jose, sustituye a "máx. 3 veces por semana").
 - Si una versión se queda en 0, ese vídeo se descansa. Regla 1 feed por cada 6 trials.

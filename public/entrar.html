@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Entrar · MaesTrials</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/panel.css">
+</head>
+<body>
+  <main class="entrar">
+    <form id="formulario">
+      <span class="logo">M</span>
+      <h1>MaesTrials</h1>
+      <p>Panel de trial reels de @josenews.ai</p>
+      <input id="clave" type="password" placeholder="Contraseña" autocomplete="current-password" required autofocus>
+      <button class="boton" type="submit">Entrar</button>
+      <div class="error-texto" id="error" role="alert"></div>
+    </form>
+  </main>
+  <script>
+    const formulario = document.getElementById("formulario");
+    formulario.addEventListener("submit", async (evento) => {
+      evento.preventDefault();
+      const boton = formulario.querySelector("button");
+      const error = document.getElementById("error");
+      boton.disabled = true;
+      error.textContent = "";
+      try {
+        const r = await fetch("/api/panel?r=entrar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ clave: document.getElementById("clave").value }),
+        });
+        if (r.ok) { location.href = "/"; return; }
+        error.textContent = (await r.json()).error || "No se pudo entrar";
+      } catch {
+        error.textContent = "Sin conexión. Prueba otra vez.";
+      }
+      boton.disabled = false;
+    });
+  </script>
+</body>
+</html>
