@@ -1,0 +1,5 @@
+.env
+.playwright-mcp/
+trabajo/
+node_modules/
+__pycache__/
