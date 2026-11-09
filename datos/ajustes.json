@@ -1,5 +1,5 @@
 {
- "autopilot": false,
+ "autopilot": true,
  "zona": "America/New_York",
  "ventana_ny": [
   9,
