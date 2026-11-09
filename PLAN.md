@@ -147,7 +147,7 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 
 **Decisiones de Jose (9-nov):**
 - **Espacio mínimo entre publicaciones del mismo vídeo: 4 días** (zona sin datos: es un experimento que se mide). Con 12 ganadores salen unos 3 trials al día.
-- Jose tiene **bloqueado el envío de DM en Instagram hasta el 17-nov-2026**. Por eso dejó de subir contenido. Riesgo (hipótesis): los pies con "Comenta PALABRA" generan DM automáticos. Pendiente: decidir el pie de los trials hasta el 17-nov.
+- Jose tiene **bloqueado el envío de DM en Instagram hasta el 17-nov-2026**. Por eso dejó de subir contenido. Riesgo (hipótesis): los pies con "Comenta PALABRA" generan DM automáticos. **Decisión (9-nov): se mantiene "Comenta PALABRA" en los pies de los trials** (opción B). El trial de hoy no se toca.
 - **Predicción comprobable:** el trial de hoy (bolsa) sale unos 34 días después de la última publicación de ese vídeo (6-oct). Si el patrón se cumple, debería pasar de 2.000 visitas.
 
 ### Fase 3 — Variaciones "de verdad"
