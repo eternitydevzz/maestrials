@@ -135,6 +135,16 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - Percentil 80 + umbral opcional. Lista de ganadores con sus números.
 - **Comprobación:** Jose revisa la lista y confirma que son sus mejores reels.
 
+### Análisis de los trials que ya subió Jose (2026-11-09, 84 publicaciones, datos en `trabajo/analisis_trials.json`)
+- **El espacio entre repeticiones es lo que más pesa.** Repeticiones del mismo vídeo (cuerpo igual, distancia ≤ 8):
+  - **≥ 9,5 días** desde la publicación anterior de ese vídeo: **9 de 9 funcionaron** (2.018 a 42.610 visitas; mediana 7.186; entre un 9 % y un 73 % de lo que hizo el original).
+  - **≤ 2,1 días**: **6 de 10 murieron** (0-286 visitas). Sin datos entre 3 y 9 días.
+- **Cambiar el gancho no explica el éxito.** Repeticiones idénticas (mismo gancho y mismo pie) con espacio largo hicieron 42.610, 7.186 y 2.675. Con espacio corto murieron incluso con el gancho muy cambiado.
+- **Último reel de feed: 2-sep-2026.** Desde entonces solo trials (y carruseles hasta el 19-oct). Los vídeos nuevos que solo salieron como trial tienen una mediana de 78 a 830 visitas por semana; los de feed de agosto, de 2.848 a 24.720. **Los 10 ganadores tienen todos versión de feed.** Es correlación, no causa demostrada.
+- **Lo que separa a un ganador de un vídeo flojo es la retención**: los ganadores se ven un 38 % (14,8 s de 44 s) y los flojos un 16 % (6,3 s); los ganadores tienen 12,5 compartidos por cada 1.000 visitas y los flojos 5,2.
+- **Fallo encontrado en la Fase 2:** la regla de "mismo pie = mismo vídeo" junta vídeos distintos que tienen pies genéricos ("Comenta CLASE…"). Hay que quitarla y agrupar solo por fotogramas.
+- **Predicción comprobable:** el trial de hoy (bolsa) sale unos 34 días después de la última publicación de ese vídeo (6-oct). Si el patrón se cumple, debería pasar de 2.000 visitas.
+
 ### Fase 3 — Variaciones "de verdad"
 - Cada versión cambia varias cosas a la vez: encuadre (zoom/reencuadre distinto), composición (p. ej. vídeo sobre fondo desenfocado), ritmo (empieza en otro momento o lleva otra velocidad), audio (música de fondo o tono), gancho de texto en pantalla y caption reescrito con IA.
 - **Hipótesis sin probar:** que esto evite la huella de Instagram. Se mide con el % de versiones en 0 visitas (objetivo < 10 %).
