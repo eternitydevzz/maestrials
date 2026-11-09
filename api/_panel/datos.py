@@ -30,11 +30,7 @@ class AlmacenLocal:
         return datos["corte_percentil"], datos["videos"]
 
     def publicaciones(self) -> list[dict]:
-        registro = list(_leer(TRABAJO / "publicaciones.json", []))
-        for archivo in TRABAJO.glob("*/publicado.json"):           # publicaciones de la Fase 1
-            d = _leer(archivo, {})
-            registro.append({"origen": archivo.parent.name, "archivo": d["video_url"].rsplit("/", 1)[-1],
-                             "publicacion": d["publicacion"], "publicado_en": d["publicado_en"]})
+        registro = list(_leer(RAIZ / "datos" / "publicaciones.json", []))   # registro único (Fase 1 incluida)
         return sorted(registro, key=lambda r: r["publicado_en"], reverse=True)
 
     def ficha(self, origen: str, archivo: str) -> dict | None:

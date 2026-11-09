@@ -145,13 +145,10 @@ def distancia(a: tuple[int, ...], b: tuple[int, ...]) -> float:
 
 def publicados_por_maestrials() -> set[str]:
     """Trials publicados por MaesTrials: no son reels de Jose y no cuentan para elegir ganadores."""
-    ids: set[str] = set()
-    for f in TRABAJO.glob("*/publicado.json"):                      # Fase 1
-        ids.add(json.loads(f.read_text(encoding="utf-8"))["publicacion"])
-    registro = TRABAJO / "publicaciones.json"                       # Fase 3 en adelante
-    if registro.exists():
-        ids.update(p["publicacion"] for p in json.loads(registro.read_text(encoding="utf-8")))
-    return ids
+    registro = RAIZ / "datos" / "publicaciones.json"   # registro único (Fase 1 incluida)
+    if not registro.exists():
+        return set()
+    return {p["publicacion"] for p in json.loads(registro.read_text(encoding="utf-8"))}
 
 
 def clave_del_video(pie: str) -> str:

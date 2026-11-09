@@ -184,6 +184,14 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - Falta para tenerlo en Vercel: el Paso 0 de Jose (token de Vercel y permiso `workflow`), la base de datos y subir los datos de `trabajo/` a ella.
 - **Fallo encontrado (sin arreglar, pendiente de Jose):** `ganadores.py` solo excluye como "de MaesTrials" la publicación de la Fase 1; las de la Fase 3 (`trabajo/publicaciones.json`) las contaría como reels de Jose pasadas 48 h.
 
+### PLAN B (decisión de Jose, 9-nov): sin panel de Vercel
+- **Por qué:** a Jose no le llega el email de verificación de Vercel (lleva 2 días). Sin eso no hay token, ni `vercel login`, ni variables, ni base de datos, ni logs. La función `api/panel.py` sale con 404 en Vercel y no se puede ver por qué.
+- **Cómo:** el trabajo lo hace **GitHub Actions** (las claves van como secretos de GitHub; los sube Jose con un comando de PowerShell, porque el sistema de permisos no me deja hacerlo a mí). Los datos viven en el repo, en `datos/`. **Vercel solo sirve los vídeos** de `public/v/` (eso funciona con push). El **panel se usa en el PC** (`herramientas/servidor_local.py`).
+- Registro único de trials: `datos/publicaciones.json` (incluye el de la Fase 1). Lo leen `fase3/variar.py`, `fase2/ganadores.py` y el panel.
+- `vercel.json` → `ignoreCommand`: Vercel solo despliega si cambian `public/`, `api/` o `vercel.json` (los commits de datos no gastan despliegues).
+- Pasos: **B1** medir solo (`automatico/medir.py` + `.github/workflows/medir.yml`, cada 2 h; foto de 24 h entre las 24 y las 26 h, con la hora exacta) → **B2** montar solo en Actions → **B3** autopilot en horas fijas (propuesta: 10:00, 14:00 y 19:00 NY; sin confirmar) → **B4** panel en el PC (Versiones, interruptor, Publicar ahora, Añadir ganador, Resultados a 24 h) y sacar el panel de `public/` → **B5** 3 días sin tocar nada.
+- Riesgos: minutos de Actions (2.000/mes en repo privado gratis, **plan de Jose sin verificar**; cálculo ≈ 1.000-1.200/mes); el repo crece con los vídeos (≈ 0,8 GB/mes con 3 al día); hay **dos proyectos de Vercel** (`maestrials` y `maestrials-4odv`) desplegando el mismo repo.
+
 ### Fase 4 — Publicación automática en Vercel
 - Schedules cada 15 min, N al día, separación de 45 min o más, **mínimo 4 días entre publicaciones del mismo vídeo** (decisión de Jose, sustituye a "máx. 3 veces por semana").
 - Si una versión se queda en 0, ese vídeo se descansa. Regla 1 feed por cada 6 trials.

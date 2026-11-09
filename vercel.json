@@ -2,6 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "",
   "outputDirectory": "public",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- public/ api/ vercel.json",
   "functions": {
     "api/panel.py": {
       "maxDuration": 60,

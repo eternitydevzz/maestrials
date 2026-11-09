@@ -28,7 +28,7 @@ from pasada import (PUBLICO, TRABAJO, api, carpeta, descargar,  # noqa: E402
                     esperar_procesado, leer_env, medir)
 
 URL_PUBLICA = "https://maestrials.vercel.app/v/"
-REGISTRO = TRABAJO / "publicaciones.json"
+REGISTRO = RAIZ / "datos" / "publicaciones.json"   # en el repo: lo leen y escriben el PC y GitHub Actions
 DIAS_MINIMOS = 4                  # decisión de Jose: mínimo 4 días entre publicaciones del mismo vídeo
 MINUTOS_ENTRE_SUBIDAS = 45
 
@@ -236,11 +236,8 @@ def montar_ficha(ficha: dict) -> None:
 
 
 def leer_registro() -> list[dict]:
-    registro = json.loads(REGISTRO.read_text(encoding="utf-8")) if REGISTRO.exists() else []
-    for anterior in TRABAJO.glob("*/publicado.json"):   # publicaciones de la Fase 1
-        datos = json.loads(anterior.read_text(encoding="utf-8"))
-        registro.append({"origen": anterior.parent.name, "publicado_en": datos["publicado_en"]})
-    return registro
+    """Todas las publicaciones de MaesTrials (la de la Fase 1 ya está dentro)."""
+    return json.loads(REGISTRO.read_text(encoding="utf-8")) if REGISTRO.exists() else []
 
 
 def comprobar_reglas(media_id: str) -> None:
