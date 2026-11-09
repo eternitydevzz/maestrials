@@ -56,7 +56,7 @@ Copia de su código del panel: `.playwright-mcp/tp-app.js`.
 - [x] D4. Feed: ahora 1 reel al día o cada 2 días; Jose quiere pasar a **2-3 al día**. Con la regla 1 feed por cada 6 trials, así caben hasta 12-18 trials al día; el tope sigue en 10 (2026-11-09).
 
 ## 3. Pendiente de decidir (Jose)
-- [ ] Clave de la API de Claude en `.env` (`ANTHROPIC_API_KEY`). Hace falta en la Fase 3.
+- [x] Clave de la API de Claude en `.env` (`ANTHROPIC_API_KEY`). La metió Jose (9-nov). Se prueba en la Fase 3.
 
 ## 3b. Conexión con Meta (hecha el 2026-11-09)
 - App **MaesTrials**, ID `1198791455807715`, en modo desarrollo y sin publicar. Porfolio: José María Garcia Gómez.
@@ -69,8 +69,8 @@ Copia de su código del panel: `.playwright-mcp/tp-app.js`.
 ## 3c. Datos reales de @josenews.ai (2026-11-09)
 - 10.062 seguidores. 83 reels entre el 29-jul y el 28-oct-2026. `media_count` dice 37; **sin verificar** por qué no coincide (puede que la lista incluya trial reels).
 - Visitas por reel: mediana 1.310, media 5.358, máximo 119.114, mínimo 0.
-- **Percentil 80 = 3.507 visitas → unos 17 ganadores.** Con 10.000 o más visitas: 10 reels; con 20.000 o más: 6.
-- 17 ganadores × 3 veces por semana = 51 a la semana ≈ **7 al día** posibles.
+- Por publicación (sin agrupar): percentil 80 = 3.507 visitas → 17. Con 10.000 o más visitas: 10 reels; con 20.000 o más: 6.
+- **Superado por la Fase 2:** lo que cuenta es el vídeo, no la publicación → 63 vídeos, P80 = 3.120, **12 ganadores**. Con la regla de 4 días: 12 ÷ 4 ≈ **3 trials al día**.
 
 ---
 
@@ -83,10 +83,10 @@ Copia de su código del panel: `.playwright-mcp/tp-app.js`.
         ├─ coge la siguiente versión ya montada (Vercel Blob, URL pública)
         └─ crea el contenedor con trial_params → espera FINISHED → publica → borra el vídeo del Blob
 
-[Montaje de vídeo con ffmpeg]  ← D1: ¿dónde?
-   A) GitHub Actions (gratis, ~2.000 min/mes en repo privado): 1 vez al día monta las versiones del día y las sube al Blob. Automático.
-   B) Dentro de Vercel: gasta las 4 h de CPU del plan gratis (no da) → obliga a Pro.
-   C) En el PC de Jose: gratis, pero el PC tiene que estar encendido.
+[Montaje de vídeo con ffmpeg]  ← D1 decidido: GitHub Actions
+   GitHub Actions (gratis, ~2.000 min/mes en repo privado): 1 vez al día monta las versiones del día y las deja en una URL pública. Automático.
+   (Descartadas: dentro de Vercel y en el PC de Jose.)
+   Hoy (Fase 1) los vídeos se sirven desde public/v/ con commit + push, no desde Blob.
 
 [Panel web en Vercel]: ganadores, calendario, resultados a 24 h y botón de pausa.
 ```
@@ -98,9 +98,9 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 ## 5. Fases (una cada vez y con comprobación)
 
 ### Fase 0 — Preparación (con Jose) ✅ HECHA 2026-11-09
-- Crear la cuenta de desarrollador de Meta y la app en modo desarrollo, con Instagram Login.
-- Dar rol a la cuenta de Instagram de Jose y sacar el token (60 días, renovable).
-- **Comprobación:** una llamada a `GET /me/media` devuelve los ~40 reels.
+- Crear la cuenta de desarrollador de Meta y la app en modo desarrollo, con **inicio de sesión unificado** (ver 3b).
+- Dar rol a la cuenta de Instagram de Jose y sacar el token (de usuario del sistema: **no caduca**).
+- **Comprobación:** la API devuelve 102 publicaciones (83 reels) con sus métricas.
 
 ### Fase 1 — Pasada de punta a punta con datos reales (desde el PC) ⏳ PUBLICADO, MIDIENDO
 **Resultado (2026-11-09):**
@@ -112,6 +112,8 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - ✅ Jose confirma en la app que sale como **Trial reel**. ✅ Su automatización de "comenta PALABRA" funciona también en los trials.
 - Calidad: Jose da por buena la de la API (720p). No hace falta buscar los originales.
 - Visitas a los 5 min: 0 (normal: Meta avisa de que las métricas pueden tardar hasta 48 h). Se mide a las 24 h (10-nov, 12:30 UTC).
+- **Lectura provisional a las 2,4 h (9-nov, 14:53 UTC):** 361 visitas, 262 de alcance, 3 me gusta, 2 comentarios, 1 compartido, 7 guardados, 10,8 s de tiempo medio visto. Ya supera el techo de los trials muertos (≤ 300 visitas).
+- Jose decide (9-nov) **no esperar a las 24 h para arrancar la Fase 3**. La medida de 24 h se toma igual y sirve de control.
 
 **Cómo se despliega en Vercel (importante):**
 - Solo con commit + push al repo privado `eternitydevzz/maestrials`. Hacerlo desde el panel de Vercel pide un código por email que no llega.
@@ -126,8 +128,8 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 ### Fase 2 — Detector de ganadores ✅ HECHA 2026-11-09 (`fase2/ganadores.py`)
 **Resultado:**
 - `is_shared_to_feed=false` = trial reel (cuadra: 16 reels de feed + 19 fotos/carruseles ≈ las 37 que dice la cuenta). Jose ya había subido unos 65 trials a mano.
-- Lo que gana es el **vídeo**, no la publicación. Las publicaciones del mismo vídeo se agrupan con una **huella de fotogramas** (dHash de los segundos 3 y 8, distancia ≤ 8) o si el pie empieza igual. La **portada no sirve**, porque Jose pone portadas distintas al mismo vídeo. Se comprobó a ojo con 2 grupos.
-- 83 publicaciones → **52 vídeos distintos**. Corte P80 = 4.830 visitas → **10 ganadores** (Jose da la lista por buena). Con 3 subidas por semana cada uno salen unos 4-5 trials al día.
+- Lo que gana es el **vídeo**, no la publicación. Las publicaciones del mismo vídeo se agrupan **solo con una huella de fotogramas** (dHash de los segundos 3 y 8, distancia ≤ 8). La **portada no sirve**, porque Jose pone portadas distintas al mismo vídeo, y el pie tampoco (ver los fallos arreglados más abajo). Se comprobó a ojo con 2 grupos.
+- 83 publicaciones → **63 vídeos distintos**. Corte P80 = 3.120 visitas → **12 ganadores**. (La primera versión daba 52 vídeos y 10 ganadores, que Jose dio por buenos; tras el arreglo salen 2 más.) Con la regla de 4 días salen unos 3 trials al día.
 - Datos de Jose: las repeticiones con **otro texto de gancho** a veces funcionan (un trial repetido hizo 14.446 visitas) y otras se quedan en 0 (repeticiones con 0-8 visitas). Instagram sí detecta los repetidos.
 - Pendiente para la Fase 5: Jose quiere poder **añadir ganadores a mano**.
 
@@ -155,8 +157,18 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - **Hipótesis sin probar:** que esto evite la huella de Instagram. Se mide con el % de versiones en 0 visitas (objetivo < 10 %).
 - **Comprobación:** Jose ve 3 versiones y las aprueba a ojo.
 
+**Decisiones de Jose (9-nov):** arrancar sin esperar a las 24 h del trial de la bolsa; cambios **suaves**; el "gancho" es el **texto en pantalla**; hoy se suben **2 más** (3 en el día); los candidatos son los 3 de más retención que ya cumplen los 4 días; la regla "1 feed por cada 6 trials" queda **solo como aviso** (bloquearía todo: el último feed es del 2-sep).
+
+**Hecho (9-nov, `fase3/variar.py`):**
+- `preparar`: transcribe el vídeo con Whisper `small` (el audio lo saca ffmpeg), pide a Claude (`claude-opus-5-5`, salida JSON, `fallbacks: "default"`) un gancho de 2 líneas y el pie reescrito, y comprueba que el pie lleva la palabra clave exacta (si no, repite hasta 3 veces). Sortea cambios suaves (zoom 1,04-1,10, velocidad 1,00-1,05, color y empezar de 0 a 0,5 s más tarde) y los guarda en la ficha `trabajo/<id>/version_<clave>.json`.
+- El gancho va en una caja **negra con letra blanca, arriba, solo los 3 primeros segundos** (la caja blanca no se veía sobre fondos blancos).
+- `remontar` vuelve a montar una versión sin llamar a Claude. `publicar` exige la regla de 4 días y los 45 min entre subidas, y que el vídeo ya esté en la URL pública.
+- Versiones listas: YO (`18007610888765552-f3-24bce52f`), API (`17901761979341450-f3-44adcba7`) y SKILL (`18024659621894106-f3-5e45f764`). ffmpeg tarda de 3 a 14 s por vídeo.
+- Hallazgo: la huella de la Fase 2 no reconoce como "el mismo vídeo" la versión zoom 1,10 de la bolsa. La regla de 4 días se cuenta con el registro propio (`trabajo/publicaciones.json` + `publicado.json` de la Fase 1), no con la huella.
+- Para la Fase 4: la regla de 4 días no ve las publicaciones que Jose suba a mano; habrá que cruzarla también con la huella.
+
 ### Fase 4 — Publicación automática en Vercel
-- Schedules cada 15 min, N al día, separación de 45 min o más, cada vídeo máx. 3 veces por semana.
+- Schedules cada 15 min, N al día, separación de 45 min o más, **mínimo 4 días entre publicaciones del mismo vídeo** (decisión de Jose, sustituye a "máx. 3 veces por semana").
 - Si una versión se queda en 0, ese vídeo se descansa. Regla 1 feed por cada 6 trials.
 - **Comprobación:** 3 días seguidos publicando solo, sin que Jose toque nada.
 
@@ -172,7 +184,7 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 ## 6. Riesgos
 - **R1.** Instagram puede bajar el alcance o desactivar los Trial Reels si se abusa (lo avisan las condiciones de TrialPilot). Por eso se empieza con 3 al día.
 - **R2.** Que las variaciones no superen la huella de Instagram → versiones en 0. Se mide en la Fase 3.
-- **R3.** Para 10 trials al día hacen falta unos 24 ganadores (cada vídeo máx. 3 veces por semana). Con el percentil 80 sobre ~40 reels salen unos 8. El umbral fijo y los 2-3 reels de feed nuevos al día deberían subir esa cifra; se comprueba con datos reales en la Fase 2.
+- **R3.** Con la regla de 4 días, para 10 trials al día hacen falta unos 40 ganadores. Hoy hay 12 (≈ 3 al día). Solo crece con vídeos nuevos que ganen (o añadiendo ganadores a mano).
 - ~~**R4.** El token caduca a los 60 días.~~ Resuelto: el token de usuario del sistema no caduca nunca.
 - **R5.** Pasar un trial reel al feed no se elige por API: `MANUAL` (lo pasa Jose) o `SS_PERFORMANCE` (lo pasa Instagram).
 
