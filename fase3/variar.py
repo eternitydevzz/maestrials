@@ -37,7 +37,9 @@ INTENTOS_CLAUDE = 3
 MODELO_WHISPER = "small"
 
 # Gancho en pantalla: caja blanca arriba, encima de la zona de subtítulos, solo al principio.
-FUENTE = "C\\:/Windows/Fonts/ariblk.ttf"
+FUENTE = RAIZ / "recursos" / "fuentes" / "ArchivoBlack-Regular.ttf"   # libre (OFL): sirve en Windows y en Linux
+VERSIONES = RAIZ / "datos" / "versiones"                 # fichas de cada versión (en el repo)
+TRANSCRIPCIONES = RAIZ / "datos" / "transcripciones"     # Whisper solo se ejecuta una vez por vídeo
 SEGUNDOS_GANCHO = 3.0
 LETRAS_POR_LINEA = 22
 LINEAS_GANCHO = 2
@@ -75,8 +77,8 @@ def sortear_cambios(semilla: int) -> Cambios:
                    valor(MARGEN_SATURACION), valor(MARGEN_CONTRASTE), valor(MARGEN_INICIO_S))
 
 
-def transcribir(video: Path) -> str:
-    guardada = video.parent / "transcripcion.txt"
+def transcribir(media_id: str, video: Path) -> str:
+    guardada = TRANSCRIPCIONES / f"{media_id}.txt"
     if guardada.exists():
         return guardada.read_text(encoding="utf-8")
     import numpy as np
@@ -88,6 +90,7 @@ def transcribir(video: Path) -> str:
     modelo = WhisperModel(MODELO_WHISPER, device="cpu", compute_type="int8")
     segmentos, _ = modelo.transcribe(audio, language="es")
     texto = " ".join(s.text.strip() for s in segmentos)
+    TRANSCRIPCIONES.mkdir(parents=True, exist_ok=True)
     guardada.write_text(texto, encoding="utf-8")
     return texto
 
@@ -169,7 +172,7 @@ def filtro_gancho(lineas: list[str], carpeta_version: Path) -> str:
         archivo = carpeta_version / f"gancho_{i}.txt"
         archivo.write_text(linea, encoding="utf-8")
         partes.append(
-            f"drawtext=fontfile='{FUENTE}':textfile='{ruta_ffmpeg(archivo)}':fontsize={TAM_LETRA}"
+            f"drawtext=fontfile='{ruta_ffmpeg(FUENTE)}':textfile='{ruta_ffmpeg(archivo)}':fontsize={TAM_LETRA}"
             f":fontcolor=white:box=1:boxcolor=black@0.85:boxborderw={BORDE_CAJA}"
             f":x=(w-text_w)/2:y=h*{Y_PRIMERA_LINEA}+{i * SALTO_LINEA}"
             f":enable='between(t,0,{SEGUNDOS_GANCHO})'")
@@ -192,8 +195,12 @@ def montar(original: Path, destino: Path, cambios: Cambios, gancho: str) -> floa
     return time.time() - inicio
 
 
+def todas_las_fichas() -> list[dict]:
+    return [json.loads(f.read_text(encoding="utf-8")) for f in sorted(VERSIONES.glob("*.json"))]
+
+
 def fichas(media_id: str) -> list[dict]:
-    return [json.loads(f.read_text(encoding="utf-8")) for f in sorted(carpeta(media_id).glob("version_*.json"))]
+    return [f for f in todas_las_fichas() if f["origen"] == media_id]
 
 
 def preparar(media_id: str) -> None:
@@ -203,7 +210,7 @@ def preparar(media_id: str) -> None:
     info = json.loads((carpeta(media_id) / "info.json").read_text(encoding="utf-8"))
     palabra = palabra_clave(info["caption"])
     print(f"[{media_id}] transcribiendo…")
-    transcripcion = transcribir(original)
+    transcripcion = transcribir(media_id, original)
     usados = [" ".join(f["gancho"]) for f in fichas(media_id)]
     print(f"[{media_id}] pidiendo gancho y pie a Claude…")
     lineas, pie = pedir_textos(transcripcion, info["caption"], palabra, usados)
@@ -212,8 +219,8 @@ def preparar(media_id: str) -> None:
     ficha = {"origen": media_id, "archivo": f"{media_id}-f3-{clave}.mp4", "clave": clave, "semilla": semilla,
              "cambios": asdict(sortear_cambios(semilla)), "gancho": lineas, "pie": pie, "palabra": palabra,
              "creada": datetime.now(timezone.utc).isoformat()}
-    (carpeta(media_id) / f"version_{clave}.json").write_text(
-        json.dumps(ficha, ensure_ascii=False, indent=1), encoding="utf-8")
+    VERSIONES.mkdir(parents=True, exist_ok=True)
+    (VERSIONES / f"{clave}.json").write_text(json.dumps(ficha, ensure_ascii=False, indent=1), encoding="utf-8")
     montar_ficha(ficha)
 
 

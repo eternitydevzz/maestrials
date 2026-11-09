@@ -26,7 +26,7 @@ def _fecha(iso: str) -> datetime:
 
 class AlmacenLocal:
     def videos(self) -> tuple[float | None, list[dict]]:
-        datos = _leer(TRABAJO / "ganadores.json", {"corte_percentil": None, "videos": []})
+        datos = _leer(RAIZ / "datos" / "ganadores.json", {"corte_percentil": None, "videos": []})
         return datos["corte_percentil"], datos["videos"]
 
     def publicaciones(self) -> list[dict]:
@@ -34,9 +34,9 @@ class AlmacenLocal:
         return sorted(registro, key=lambda r: r["publicado_en"], reverse=True)
 
     def ficha(self, origen: str, archivo: str) -> dict | None:
-        for ruta in (TRABAJO / origen).glob("version_*.json"):
+        for ruta in (RAIZ / "datos" / "versiones").glob("*.json"):
             datos = _leer(ruta, {})
-            if datos.get("archivo") == archivo:
+            if datos.get("origen") == origen and datos.get("archivo") == archivo:
                 return datos
         return None
 

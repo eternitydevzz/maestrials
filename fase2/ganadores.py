@@ -28,7 +28,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 TRABAJO = RAIZ / "trabajo"
-SALIDA = TRABAJO / "ganadores.json"
+SALIDA = RAIZ / "datos" / "ganadores.json"   # en el repo: lo usa GitHub Actions para preparar versiones
 
 PERCENTIL = 80
 UMBRAL_FIJO: int | None = None   # p. ej. 10_000 para activarlo

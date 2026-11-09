@@ -9,6 +9,7 @@ Uso (desde la raíz del proyecto):
 El token se lee de .env y nunca se imprime.
 """
 import json
+import os
 import secrets
 import subprocess
 import sys
@@ -34,12 +35,19 @@ ESPERA_ESTADO_S = 20   # cada cuánto se mira si Instagram ha procesado el víde
 INTENTOS_ESTADO = 30   # 30 × 20 s = 10 min como mucho
 
 
+CLAVES_ENTORNO = ("IG_TOKEN", "IG_USER_ID", "GRAPH_BASE", "ANTHROPIC_API_KEY")
+
+
 def leer_env():
+    """En el PC, de .env; en GitHub Actions, de las variables de entorno (secretos)."""
     datos = {}
-    for linea in (RAIZ / ".env").read_text(encoding="utf-8").splitlines():
-        if "=" in linea and not linea.startswith("#"):
-            clave, valor = linea.split("=", 1)
-            datos[clave.strip()] = valor.strip()
+    archivo = RAIZ / ".env"
+    if archivo.exists():
+        for linea in archivo.read_text(encoding="utf-8").splitlines():
+            if "=" in linea and not linea.startswith("#"):
+                clave, valor = linea.split("=", 1)
+                datos[clave.strip()] = valor.strip()
+    datos.update({k: v for k, v in os.environ.items() if k in CLAVES_ENTORNO and v})
     return datos
 
 
