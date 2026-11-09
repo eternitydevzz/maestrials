@@ -1,9 +1,8 @@
-# MaesTrials — B1: mide los trials cada 2 horas y guarda la foto de las 24 h en datos/publicaciones.json.
+# MaesTrials — B1: mide los trials y guarda la foto de las 24 h en datos/publicaciones.json.
+# Desde el B3 lo mide cada hora la tarea "autopilot"; esta queda solo para lanzarla a mano.
 name: medir
 
 on:
-  schedule:
-    - cron: "17 */2 * * *"   # minuto 17 de cada hora par (UTC). GitHub puede retrasarlo unos minutos.
   workflow_dispatch:          # botón "Run workflow" para lanzarlo a mano
 
 permissions:

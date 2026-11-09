@@ -1,0 +1,47 @@
+# MaesTrials — B3: cada hora mide los trials y, si toca un hueco (10, 14 y 19 NY), publica el siguiente.
+name: autopilot
+
+on:
+  schedule:
+    - cron: "7 * * * *"      # minuto 7 de cada hora (UTC). GitHub puede retrasarlo unos minutos.
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: datos
+  cancel-in-progress: false
+
+jobs:
+  autopilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20       # esperar a que Instagram procese un vídeo puede tardar hasta 10 min
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Medir
+        continue-on-error: true   # si falla medir, se publica igual
+        run: python -X utf8 automatico/medir.py
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          GRAPH_BASE: ${{ secrets.GRAPH_BASE }}
+      - name: Publicar si toca
+        run: python -X utf8 automatico/publicar.py
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          GRAPH_BASE: ${{ secrets.GRAPH_BASE }}
+      - name: Guardar en el repo
+        if: always()              # lo publicado se guarda aunque algo falle después
+        run: |
+          git config user.name "eternitydevzz"
+          git config user.email "336098555+eternitydevzz@users.noreply.github.com"
+          git add datos/
+          if git diff --cached --quiet; then echo "Sin cambios"; exit 0; fi
+          git commit -m "datos: autopilot"
+          git pull --rebase
+          git push

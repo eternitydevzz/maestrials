@@ -1,0 +1,7 @@
+{
+ "autopilot": true,
+ "zona": "America/New_York",
+ "ventana_ny": [9, 22],
+ "huecos_ny": [10, 14, 19],
+ "maximo_dia": 3
+}

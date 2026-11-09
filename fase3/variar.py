@@ -284,11 +284,19 @@ def publicar(media_id: str, archivo: str) -> None:
     print(f"Contenedor creado: {contenedor}")
     esperar_procesado(contenedor)
     publicado = api("POST", f"{env['IG_USER_ID']}/media_publish", {"creation_id": contenedor})["id"]
-    enlace = api("GET", publicado, {"fields": "permalink"}).get("permalink")
-    registro = json.loads(REGISTRO.read_text(encoding="utf-8")) if REGISTRO.exists() else []
-    registro.append({"origen": media_id, "archivo": archivo, "publicacion": publicado, "enlace": enlace,
-                     "publicado_en": datetime.now(timezone.utc).isoformat()})
-    REGISTRO.write_text(json.dumps(registro, ensure_ascii=False, indent=1), encoding="utf-8")
+    # Se apunta YA: si algo falla después, el autopilot no puede volver a publicar lo mismo.
+    entrada = {"origen": media_id, "archivo": archivo, "publicacion": publicado, "enlace": None,
+               "publicado_en": datetime.now(timezone.utc).isoformat()}
+    anterior = json.loads(REGISTRO.read_text(encoding="utf-8")) if REGISTRO.exists() else []
+    REGISTRO.write_text(json.dumps([*anterior, entrada], ensure_ascii=False, indent=1), encoding="utf-8")
+    try:
+        enlace = api("GET", publicado, {"fields": "permalink"}).get("permalink")
+    except (SystemExit, Exception) as e:  # noqa: BLE001 — el enlace es un extra; lo publicado ya está apuntado
+        print(f"  (no se pudo leer el enlace: {e})")
+        enlace = None
+    if enlace:
+        REGISTRO.write_text(json.dumps([*anterior, {**entrada, "enlace": enlace}], ensure_ascii=False, indent=1),
+                            encoding="utf-8")
     print(f"PUBLICADO como trial reel: {publicado} → {enlace}")
 
 
