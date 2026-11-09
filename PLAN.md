@@ -142,7 +142,11 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - **Cambiar el gancho no explica el éxito.** Repeticiones idénticas (mismo gancho y mismo pie) con espacio largo hicieron 42.610, 7.186 y 2.675. Con espacio corto murieron incluso con el gancho muy cambiado.
 - **Último reel de feed: 2-sep-2026.** Desde entonces solo trials (y carruseles hasta el 19-oct). Los vídeos nuevos que solo salieron como trial tienen una mediana de 78 a 830 visitas por semana; los de feed de agosto, de 2.848 a 24.720. **Los 10 ganadores tienen todos versión de feed.** Es correlación, no causa demostrada.
 - **Lo que separa a un ganador de un vídeo flojo es la retención**: los ganadores se ven un 38 % (14,8 s de 44 s) y los flojos un 16 % (6,3 s); los ganadores tienen 12,5 compartidos por cada 1.000 visitas y los flojos 5,2.
-- **Fallo encontrado en la Fase 2:** la regla de "mismo pie = mismo vídeo" junta vídeos distintos que tienen pies genéricos ("Comenta CLASE…"). Hay que quitarla y agrupar solo por fotogramas.
+- **Fallos de la Fase 2, ARREGLADOS el 9-nov:** (a) "mismo pie = mismo vídeo" juntaba vídeos distintos con pies genéricos → ahora se agrupa **solo por fotogramas**; (b) los grupos se nombraban por el pie y uno pisaba a otro (se perdía "Comenta N8N", 5.794 visitas) → ahora se nombran por id. Comprobado: 83 publicaciones = **63 vídeos**, sin perder ninguna. Corte P80 = 3.120 → **12 ganadores**.
+
+**Decisiones de Jose (9-nov):**
+- **Espacio mínimo entre publicaciones del mismo vídeo: 4 días** (zona sin datos: es un experimento que se mide). Con 12 ganadores salen unos 3 trials al día.
+- Jose tiene **bloqueado el envío de DM en Instagram hasta el 17-nov-2026**. Por eso dejó de subir contenido. Riesgo (hipótesis): los pies con "Comenta PALABRA" generan DM automáticos. Pendiente: decidir el pie de los trials hasta el 17-nov.
 - **Predicción comprobable:** el trial de hoy (bolsa) sale unos 34 días después de la última publicación de ese vídeo (6-oct). Si el patrón se cumple, debería pasar de 2.000 visitas.
 
 ### Fase 3 — Variaciones "de verdad"

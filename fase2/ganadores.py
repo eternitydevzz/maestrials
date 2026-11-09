@@ -6,9 +6,10 @@ Uso (desde la raíz del proyecto):
 Regla (PLAN.md): un VÍDEO gana si su mejor publicación (feed o trial) está en el
 top 20 % por visitas (percentil 80) o supera UMBRAL_FIJO. Solo cuentan publicaciones
 de los últimos DIAS_CANDIDATOS días y con al menos HORAS_MINIMAS de vida.
-Las publicaciones del mismo vídeo se agrupan si sus fotogramas de los segundos 3 y 8
-se parecen (huella dHash, distancia media <= UMBRAL_HUELLA) o si el pie empieza igual.
-La portada NO sirve: Jose usa portadas distintas para el mismo vídeo (medido el 9-nov-2026).
+Las publicaciones del mismo vídeo se agrupan SOLO si sus fotogramas de los segundos 3 y 8
+se parecen (huella dHash, distancia media <= UMBRAL_HUELLA).
+- La portada NO sirve: Jose usa portadas distintas para el mismo vídeo (medido el 9-nov-2026).
+- El pie NO sirve: pies genéricos ("Comenta CLASE…") juntaban vídeos distintos (corregido el 9-nov-2026).
 """
 from __future__ import annotations
 
@@ -153,8 +154,7 @@ def candidatas(env: dict[str, str]) -> list[Publicacion]:
 
 
 def mismo_video(a: Publicacion, b: Publicacion) -> bool:
-    if clave_del_video(a.pie) == clave_del_video(b.pie):
-        return True
+    """Sin huella (vídeo que no se pudo leer) nunca se junta con otro: mejor separado que mal unido."""
     return a.huella is not None and b.huella is not None and distancia(a.huella, b.huella) <= UMBRAL_HUELLA
 
 
@@ -175,7 +175,9 @@ def agrupar(pubs: list[Publicacion]) -> dict[str, list[Publicacion]]:
     grupos: dict[str, list[Publicacion]] = {}
     for i, p in enumerate(pubs):
         grupos.setdefault(str(raiz(i)), []).append(p)
-    return {clave_del_video(max(v, key=lambda p: p.visitas).pie): v for v in grupos.values()}
+    # Nombre del grupo = id de su mejor publicación (único). Con el pie se pisaban grupos
+    # distintos que empiezan igual (bug encontrado el 9-nov-2026 con "Comenta N8N").
+    return {max(v, key=lambda p: p.visitas).id: v for v in grupos.values()}
 
 
 def decidir(grupos: dict[str, list[Publicacion]]) -> tuple[list[Video], float]:
