@@ -253,7 +253,8 @@ function tarjetaVersion(v, orden) {
   function botones() {
     const publicar = el("button", "boton", "Publicar ahora");
     const editar = el("button", "boton-suave", "Editar");
-    const rehacer = el("button", "boton-suave", "Rehacer con Claude");
+    const rehacer = el("button", "boton-suave", "Rehacer");
+    rehacer.title = "Claude escribe otro gancho y otro pie, y se monta de nuevo";
     const descartar = el("button", "boton-suave peligro", "Descartar");
     publicar.addEventListener("click", () => {
       if (!confirm(`¿Publicar AHORA en tu Instagram como trial?\n\nGancho: ${v.gancho.join(" ")}\n\nPie:\n${v.pie}`)) return;
