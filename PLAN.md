@@ -123,7 +123,15 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - **Comprobación:** Jose ve el trial reel en su Instagram y sus visitas a las 24 h.
 - **Hasta que Jose no lo vea funcionar, no se construye lo siguiente.**
 
-### Fase 2 — Detector de ganadores
+### Fase 2 — Detector de ganadores ✅ HECHA 2026-11-09 (`fase2/ganadores.py`)
+**Resultado:**
+- `is_shared_to_feed=false` = trial reel (cuadra: 16 reels de feed + 19 fotos/carruseles ≈ las 37 que dice la cuenta). Jose ya había subido unos 65 trials a mano.
+- Lo que gana es el **vídeo**, no la publicación. Las publicaciones del mismo vídeo se agrupan con una **huella de fotogramas** (dHash de los segundos 3 y 8, distancia ≤ 8) o si el pie empieza igual. La **portada no sirve**, porque Jose pone portadas distintas al mismo vídeo. Se comprobó a ojo con 2 grupos.
+- 83 publicaciones → **52 vídeos distintos**. Corte P80 = 4.830 visitas → **10 ganadores** (Jose da la lista por buena). Con 3 subidas por semana cada uno salen unos 4-5 trials al día.
+- Datos de Jose: las repeticiones con **otro texto de gancho** a veces funcionan (un trial repetido hizo 14.446 visitas) y otras se quedan en 0 (repeticiones con 0-8 visitas). Instagram sí detecta los repetidos.
+- Pendiente para la Fase 5: Jose quiere poder **añadir ganadores a mano**.
+
+#### Plan original de la Fase 2
 - Percentil 80 + umbral opcional. Lista de ganadores con sus números.
 - **Comprobación:** Jose revisa la lista y confirma que son sus mejores reels.
 

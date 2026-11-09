@@ -6,14 +6,16 @@ Uso (desde la raíz del proyecto):
 Regla (PLAN.md): un VÍDEO gana si su mejor publicación (feed o trial) está en el
 top 20 % por visitas (percentil 80) o supera UMBRAL_FIJO. Solo cuentan publicaciones
 de los últimos DIAS_CANDIDATOS días y con al menos HORAS_MINIMAS de vida.
-Las publicaciones del mismo vídeo se agrupan por el inicio del pie (hipótesis:
-Jose reutiliza el pie en los trials del mismo vídeo).
+Las publicaciones del mismo vídeo se agrupan si sus fotogramas de los segundos 3 y 8
+se parecen (huella dHash, distancia media <= UMBRAL_HUELLA) o si el pie empieza igual.
+La portada NO sirve: Jose usa portadas distintas para el mismo vídeo (medido el 9-nov-2026).
 """
 from __future__ import annotations
 
 import json
 import re
 import statistics
+import subprocess
 import sys
 import unicodedata
 import urllib.error
@@ -32,6 +34,8 @@ UMBRAL_FIJO: int | None = None   # p. ej. 10_000 para activarlo
 DIAS_CANDIDATOS = 180
 HORAS_MINIMAS = 48
 LETRAS_CLAVE = 45                # cuántas letras del pie forman la clave del vídeo
+SEGUNDOS_HUELLA = (3, 8)         # fotogramas que forman la huella del vídeo
+UMBRAL_HUELLA = 8                # distancia media (0-64) para decir "mismo vídeo"
 
 
 @dataclass(frozen=True)
@@ -43,6 +47,7 @@ class Publicacion:
     comentarios: int
     pie: str
     enlace: str
+    huella: tuple[int, ...] | None
 
 
 @dataclass(frozen=True)
@@ -77,7 +82,7 @@ def pedir(url: str) -> dict:
 
 
 def listar_reels(env: dict[str, str]) -> list[dict]:
-    campos = "id,media_product_type,is_shared_to_feed,timestamp,permalink,comments_count,caption"
+    campos = "id,media_product_type,is_shared_to_feed,timestamp,permalink,comments_count,caption,media_url"
     params = urllib.parse.urlencode({"fields": campos, "limit": 100, "access_token": env["IG_TOKEN"]})
     url: str | None = f"{env['GRAPH_BASE']}/{env['IG_USER_ID']}/media?{params}"
     todos: list[dict] = []
@@ -93,6 +98,28 @@ def visitas_de(env: dict[str, str], media_id: str) -> int:
     resp = pedir(f"{env['GRAPH_BASE']}/{media_id}/insights?{params}")
     datos = resp.get("data") or [{}]
     return int((datos[0].get("values") or [{}])[0].get("value") or 0)
+
+
+def dhash_fotograma(url: str, segundo: int) -> int | None:
+    """Huella de 64 bits de un fotograma: cada bit dice si un píxel es más claro que el de al lado."""
+    crudo = subprocess.run(
+        ["ffmpeg", "-v", "error", "-ss", str(segundo), "-i", url, "-frames:v", "1",
+         "-vf", "scale=9:8,format=gray", "-f", "rawvideo", "-"],
+        capture_output=True, check=False).stdout
+    if len(crudo) != 72:
+        return None
+    return sum(1 << i for i in range(64) if crudo[(i // 8) * 9 + i % 8] > crudo[(i // 8) * 9 + i % 8 + 1])
+
+
+def huella_de(url: str | None) -> tuple[int, ...] | None:
+    if not url:
+        return None
+    partes = [dhash_fotograma(url, s) for s in SEGUNDOS_HUELLA]
+    return None if None in partes else tuple(partes)  # type: ignore[arg-type]
+
+
+def distancia(a: tuple[int, ...], b: tuple[int, ...]) -> float:
+    return sum(bin(x ^ y).count("1") for x, y in zip(a, b)) / len(a)
 
 
 def publicados_por_maestrials() -> set[str]:
@@ -120,15 +147,35 @@ def candidatas(env: dict[str, str]) -> list[Publicacion]:
         lista.append(Publicacion(
             id=m["id"], fecha=m["timestamp"][:10], en_feed=bool(m.get("is_shared_to_feed")),
             visitas=visitas_de(env, m["id"]), comentarios=int(m.get("comments_count") or 0),
-            pie=(m.get("caption") or "").replace("\n", " ")[:80], enlace=m["permalink"]))
+            pie=(m.get("caption") or "").replace("\n", " ")[:80], enlace=m["permalink"],
+            huella=huella_de(m.get("media_url"))))
     return lista
 
 
+def mismo_video(a: Publicacion, b: Publicacion) -> bool:
+    if clave_del_video(a.pie) == clave_del_video(b.pie):
+        return True
+    return a.huella is not None and b.huella is not None and distancia(a.huella, b.huella) <= UMBRAL_HUELLA
+
+
 def agrupar(pubs: list[Publicacion]) -> dict[str, list[Publicacion]]:
+    """Unión de conjuntos: si A se parece a B y B a C, los tres son el mismo vídeo."""
+    jefe = list(range(len(pubs)))
+
+    def raiz(i: int) -> int:
+        while jefe[i] != i:
+            jefe[i] = jefe[jefe[i]]
+            i = jefe[i]
+        return i
+
+    for i in range(len(pubs)):
+        for j in range(i + 1, len(pubs)):
+            if mismo_video(pubs[i], pubs[j]):
+                jefe[raiz(i)] = raiz(j)
     grupos: dict[str, list[Publicacion]] = {}
-    for p in pubs:
-        grupos.setdefault(clave_del_video(p.pie), []).append(p)
-    return grupos
+    for i, p in enumerate(pubs):
+        grupos.setdefault(str(raiz(i)), []).append(p)
+    return {clave_del_video(max(v, key=lambda p: p.visitas).pie): v for v in grupos.values()}
 
 
 def decidir(grupos: dict[str, list[Publicacion]]) -> tuple[list[Video], float]:
