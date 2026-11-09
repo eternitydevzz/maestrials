@@ -137,8 +137,9 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 
 ### Análisis de los trials que ya subió Jose (2026-11-09, 84 publicaciones, datos en `trabajo/analisis_trials.json`)
 - **El espacio entre repeticiones es lo que más pesa.** Repeticiones del mismo vídeo (cuerpo igual, distancia ≤ 8):
-  - **≥ 9,5 días** desde la publicación anterior de ese vídeo: **9 de 9 funcionaron** (2.018 a 42.610 visitas; mediana 7.186; entre un 9 % y un 73 % de lo que hizo el original).
-  - **≤ 2,1 días**: **6 de 10 murieron** (0-286 visitas). Sin datos entre 3 y 9 días.
+  - **≥ 9,5 días** desde la publicación anterior de ese vídeo: **10 de 10 funcionaron** (más de 1.000 visitas; mediana 4.968; hasta 42.610).
+  - **≤ 2,1 días**: **7 de 10 murieron** (300 visitas o menos; mediana 6). Sin datos entre 3 y 9 días.
+  - (Recalculado el 9-nov con el agrupado corregido; antes salían 9/9 y 6/10.)
 - **Cambiar el gancho no explica el éxito.** Repeticiones idénticas (mismo gancho y mismo pie) con espacio largo hicieron 42.610, 7.186 y 2.675. Con espacio corto murieron incluso con el gancho muy cambiado.
 - **Último reel de feed: 2-sep-2026.** Desde entonces solo trials (y carruseles hasta el 19-oct). Los vídeos nuevos que solo salieron como trial tienen una mediana de 78 a 830 visitas por semana; los de feed de agosto, de 2.848 a 24.720. **Los 10 ganadores tienen todos versión de feed.** Es correlación, no causa demostrada.
 - **Lo que separa a un ganador de un vídeo flojo es la retención**: los ganadores se ven un 38 % (14,8 s de 44 s) y los flojos un 16 % (6,3 s); los ganadores tienen 12,5 compartidos por cada 1.000 visitas y los flojos 5,2.
