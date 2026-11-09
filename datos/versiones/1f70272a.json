@@ -1,0 +1,21 @@
+{
+ "origen": "18107396678277689",
+ "archivo": "18107396678277689-f3-1f70272a.mp4",
+ "clave": "1f70272a",
+ "semilla": 1779959088,
+ "cambios": {
+  "zoom": 1.092,
+  "desplazar_y": 0.383,
+  "velocidad": 1.031,
+  "saturacion": 1.076,
+  "contraste": 1.003,
+  "inicio_s": 0.361
+ },
+ "gancho": [
+  "Si Claude Code",
+  "llega al límite..."
+ ],
+ "pie": "Cuando Claude Code se queda sin tokens, esta herramienta salta sola a Gemini, Kimi o GLM y tu sesión sigue en marcha 🔁 Comenta CÓDIGO y te paso la guía de configuración paso a paso 👇 #ClaudeCode #InteligenciaArtificial #Programacion #Productividad",
+ "palabra": "CÓDIGO",
+ "creada": "2026-11-09T17:54:19.603529+00:00"
+}
