@@ -102,7 +102,20 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - Dar rol a la cuenta de Instagram de Jose y sacar el token (60 días, renovable).
 - **Comprobación:** una llamada a `GET /me/media` devuelve los ~40 reels.
 
-### Fase 1 — Pasada de punta a punta con datos reales (desde el PC)
+### Fase 1 — Pasada de punta a punta con datos reales (desde el PC) ⏳ PUBLICADO, MIDIENDO
+**Resultado (2026-11-09):**
+- Ganador: reel `18129515419637342` ("La IA que está cambiando la forma de analizar la bolsa", 119.120 visitas).
+- Versión 1 con ffmpeg (`fase1/pasada.py`): zoom 1,10, velocidad 1,05, saturación 1,08 y contraste 1,04. **ffmpeg tardó 4 s** para 56 s de vídeo.
+- La API da el vídeo a **720x1280** (ya comprimido por Instagram). Para mejorar la calidad, mejor partir de los archivos originales de Jose.
+- URL pública: `https://maestrials.vercel.app/v/<archivo>.mp4` (carpeta `public/v/` del repo).
+- **Trial reel publicado:** `18416510161083451` → https://www.instagram.com/reel/DfhVYMrFWa_/ (12:30 UTC). La API aceptó `trial_params` MANUAL y `is_shared_to_feed: false`.
+- Pendiente: Jose confirma en la app que sale como "Trial" y medimos las visitas a las 24 h (10-nov, 12:30 UTC).
+
+**Cómo se despliega en Vercel (importante):**
+- Solo con commit + push al repo privado `eternitydevzz/maestrials`. Hacerlo desde el panel de Vercel pide un código por email que no llega.
+- El autor del commit tiene que ser `eternitydevzz <336098555+eternitydevzz@users.noreply.github.com>` (configurado en este repo). Si no, Vercel marca el despliegue como "Blocked".
+- Push con la credencial de gh: `git -c credential.helper= -c "credential.helper=!gh auth git-credential" push`.
+- Proyecto Vercel: `info-79696548s-projects/maestrials` (equipo Eternity Group, plan Pro).
 - Leer los reels y sus `views` y `comments`, elegir 1 ganador, descargarlo, montar 1 versión con ffmpeg, subirla a una URL pública y publicarla como trial reel `MANUAL`.
 - Medir cuánto tarda ffmpeg por versión (sirve para decidir D1).
 - **Comprobación:** Jose ve el trial reel en su Instagram y sus visitas a las 24 h.
