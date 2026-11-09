@@ -51,8 +51,7 @@ def decidir(ahora: datetime, ajustes: dict, registro: list[dict]) -> Decision:
 
 
 def cola_por_retencion() -> list[dict]:
-    videos = json.loads(preparar.GANADORES.read_text(encoding="utf-8"))["videos"]
-    retencion = {i: v.get("retencion") or 0 for v in videos for i in v["ids"]}
+    retencion = {i: v.get("retencion") or 0 for v in preparar.videos_ganadores() for i in v["ids"]}
     return sorted(preparar.pendientes(), key=lambda f: retencion.get(f["origen"], 0), reverse=True)
 
 

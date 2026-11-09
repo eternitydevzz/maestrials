@@ -13,11 +13,20 @@
   <header class="cabecera">
     <div class="marca"><span class="logo">M</span>MaesTrials <span class="cuenta">@josenews.ai</span></div>
     <nav class="pestanas" aria-label="Secciones">
+      <button data-vista="versiones">Versiones</button>
       <button data-vista="ganadores">Ganadores</button>
       <button data-vista="resultados">Resultados</button>
     </nav>
-    <button class="salir" id="salir">Salir</button>
+    <div class="controles">
+      <label class="interruptor" title="Con el autopilot encendido, GitHub publica solo en los huecos">
+        <input type="checkbox" id="autopilot" disabled>
+        <span class="pista" aria-hidden="true"></span>
+        <span id="autopilot-texto">Autopilot</span>
+      </label>
+      <button class="boton-suave" id="sincronizar" title="Traer lo último que hizo GitHub">Sincronizar</button>
+    </div>
   </header>
+  <div class="aviso-flotante" id="aviso" role="status" hidden></div>
   <main id="contenido"></main>
   <script src="/panel.js"></script>
 </body>

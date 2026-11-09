@@ -11,7 +11,7 @@ from _panel.rutas import responder  # noqa: E402
 MAX_CUERPO = 1_000_000
 
 
-def atender(peticion: BaseHTTPRequestHandler, metodo: str, segura: bool) -> None:
+def atender(peticion: BaseHTTPRequestHandler, metodo: str, segura: bool, local: bool = False) -> None:
     ruta = parse_qs(urlparse(peticion.path).query).get("r", [""])[0]
     try:
         cookies = {k: m.value for k, m in SimpleCookie(peticion.headers.get("Cookie", "")).items()}
@@ -19,7 +19,7 @@ def atender(peticion: BaseHTTPRequestHandler, metodo: str, segura: bool) -> None
         cookies = {}
     largo = min(int(peticion.headers.get("Content-Length") or 0), MAX_CUERPO)
     cuerpo = peticion.rfile.read(largo) if largo else b""
-    respuesta = responder(metodo, ruta, cookies, cuerpo, segura)
+    respuesta = responder(metodo, ruta, cookies, cuerpo, segura, local=local)
     peticion.send_response(respuesta.estado)
     for clave, valor in respuesta.cabeceras:
         peticion.send_header(clave, valor)

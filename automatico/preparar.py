@@ -18,8 +18,17 @@ sys.path.insert(0, str(RAIZ / "fase3"))
 import variar  # noqa: E402
 
 GANADORES = RAIZ / "datos" / "ganadores.json"
+MANUALES = RAIZ / "datos" / "manuales.json"     # ganadores que Jose añade a mano desde el panel
 LISTAS = 3          # versiones preparadas y sin publicar que queremos tener (= trials al día)
 HORIZONTE_H = 13    # el vídeo tiene que poder salir antes del último hueco del día (19:00 NY)
+
+
+def videos_ganadores() -> list[dict]:
+    """Ganadores automáticos (fase2/ganadores.py) + los añadidos a mano, sin repetir."""
+    automaticos = [v for v in json.loads(GANADORES.read_text(encoding="utf-8"))["videos"] if v["ganador"]]
+    vistos = {i for v in automaticos for i in v["ids"]}
+    manuales = json.loads(MANUALES.read_text(encoding="utf-8")) if MANUALES.exists() else []
+    return automaticos + [m for m in manuales if not set(m["ids"]) & vistos]
 
 
 def pendientes() -> list[dict]:
@@ -34,7 +43,7 @@ def ultima_publicacion(video: dict, registro: list[dict]) -> datetime:
 
 
 def elegir(ahora: datetime) -> list[dict]:
-    videos = [v for v in json.loads(GANADORES.read_text(encoding="utf-8"))["videos"] if v["ganador"]]
+    videos = videos_ganadores()
     registro = variar.leer_registro()
     en_cola = {f["origen"] for f in pendientes()}
     limite = ahora + timedelta(hours=HORIZONTE_H) - timedelta(days=variar.DIAS_MINIMOS)
