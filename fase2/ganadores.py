@@ -1,0 +1,167 @@
+"""MaesTrials — Fase 2: detector de reels ganadores.
+
+Uso (desde la raíz del proyecto):
+  python -I -X utf8 fase2/ganadores.py
+
+Regla (PLAN.md): un VÍDEO gana si su mejor publicación (feed o trial) está en el
+top 20 % por visitas (percentil 80) o supera UMBRAL_FIJO. Solo cuentan publicaciones
+de los últimos DIAS_CANDIDATOS días y con al menos HORAS_MINIMAS de vida.
+Las publicaciones del mismo vídeo se agrupan por el inicio del pie (hipótesis:
+Jose reutiliza el pie en los trials del mismo vídeo).
+"""
+from __future__ import annotations
+
+import json
+import re
+import statistics
+import sys
+import unicodedata
+import urllib.error
+import urllib.parse
+import urllib.request
+from dataclasses import asdict, dataclass
+from datetime import datetime, timedelta, timezone
+from pathlib import Path
+
+RAIZ = Path(__file__).resolve().parent.parent
+TRABAJO = RAIZ / "trabajo"
+SALIDA = TRABAJO / "ganadores.json"
+
+PERCENTIL = 80
+UMBRAL_FIJO: int | None = None   # p. ej. 10_000 para activarlo
+DIAS_CANDIDATOS = 180
+HORAS_MINIMAS = 48
+LETRAS_CLAVE = 45                # cuántas letras del pie forman la clave del vídeo
+
+
+@dataclass(frozen=True)
+class Publicacion:
+    id: str
+    fecha: str
+    en_feed: bool
+    visitas: int
+    comentarios: int
+    pie: str
+    enlace: str
+
+
+@dataclass(frozen=True)
+class Video:
+    clave: str
+    mejor_id: str
+    mejor_enlace: str
+    mejores_visitas: int
+    comentarios_mejor: int
+    publicaciones: int
+    alguna_en_feed: bool
+    pie: str
+    ganador: bool
+
+
+def leer_env() -> dict[str, str]:
+    datos: dict[str, str] = {}
+    for linea in (RAIZ / ".env").read_text(encoding="utf-8").splitlines():
+        if "=" in linea and not linea.startswith("#"):
+            clave, valor = linea.split("=", 1)
+            datos[clave.strip()] = valor.strip()
+    return datos
+
+
+def pedir(url: str) -> dict:
+    try:
+        with urllib.request.urlopen(url, timeout=60) as r:
+            return json.loads(r.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        error = json.loads(e.read().decode("utf-8")).get("error", {})
+        raise SystemExit(f"ERROR de Instagram ({error.get('code')}): {error.get('message')}")
+
+
+def listar_reels(env: dict[str, str]) -> list[dict]:
+    campos = "id,media_product_type,is_shared_to_feed,timestamp,permalink,comments_count,caption"
+    params = urllib.parse.urlencode({"fields": campos, "limit": 100, "access_token": env["IG_TOKEN"]})
+    url: str | None = f"{env['GRAPH_BASE']}/{env['IG_USER_ID']}/media?{params}"
+    todos: list[dict] = []
+    while url:
+        resp = pedir(url)
+        todos.extend(resp.get("data", []))
+        url = resp.get("paging", {}).get("next")
+    return [m for m in todos if m.get("media_product_type") == "REELS"]
+
+
+def visitas_de(env: dict[str, str], media_id: str) -> int:
+    params = urllib.parse.urlencode({"metric": "views", "access_token": env["IG_TOKEN"]})
+    resp = pedir(f"{env['GRAPH_BASE']}/{media_id}/insights?{params}")
+    datos = resp.get("data") or [{}]
+    return int((datos[0].get("values") or [{}])[0].get("value") or 0)
+
+
+def publicados_por_maestrials() -> set[str]:
+    ids: set[str] = set()
+    for f in TRABAJO.glob("*/publicado.json"):
+        ids.add(json.loads(f.read_text(encoding="utf-8"))["publicacion"])
+    return ids
+
+
+def clave_del_video(pie: str) -> str:
+    sin_tildes = unicodedata.normalize("NFKD", pie).encode("ascii", "ignore").decode()
+    solo_letras = re.sub(r"[^a-z0-9]", "", sin_tildes.lower())
+    return solo_letras[:LETRAS_CLAVE] or "sin-pie"
+
+
+def candidatas(env: dict[str, str]) -> list[Publicacion]:
+    ahora = datetime.now(timezone.utc)
+    desde, hasta = ahora - timedelta(days=DIAS_CANDIDATOS), ahora - timedelta(hours=HORAS_MINIMAS)
+    excluir = publicados_por_maestrials()
+    lista: list[Publicacion] = []
+    for m in listar_reels(env):
+        fecha = datetime.strptime(m["timestamp"], "%Y-%m-%dT%H:%M:%S%z")
+        if m["id"] in excluir or not (desde <= fecha <= hasta):
+            continue
+        lista.append(Publicacion(
+            id=m["id"], fecha=m["timestamp"][:10], en_feed=bool(m.get("is_shared_to_feed")),
+            visitas=visitas_de(env, m["id"]), comentarios=int(m.get("comments_count") or 0),
+            pie=(m.get("caption") or "").replace("\n", " ")[:80], enlace=m["permalink"]))
+    return lista
+
+
+def agrupar(pubs: list[Publicacion]) -> dict[str, list[Publicacion]]:
+    grupos: dict[str, list[Publicacion]] = {}
+    for p in pubs:
+        grupos.setdefault(clave_del_video(p.pie), []).append(p)
+    return grupos
+
+
+def decidir(grupos: dict[str, list[Publicacion]]) -> tuple[list[Video], float]:
+    mejores = {k: max(v, key=lambda p: p.visitas) for k, v in grupos.items()}
+    visitas = [p.visitas for p in mejores.values()]
+    corte = statistics.quantiles(visitas, n=100)[PERCENTIL - 1] if len(visitas) >= 5 else float("inf")
+    videos = []
+    for clave, mejor in mejores.items():
+        gana = mejor.visitas >= corte or (UMBRAL_FIJO is not None and mejor.visitas >= UMBRAL_FIJO)
+        videos.append(Video(
+            clave=clave, mejor_id=mejor.id, mejor_enlace=mejor.enlace, mejores_visitas=mejor.visitas,
+            comentarios_mejor=mejor.comentarios, publicaciones=len(grupos[clave]),
+            alguna_en_feed=any(p.en_feed for p in grupos[clave]), pie=mejor.pie, ganador=gana))
+    return sorted(videos, key=lambda v: v.mejores_visitas, reverse=True), corte
+
+
+def main() -> None:
+    env = leer_env()
+    pubs = candidatas(env)
+    if not pubs:
+        raise SystemExit("No hay reels candidatos")
+    videos, corte = decidir(agrupar(pubs))
+    ganadores = [v for v in videos if v.ganador]
+    SALIDA.write_text(json.dumps({"corte_percentil": corte, "umbral_fijo": UMBRAL_FIJO,
+                                  "videos": [asdict(v) for v in videos]}, ensure_ascii=False, indent=1),
+                      encoding="utf-8")
+    print(f"Publicaciones candidatas: {len(pubs)} | vídeos distintos: {len(videos)} | "
+          f"corte P{PERCENTIL}: {corte:,.0f} visitas | GANADORES: {len(ganadores)}")
+    for v in videos:
+        marca = "GANA" if v.ganador else "    "
+        feed = "feed" if v.alguna_en_feed else "trial"
+        print(f"{marca} {v.mejores_visitas:>9,} vis | {v.comentarios_mejor:>5} com | {v.publicaciones} pub ({feed:<5}) | {v.pie[:50]}")
+
+
+if __name__ == "__main__":
+    sys.exit(main())
