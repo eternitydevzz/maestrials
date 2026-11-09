@@ -109,7 +109,9 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - La API da el vídeo a **720x1280** (ya comprimido por Instagram). Para mejorar la calidad, mejor partir de los archivos originales de Jose.
 - URL pública: `https://maestrials.vercel.app/v/<archivo>.mp4` (carpeta `public/v/` del repo).
 - **Trial reel publicado:** `18416510161083451` → https://www.instagram.com/reel/DfhVYMrFWa_/ (12:30 UTC). La API aceptó `trial_params` MANUAL y `is_shared_to_feed: false`.
-- Pendiente: Jose confirma en la app que sale como "Trial" y medimos las visitas a las 24 h (10-nov, 12:30 UTC).
+- ✅ Jose confirma en la app que sale como **Trial reel**. ✅ Su automatización de "comenta PALABRA" funciona también en los trials.
+- Calidad: Jose da por buena la de la API (720p). No hace falta buscar los originales.
+- Visitas a los 5 min: 0 (normal: Meta avisa de que las métricas pueden tardar hasta 48 h). Se mide a las 24 h (10-nov, 12:30 UTC).
 
 **Cómo se despliega en Vercel (importante):**
 - Solo con commit + push al repo privado `eternitydevzz/maestrials`. Hacerlo desde el panel de Vercel pide un código por email que no llega.
