@@ -6,15 +6,26 @@
   "enlace": "https://www.instagram.com/reel/DfhVYMrFWa_/",
   "publicado_en": "2026-11-09T12:30:28.560200+00:00",
   "metricas_ultimas": {
-   "views": 3046,
-   "reach": 2437,
-   "likes": 55,
-   "comments": 58,
-   "shares": 32,
-   "saved": 76,
-   "ig_reels_avg_watch_time": 14114,
-   "horas": 21.1,
-   "en": "2026-11-10T09:37:15.970512+00:00"
+   "views": 3349,
+   "reach": 2702,
+   "likes": 63,
+   "comments": 66,
+   "shares": 36,
+   "saved": 86,
+   "ig_reels_avg_watch_time": 14498,
+   "horas": 29.1,
+   "en": "2026-11-10T17:38:24.828842+00:00"
+  },
+  "metricas_24h": {
+   "views": 3349,
+   "reach": 2702,
+   "likes": 63,
+   "comments": 66,
+   "shares": 36,
+   "saved": 86,
+   "ig_reels_avg_watch_time": 14498,
+   "horas": 29.1,
+   "en": "2026-11-10T17:38:24.828842+00:00"
   }
  },
  {
@@ -31,8 +42,19 @@
    "shares": 0,
    "saved": 1,
    "ig_reels_avg_watch_time": 3842,
-   "horas": 17.9,
-   "en": "2026-11-10T09:37:15.970512+00:00"
+   "horas": 26.0,
+   "en": "2026-11-10T17:38:24.828842+00:00"
+  },
+  "metricas_24h": {
+   "views": 112,
+   "reach": 98,
+   "likes": 1,
+   "comments": 1,
+   "shares": 0,
+   "saved": 1,
+   "ig_reels_avg_watch_time": 3842,
+   "horas": 26.0,
+   "en": "2026-11-10T17:38:24.828842+00:00"
   }
  },
  {
@@ -42,15 +64,33 @@
   "enlace": "https://www.instagram.com/reel/DfhwjrtAk2B/",
   "publicado_en": "2026-11-09T16:27:56.417712+00:00",
   "metricas_ultimas": {
-   "views": 233,
-   "reach": 197,
-   "likes": 4,
-   "comments": 3,
+   "views": 285,
+   "reach": 231,
+   "likes": 5,
+   "comments": 5,
    "shares": 0,
-   "saved": 4,
-   "ig_reels_avg_watch_time": 5669,
-   "horas": 17.2,
-   "en": "2026-11-10T09:37:15.970512+00:00"
+   "saved": 5,
+   "ig_reels_avg_watch_time": 8065,
+   "horas": 25.2,
+   "en": "2026-11-10T17:38:24.828842+00:00"
+  },
+  "metricas_24h": {
+   "views": 285,
+   "reach": 231,
+   "likes": 5,
+   "comments": 5,
+   "shares": 0,
+   "saved": 5,
+   "ig_reels_avg_watch_time": 8065,
+   "horas": 25.2,
+   "en": "2026-11-10T17:38:24.828842+00:00"
   }
+ },
+ {
+  "origen": "18024659621894106",
+  "archivo": "18024659621894106-f3-5e45f764.mp4",
+  "publicacion": "18484641607116275",
+  "enlace": "https://www.instagram.com/reel/DfkdhgOiSLN/",
+  "publicado_en": "2026-11-10T17:39:24.699216+00:00"
  }
 ]
