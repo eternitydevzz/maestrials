@@ -16,11 +16,15 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ / "fase3"))
 import variar  # noqa: E402
+import cuenta  # noqa: E402
 
-GANADORES = RAIZ / "datos" / "ganadores.json"
-MANUALES = RAIZ / "datos" / "manuales.json"     # ganadores que Jose añade a mano desde el panel
-LISTAS = 3          # versiones preparadas y sin publicar que queremos tener (= trials al día)
-HORIZONTE_H = 13    # el vídeo tiene que poder salir antes del último hueco del día (19:00 NY)
+GANADORES = cuenta.DATOS / "ganadores.json"
+MANUALES = cuenta.DATOS / "manuales.json"     # ganadores que Jose añade a mano desde el panel
+AJUSTES = json.loads((cuenta.DATOS / "ajustes.json").read_text(encoding="utf-8"))
+LISTAS = AJUSTES["maximo_dia"]   # versiones preparadas y sin publicar que queremos tener (= trials al día)
+HORA_PREPARAR_NY = 6             # cron-job.org lanza preparar a las 6:00 NY
+# el vídeo tiene que poder salir antes del último hueco del día (Jose: 19 - 6 = 13 h)
+HORIZONTE_H = max(AJUSTES["huecos_ny"]) - HORA_PREPARAR_NY
 
 
 def videos_ganadores() -> list[dict]:

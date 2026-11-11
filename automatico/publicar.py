@@ -21,8 +21,9 @@ sys.path.insert(0, str(RAIZ / "fase3"))
 sys.path.insert(0, str(RAIZ / "automatico"))
 import preparar  # noqa: E402
 import variar  # noqa: E402
+import cuenta  # noqa: E402
 
-AJUSTES = RAIZ / "datos" / "ajustes.json"
+AJUSTES = cuenta.DATOS / "ajustes.json"
 TRIALS_POR_FEED = 6
 DIAS_AVISO_FEED = 7
 

@@ -24,11 +24,13 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ / "fase1"))
+sys.path.append(str(RAIZ / "automatico"))
+import cuenta  # noqa: E402
 from pasada import (PUBLICO, TRABAJO, api, carpeta, descargar,  # noqa: E402
                     esperar_procesado, leer_env, medir)
 
-URL_PUBLICA = "https://maestrials.vercel.app/v/"
-REGISTRO = RAIZ / "datos" / "publicaciones.json"   # en el repo: lo leen y escriben el PC y GitHub Actions
+URL_PUBLICA = cuenta.URL_VIDEOS
+REGISTRO = cuenta.DATOS / "publicaciones.json"   # en el repo: lo leen y escriben el PC y GitHub Actions
 DIAS_MINIMOS = 4                  # decisión de Jose: mínimo 4 días entre publicaciones del mismo vídeo
 MINUTOS_ENTRE_SUBIDAS = 45
 
@@ -38,8 +40,8 @@ MODELO_WHISPER = "small"
 
 # Gancho en pantalla: caja blanca arriba, encima de la zona de subtítulos, solo al principio.
 FUENTE = RAIZ / "recursos" / "fuentes" / "ArchivoBlack-Regular.ttf"   # libre (OFL): sirve en Windows y en Linux
-VERSIONES = RAIZ / "datos" / "versiones"                 # fichas de cada versión (en el repo)
-TRANSCRIPCIONES = RAIZ / "datos" / "transcripciones"     # Whisper solo se ejecuta una vez por vídeo
+VERSIONES = cuenta.DATOS / "versiones"                 # fichas de cada versión (en el repo)
+TRANSCRIPCIONES = cuenta.DATOS / "transcripciones"     # Whisper solo se ejecuta una vez por vídeo
 SEGUNDOS_GANCHO = 3.0
 LETRAS_POR_LINEA = 22
 LINEAS_GANCHO = 2
@@ -96,7 +98,7 @@ def transcribir(media_id: str, video: Path) -> str:
 
 
 def palabra_clave(pie: str) -> str:
-    encontrada = re.search(r"(?i:escribe|comenta)\s+[\"“«]?([A-ZÁÉÍÓÚÑ0-9]{2,})\b", pie)
+    encontrada = re.search(r"(?i:escribe|comenta)\s+(?i:la\s+palabra\s+)?[*\"“«]*([A-ZÁÉÍÓÚÑ0-9]{2,})\b", pie)
     if not encontrada:
         raise SystemExit("No encuentro la palabra clave (\"escribe PALABRA\" o \"comenta PALABRA\") en el pie")
     return encontrada.group(1)
@@ -113,7 +115,7 @@ def partir_gancho(gancho: str) -> list[str] | None:
     return None
 
 
-INSTRUCCIONES = f"""Escribes para el Instagram @josenews.ai: IA práctica, en español neutro, tono cercano y directo.
+INSTRUCCIONES = f"""Escribes para el Instagram {cuenta.ARROBA}: IA práctica, en español neutro, tono cercano y directo.
 Te paso la transcripción de un reel, su pie original, la palabra clave de su automatización y los ganchos que ya se usaron.
 
 Devuelve dos textos:

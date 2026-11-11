@@ -14,10 +14,12 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ / "api"))
+sys.path.append(str(RAIZ / "automatico"))
+import cuenta  # noqa: E402,F401 — pone el token de la cuenta antes de leer el entorno
 from _panel.config import entorno  # noqa: E402
 from _panel.instagram import ErrorInstagram, en_paralelo, metricas  # noqa: E402
 
-REGISTRO = RAIZ / "datos" / "publicaciones.json"
+REGISTRO = cuenta.DATOS / "publicaciones.json"
 HORAS_FOTO = 24
 DIAS_SEGUIMIENTO = 7
 

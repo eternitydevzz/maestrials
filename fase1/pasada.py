@@ -22,7 +22,10 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 TRABAJO = RAIZ / "trabajo"
-PUBLICO = RAIZ / "public" / "v"
+sys.path.append(str(RAIZ / "automatico"))
+import cuenta  # noqa: E402
+
+PUBLICO = cuenta.VIDEOS   # Jose: public/v/ · Cristian: public/v/cristian/
 
 # Cambios de la versión 1 (Fase 1). La variedad de verdad llega en la Fase 3.
 ZOOM = 1.10            # reencuadre: 10 % más cerca

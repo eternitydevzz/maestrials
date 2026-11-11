@@ -29,7 +29,10 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 TRABAJO = RAIZ / "trabajo"
-SALIDA = RAIZ / "datos" / "ganadores.json"   # en el repo: lo usa GitHub Actions para preparar versiones
+sys.path.append(str(RAIZ / "automatico"))
+import cuenta  # noqa: E402
+
+SALIDA = cuenta.DATOS / "ganadores.json"   # en el repo: lo usa GitHub Actions para preparar versiones
 
 PERCENTIL = 80
 UMBRAL_FIJO: int | None = None   # p. ej. 10_000 para activarlo
@@ -150,7 +153,7 @@ def distancia(a: tuple[int, ...], b: tuple[int, ...]) -> float:
 
 def publicados_por_maestrials() -> set[str]:
     """Trials publicados por MaesTrials: no son reels de Jose y no cuentan para elegir ganadores."""
-    registro = RAIZ / "datos" / "publicaciones.json"   # registro único (Fase 1 incluida)
+    registro = cuenta.DATOS / "publicaciones.json"   # registro único (Fase 1 incluida)
     if not registro.exists():
         return set()
     return {p["publicacion"] for p in json.loads(registro.read_text(encoding="utf-8"))}

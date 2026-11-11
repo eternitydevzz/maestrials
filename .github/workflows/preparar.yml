@@ -1,4 +1,5 @@
 # MaesTrials — B2: cada día monta las versiones que faltan (ffmpeg + Whisper + Claude) y las deja en public/v/.
+# Hace las dos cuentas: Jose (public/v/, datos/) y Cristian (public/v/cristian/, datos/cristian/).
 name: preparar
 
 on:
@@ -6,8 +7,12 @@ on:
     - cron: "5 11 * * *"     # 11:05 UTC = 6:05 NY (invierno) / 7:05 NY (verano): antes del primer hueco (10:00 NY)
   workflow_dispatch:
     inputs:
+      cuenta:
+        description: "jose o cristian (vacío = las dos)"
+        required: false
+        default: ""
       videos:
-        description: "Ids de vídeo separados por espacios (vacío = elegir solo)"
+        description: "Ids de vídeo separados por espacios (vacío = elegir solo; hace falta elegir cuenta)"
         required: false
         default: ""
 
@@ -21,7 +26,7 @@ concurrency:
 jobs:
   preparar:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 50       # las dos cuentas: hasta 3 + 5 versiones
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -38,21 +43,27 @@ jobs:
         with:
           path: ~/.cache/huggingface
           key: whisper-small-v1
-      - name: Actualizar ganadores si toca
-        continue-on-error: true   # si falla, se prepara con la lista anterior
-        run: python -X utf8 automatico/ganadores_si_toca.py
+      - name: Ganadores si toca y preparar (cada cuenta)
+        # si falla ganadores, se prepara con la lista anterior; si falla una cuenta, la otra sigue y al final sale en rojo
+        run: |
+          if [ -n "$VIDEOS" ] && [ -z "$CUENTA" ]; then echo "::error::Para elegir vídeos hay que elegir cuenta"; exit 1; fi
+          fallo=0
+          for cuenta in ${CUENTA:-jose cristian}; do
+            echo "::group::Cuenta $cuenta"
+            MT_CUENTA=$cuenta python -X utf8 automatico/ganadores_si_toca.py || echo "::warning::ganadores falló en $cuenta"
+            MT_CUENTA=$cuenta python -X utf8 automatico/preparar.py $VIDEOS || { echo "::error::preparar falló en $cuenta"; fallo=1; }
+            echo "::endgroup::"
+          done
+          exit $fallo
         env:
-          IG_TOKEN: ${{ secrets.IG_TOKEN }}
-          IG_USER_ID: ${{ secrets.IG_USER_ID }}
-          GRAPH_BASE: ${{ secrets.GRAPH_BASE }}
-      - name: Preparar
-        run: python -X utf8 automatico/preparar.py $VIDEOS
-        env:
+          CUENTA: ${{ inputs.cuenta }}
           VIDEOS: ${{ inputs.videos }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           IG_TOKEN: ${{ secrets.IG_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_TOKEN_CRISTIAN: ${{ secrets.IG_TOKEN_CRISTIAN }}
+          IG_USER_ID_CRISTIAN: ${{ secrets.IG_USER_ID_CRISTIAN }}
           GRAPH_BASE: ${{ secrets.GRAPH_BASE }}
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
       - name: Guardar en el repo
         if: always()           # aunque falle un vídeo, se guardan los que salieron bien
         run: |
