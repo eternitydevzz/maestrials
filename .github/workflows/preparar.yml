@@ -38,6 +38,13 @@ jobs:
         with:
           path: ~/.cache/huggingface
           key: whisper-small-v1
+      - name: Actualizar ganadores si toca
+        continue-on-error: true   # si falla, se prepara con la lista anterior
+        run: python -X utf8 automatico/ganadores_si_toca.py
+        env:
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          GRAPH_BASE: ${{ secrets.GRAPH_BASE }}
       - name: Preparar
         run: python -X utf8 automatico/preparar.py $VIDEOS
         env:

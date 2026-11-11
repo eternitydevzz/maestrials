@@ -14,6 +14,7 @@ se parecen (huella dHash, distancia media <= UMBRAL_HUELLA).
 from __future__ import annotations
 
 import json
+import os
 import re
 import statistics
 import subprocess
@@ -72,11 +73,15 @@ class Video:
 
 
 def leer_env() -> dict[str, str]:
+    """En el PC, de .env; en GitHub Actions, de las variables de entorno (secretos)."""
     datos: dict[str, str] = {}
-    for linea in (RAIZ / ".env").read_text(encoding="utf-8").splitlines():
-        if "=" in linea and not linea.startswith("#"):
-            clave, valor = linea.split("=", 1)
-            datos[clave.strip()] = valor.strip()
+    archivo = RAIZ / ".env"
+    if archivo.exists():
+        for linea in archivo.read_text(encoding="utf-8").splitlines():
+            if "=" in linea and not linea.startswith("#"):
+                clave, valor = linea.split("=", 1)
+                datos[clave.strip()] = valor.strip()
+    datos.update({k: v for k, v in os.environ.items() if k in ("IG_TOKEN", "IG_USER_ID", "GRAPH_BASE") and v})
     return datos
 
 
@@ -230,6 +235,7 @@ def main() -> None:
     videos, corte = decidir(agrupar(pubs))
     ganadores = [v for v in videos if v.ganador]
     SALIDA.write_text(json.dumps({"corte_percentil": corte, "umbral_fijo": UMBRAL_FIJO,
+                                  "generado_en": datetime.now(timezone.utc).isoformat(),
                                   "videos": [asdict(v) for v in videos]}, ensure_ascii=False, indent=1),
                       encoding="utf-8")
     print(f"Publicaciones candidatas: {len(pubs)} | vídeos distintos: {len(videos)} | "

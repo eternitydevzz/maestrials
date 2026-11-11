@@ -86,9 +86,8 @@ def main() -> None:
     if not decision.publicar:
         return
     cola = cola_por_retencion()
-    if not cola:
-        print("AVISO: no hay versiones en cola (preparar las rellena cada día a las 11:05 UTC)")
-        return
+    if not cola:   # falla a propósito: la ejecución sale en rojo y GitHub avisa por email
+        raise SystemExit("FALLO: tocaba publicar y no hay versiones en cola (preparar las rellena cada día a las 6:00 NY)")
     for ficha in cola:
         try:   # comprobaciones previas: si fallan, se prueba la siguiente de la cola
             variar.comprobar_reglas(ficha["origen"])
@@ -102,7 +101,7 @@ def main() -> None:
         avisar_feed(registro, ahora)
         variar.publicar(ficha["origen"], ficha["archivo"])   # si falla aquí, se para (nada de reintentos a ciegas)
         return
-    print("AVISO: ninguna versión de la cola cumple ahora las reglas")
+    raise SystemExit("FALLO: tocaba publicar y ninguna versión de la cola cumple ahora las reglas")
 
 
 if __name__ == "__main__":
