@@ -63,3 +63,6 @@ jobs:
           git commit -m "datos: versiones preparadas"
           git pull --rebase
           git push
+      - name: Recordatorio de renovar el token de cron-job.org
+        if: always()           # se comprueba aunque preparar falle; sale en rojo 14 días antes de caducar
+        run: python -X utf8 automatico/aviso_token.py
