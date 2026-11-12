@@ -1,0 +1,21 @@
+{
+ "origen": "18086278985202012",
+ "archivo": "18086278985202012-f3-c4abcd8d.mp4",
+ "clave": "c4abcd8d",
+ "semilla": 1772197825,
+ "cambios": {
+  "zoom": 1.061,
+  "desplazar_y": 0.41,
+  "velocidad": 1.0,
+  "saturacion": 1.048,
+  "contraste": 1.01,
+  "inicio_s": 0.136
+ },
+ "gancho": [
+  "Tu plan de 20 rinde",
+  "como el de 250"
+ ],
+ "pie": "🧠 Graphify crea un mapa de tu proyecto para que Claude Code no tenga que releerlo todo y gaste muchos menos tokens. ¿Lo quieres instalar? Escribe REPO 👇 #ClaudeCode #InteligenciaArtificial #Programacion #Productividad #CodigoAbierto",
+ "palabra": "REPO",
+ "creada": "2026-11-12T11:03:09.310159+00:00"
+}
