@@ -26,6 +26,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ / "fase1"))
 sys.path.append(str(RAIZ / "automatico"))
 import cuenta  # noqa: E402
+import niveles  # noqa: E402
 from pasada import (PUBLICO, TRABAJO, api, carpeta, descargar,  # noqa: E402
                     esperar_procesado, leer_env, medir)
 
@@ -115,7 +116,7 @@ def partir_gancho(gancho: str) -> list[str] | None:
     return None
 
 
-INSTRUCCIONES = f"""Escribes para el Instagram {cuenta.ARROBA}: IA práctica, en español neutro, tono cercano y directo.
+INSTRUCCIONES = f"""Escribes para el Instagram {cuenta.ARROBA}: IA práctica, {cuenta.IDIOMA}, tono cercano y directo.
 Te paso la transcripción de un reel, su pie original, la palabra clave de su automatización y los ganchos que ya se usaron.
 
 Devuelve dos textos:
@@ -252,7 +253,8 @@ def leer_registro() -> list[dict]:
 def comprobar_reglas(media_id: str) -> None:
     ahora = datetime.now(timezone.utc)
     registro = leer_registro()
-    del_video = [datetime.fromisoformat(r["publicado_en"]) for r in registro if r["origen"] == media_id]
+    mismo_video = niveles.hermanos(media_id)   # el mismo vídeo publicado con otros ids también cuenta
+    del_video = [datetime.fromisoformat(r["publicado_en"]) for r in registro if r["origen"] in mismo_video]
     if del_video and ahora - max(del_video) < timedelta(days=DIAS_MINIMOS):
         raise SystemExit(f"Regla de {DIAS_MINIMOS} días: {media_id} salió el {max(del_video):%d-%b %H:%M} UTC")
     todas = [datetime.fromisoformat(r["publicado_en"]) for r in registro]
@@ -279,10 +281,13 @@ def publicar(media_id: str, archivo: str) -> None:
     url = URL_PUBLICA + archivo
     comprobar_url(url)
     env = leer_env()
-    contenedor = api("POST", f"{env['IG_USER_ID']}/media", {
+    parametros = {
         "media_type": "REELS", "video_url": url, "caption": ficha["pie"], "share_to_feed": "false",
         "trial_params": json.dumps({"graduation_strategy": "MANUAL"}),
-    })["id"]
+    }
+    if cuenta.UBICACION_ID:
+        parametros["location_id"] = cuenta.UBICACION_ID
+    contenedor = api("POST", f"{env['IG_USER_ID']}/media", parametros)["id"]
     print(f"Contenedor creado: {contenedor}")
     esperar_procesado(contenedor)
     publicado = api("POST", f"{env['IG_USER_ID']}/media_publish", {"creation_id": contenedor})["id"]

@@ -12,8 +12,12 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 URL_BASE = "https://maestrials.vercel.app/v/"
 CUENTAS = {
-    "jose": {"arroba": "@josenews.ai", "carpeta": "", "ig_id": "17841438323050307"},
-    "cristian": {"arroba": "@cristianews.ai", "carpeta": "cristian", "ig_id": "17841431048478322"},
+    "jose": {"arroba": "@josenews.ai", "carpeta": "", "ig_id": "17841438323050307",
+             "idioma": "en español neutro", "ubicacion_id": None},
+    # Cristian (decisión de Jose, 13-nov): público de España → español de España y ubicación Madrid
+    "cristian": {"arroba": "@cristianews.ai", "carpeta": "cristian", "ig_id": "17841431048478322",
+                 "idioma": "en español de España (palabras de España como ordenador, móvil o vale; tutea al lector)",
+                 "ubicacion_id": "112446056797834"},   # página de lugar "Madrid" (Instagram la aceptó el 13-nov)
 }
 
 NOMBRE = (os.environ.get("MT_CUENTA") or "jose").strip().lower()
@@ -21,6 +25,8 @@ if NOMBRE not in CUENTAS:
     raise SystemExit(f"MT_CUENTA desconocida: {NOMBRE!r} (valen: {', '.join(CUENTAS)})")
 _CUENTA = CUENTAS[NOMBRE]
 ARROBA = _CUENTA["arroba"]
+IDIOMA = _CUENTA["idioma"]
+UBICACION_ID = _CUENTA["ubicacion_id"]
 DATOS = RAIZ / "datos" / _CUENTA["carpeta"]
 VIDEOS = RAIZ / "public" / "v" / _CUENTA["carpeta"]
 URL_VIDEOS = URL_BASE + (f"{_CUENTA['carpeta']}/" if _CUENTA["carpeta"] else "")

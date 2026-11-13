@@ -12,6 +12,7 @@ import json
 import os
 import secrets
 import subprocess
+import shutil
 import sys
 import time
 import urllib.error
@@ -84,7 +85,13 @@ def descargar(media_id):
     insights = api("GET", f"{media_id}/insights", {"metric": "views"})
     visitas = insights["data"][0]["values"][0]["value"]
     destino = carpeta(media_id) / "original.mp4"
-    urllib.request.urlretrieve(m["media_url"], destino)
+    a_mano = cuenta.DATOS / "originales" / f"{media_id}.mp4"   # Instagram no da el vídeo si lleva música con derechos
+    if m.get("media_url"):
+        urllib.request.urlretrieve(m["media_url"], destino)
+    elif a_mano.exists():
+        shutil.copyfile(a_mano, destino)
+    else:
+        raise SystemExit(f"{media_id}: Instagram no da el vídeo y no hay archivo en {a_mano.relative_to(RAIZ)}")
     info = {"id": media_id, "permalink": m["permalink"], "timestamp": m["timestamp"],
             "visitas": visitas, "caption": m.get("caption") or ""}
     (carpeta(media_id) / "info.json").write_text(json.dumps(info, ensure_ascii=False, indent=1), encoding="utf-8")

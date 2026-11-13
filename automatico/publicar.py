@@ -22,6 +22,7 @@ sys.path.insert(0, str(RAIZ / "automatico"))
 import preparar  # noqa: E402
 import variar  # noqa: E402
 import cuenta  # noqa: E402
+import niveles  # noqa: E402
 
 AJUSTES = cuenta.DATOS / "ajustes.json"
 TRIALS_POR_FEED = 6
@@ -32,9 +33,13 @@ DIAS_AVISO_FEED = 7
 class Decision:
     publicar: bool
     motivo: str
+    nivel: str | None = None   # solo en cuentas con niveles (Cristian)
 
 
 def decidir(ahora: datetime, ajustes: dict, registro: list[dict]) -> Decision:
+    if niveles.ACTIVO:   # huecos con nivel y hora local de la cuenta (Cristian: Madrid)
+        hueco = niveles.hueco_actual(ahora, ajustes, registro)
+        return Decision(hueco.publicar, hueco.motivo, hueco.nivel)
     zona = ZoneInfo(ajustes["zona"])
     ny = ahora.astimezone(zona)
     if not ajustes["autopilot"]:
@@ -87,6 +92,11 @@ def main() -> None:
     if not decision.publicar:
         return
     cola = cola_por_retencion()
+    if decision.nivel:
+        cola = [f for f in cola if niveles.nivel_de(f["origen"]) == decision.nivel]
+        if not cola and decision.nivel == "relleno":   # el relleno es opcional: sin email de fallo
+            print("No hay relleno en cola: este hueco se salta")
+            return
     if not cola:   # falla a propósito: la ejecución sale en rojo y GitHub avisa por email
         raise SystemExit("FALLO: tocaba publicar y no hay versiones en cola (preparar las rellena cada día a las 6:00 NY)")
     for ficha in cola:
@@ -101,6 +111,9 @@ def main() -> None:
             return
         avisar_feed(registro, ahora)
         variar.publicar(ficha["origen"], ficha["archivo"])   # si falla aquí, se para (nada de reintentos a ciegas)
+        return
+    if decision.nivel == "relleno":
+        print("Ningún relleno cumple ahora las reglas: este hueco se salta")
         return
     raise SystemExit("FALLO: tocaba publicar y ninguna versión de la cola cumple ahora las reglas")
 

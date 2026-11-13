@@ -17,18 +17,26 @@ RAIZ = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RAIZ / "fase3"))
 import variar  # noqa: E402
 import cuenta  # noqa: E402
+import niveles  # noqa: E402
 
 GANADORES = cuenta.DATOS / "ganadores.json"
 MANUALES = cuenta.DATOS / "manuales.json"     # ganadores que Jose añade a mano desde el panel
 AJUSTES = json.loads((cuenta.DATOS / "ajustes.json").read_text(encoding="utf-8"))
-LISTAS = AJUSTES["maximo_dia"]   # versiones preparadas y sin publicar que queremos tener (= trials al día)
 HORA_PREPARAR_NY = 6             # cron-job.org lanza preparar a las 6:00 NY
-# el vídeo tiene que poder salir antes del último hueco del día (Jose: 19 - 6 = 13 h)
-HORIZONTE_H = max(AJUSTES["huecos_ny"]) - HORA_PREPARAR_NY
+if niveles.ACTIVO:   # cuenta con niveles (Cristian): cuotas por nivel; lo preparado sale en las próximas 24 h
+    LISTAS = sum(AJUSTES["cuotas"].values())
+    HORIZONTE_H = 24
+else:                # cuenta de Jose: como siempre
+    LISTAS = AJUSTES["maximo_dia"]   # versiones preparadas y sin publicar que queremos tener (= trials al día)
+    # el vídeo tiene que poder salir antes del último hueco del día (Jose: 19 - 6 = 13 h)
+    HORIZONTE_H = max(AJUSTES["huecos_ny"]) - HORA_PREPARAR_NY
 
 
 def videos_ganadores() -> list[dict]:
-    """Ganadores automáticos (fase2/ganadores.py) + los añadidos a mano, sin repetir."""
+    """Ganadores automáticos (fase2/ganadores.py) + los añadidos a mano, sin repetir.
+    Con niveles: solo los de seleccion.json (los elige Jose), con los ids de todo su grupo."""
+    if niveles.ACTIVO:
+        return niveles.videos_elegibles(json.loads(GANADORES.read_text(encoding="utf-8"))["videos"])
     automaticos = [v for v in json.loads(GANADORES.read_text(encoding="utf-8"))["videos"] if v["ganador"]]
     vistos = {i for v in automaticos for i in v["ids"]}
     manuales = json.loads(MANUALES.read_text(encoding="utf-8")) if MANUALES.exists() else []
@@ -46,14 +54,27 @@ def ultima_publicacion(video: dict, registro: list[dict]) -> datetime:
     return max(fechas)
 
 
-def elegir(ahora: datetime) -> list[dict]:
-    videos = videos_ganadores()
+def elegir(ahora: datetime, nivel: str | None = None) -> list[dict]:
+    videos = [v for v in videos_ganadores() if nivel is None or v.get("nivel") == nivel]
     registro = variar.leer_registro()
     en_cola = {f["origen"] for f in pendientes()}
     limite = ahora + timedelta(hours=HORIZONTE_H) - timedelta(days=variar.DIAS_MINIMOS)
     aptos = [v for v in videos
              if not set(v["ids"]) & en_cola and ultima_publicacion(v, registro) <= limite]
+    if nivel == "relleno":   # el relleno va en el orden de seleccion.json (primero los dudosos, luego los de gratis)
+        return sorted(aptos, key=lambda v: v["orden"])
     return sorted(aptos, key=lambda v: v["retencion"] or 0, reverse=True)
+
+
+def objetivo_por_niveles(ahora: datetime) -> list[str]:
+    """Lo que falta para tener en cola la cuota de cada nivel (p. ej. 2 cualificados y 2 de relleno)."""
+    objetivo = []
+    for nivel, cuota in AJUSTES["cuotas"].items():
+        en_cola = sum(1 for f in pendientes() if niveles.nivel_de(f["origen"]) == nivel)
+        elegidos = [v["mejor_id"] for v in elegir(ahora, nivel)[:max(0, cuota - en_cola)]]
+        print(f"  {nivel}: {en_cola} en cola, cuota {cuota} → preparar {elegidos or 'ninguno'}")
+        objetivo += elegidos
+    return objetivo
 
 
 def main() -> None:
@@ -64,6 +85,8 @@ def main() -> None:
         raise SystemExit("Los ids de vídeo solo llevan números")
     if pedidos:
         objetivo = pedidos
+    elif niveles.ACTIVO:
+        objetivo = objetivo_por_niveles(datetime.now(timezone.utc))
     else:
         hueco = max(0, LISTAS - len(pendientes()))
         objetivo = [v["mejor_id"] for v in elegir(datetime.now(timezone.utc))[:hueco]]
