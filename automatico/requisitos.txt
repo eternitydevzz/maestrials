@@ -2,3 +2,4 @@ anthropic==2.6.0
 faster-whisper==1.2.1
 numpy==2.5.4
 tzdata==2026.6
+pillow==13.0.0

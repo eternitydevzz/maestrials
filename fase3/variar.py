@@ -39,17 +39,22 @@ MODELO_CLAUDE = "claude-opus-5-5"
 INTENTOS_CLAUDE = 3
 MODELO_WHISPER = "small"
 
-# Gancho en pantalla: caja blanca arriba, encima de la zona de subtítulos, solo al principio.
-FUENTE = RAIZ / "recursos" / "fuentes" / "ArchivoBlack-Regular.ttf"   # libre (OFL): sirve en Windows y en Linux
+# Gancho en pantalla, estilo texto "Classic" de Instagram (decisión de Jose, 13-nov): letra blanca en mayúsculas,
+# cajas negras redondeadas unidas, alineado a la izquierda, arriba de la zona segura y solo al principio.
+FUENTE = RAIZ / "recursos" / "fuentes" / "InstrumentSans.ttf"   # libre (OFL); la más parecida a "Classic" que probamos
+PESO_FUENTE = 700                 # Bold (el máximo de Instrument Sans)
 VERSIONES = cuenta.DATOS / "versiones"                 # fichas de cada versión (en el repo)
 TRANSCRIPCIONES = cuenta.DATOS / "transcripciones"     # Whisper solo se ejecuta una vez por vídeo
 SEGUNDOS_GANCHO = 3.0
 LETRAS_POR_LINEA = 22
 LINEAS_GANCHO = 2
-TAM_LETRA = 38
-BORDE_CAJA = 16
-Y_PRIMERA_LINEA = 0.09            # proporción de la altura del vídeo
-SALTO_LINEA = TAM_LETRA + 2 * BORDE_CAJA - 4   # las dos cajas se tocan: parecen una sola etiqueta
+ZONA_SEGURA_ARRIBA = 0.14         # las guías de reels piden dejar libre el 14 % de arriba (lo tapa la interfaz)
+ZONA_SEGURA_LADO = 0.06           # y el 6 % de cada lado
+ANCHO_MAX_GANCHO = 0.80           # la línea más larga ocupa como mucho el 80 % del ancho del vídeo
+TAM_LETRA = 0.075                 # tamaño de letra = 7,5 % del ancho del vídeo (se reduce si no cabe)
+ALTO_LINEA = 1.45                 # alto de cada caja, en veces el tamaño de letra
+MARGEN_CAJA = 0.42                # margen del texto dentro de la caja, en veces el tamaño de letra
+RADIO_CAJA = 0.32                 # radio de las esquinas, en veces el tamaño de letra
 
 # Márgenes de los cambios suaves (se sortea un valor dentro de cada uno).
 MARGEN_ZOOM = (1.04, 1.10)
@@ -165,31 +170,48 @@ def pedir_textos(transcripcion: str, pie: str, palabra: str, ganchos_usados: lis
     raise SystemExit(f"Claude no devolvió textos válidos en {INTENTOS_CLAUDE} intentos")
 
 
-def ruta_ffmpeg(ruta: Path) -> str:
-    return str(ruta).replace("\\", "/").replace(":", "\\:")
+def fuente_gancho(tam: int):
+    from PIL import ImageFont
+    fuente = ImageFont.truetype(str(FUENTE), tam)
+    ejes = fuente.get_variation_axes()   # fuente variable: ancho normal y grosor Bold
+    fuente.set_variation_by_axes([PESO_FUENTE if "eight" in str(e["name"]) else e["maximum"] if "idth" in str(e["name"])
+                                  else e["default"] for e in ejes])
+    return fuente
 
 
-def filtro_gancho(lineas: list[str], carpeta_version: Path) -> str:
-    partes = []
-    for i, linea in enumerate(lineas):
-        archivo = carpeta_version / f"gancho_{i}.txt"
-        archivo.write_text(linea, encoding="utf-8")
-        partes.append(
-            f"drawtext=fontfile='{ruta_ffmpeg(FUENTE)}':textfile='{ruta_ffmpeg(archivo)}':fontsize={TAM_LETRA}"
-            f":fontcolor=white:box=1:boxcolor=black@0.85:boxborderw={BORDE_CAJA}"
-            f":x=(w-text_w)/2:y=h*{Y_PRIMERA_LINEA}+{i * SALTO_LINEA}"
-            f":enable='between(t,0,{SEGUNDOS_GANCHO})'")
-    return ",".join(partes)
+def dibujar_gancho(lineas: list[str], ancho_video: int, destino: Path) -> None:
+    """PNG transparente con el gancho estilo "Classic": cajas negras redondeadas unidas, texto blanco a la izquierda."""
+    from PIL import Image, ImageDraw
+    textos = [t.upper() for t in lineas]
+    tam = int(ancho_video * TAM_LETRA)
+    fuente = fuente_gancho(tam)
+    while max(fuente.getlength(t) for t in textos) > ancho_video * ANCHO_MAX_GANCHO and tam > 12:
+        tam -= 2
+        fuente = fuente_gancho(tam)
+    alto, margen, radio = int(tam * ALTO_LINEA), int(tam * MARGEN_CAJA), int(tam * RADIO_CAJA)
+    anchos = [int(fuente.getlength(t)) + 2 * margen for t in textos]
+    imagen = Image.new("RGBA", (max(anchos) + 2, alto * len(textos) + 2), (0, 0, 0, 0))
+    lapiz = ImageDraw.Draw(imagen)
+    for i, ancho in enumerate(anchos):
+        lapiz.rounded_rectangle((0, i * alto, ancho, (i + 1) * alto), radio, fill="black")
+        if i:   # se une con la caja de arriba, sin muescas en la junta (como en Instagram)
+            lapiz.rectangle((0, i * alto - radio, min(ancho, anchos[i - 1]), i * alto + radio), fill="black")
+    for i, texto in enumerate(textos):
+        lapiz.text((margen, i * alto + alto / 2), texto, font=fuente, fill="white", anchor="lm")
+    imagen.save(destino)
 
 
-def montar(original: Path, destino: Path, cambios: Cambios, gancho: str) -> float:
+def montar(original: Path, destino: Path, cambios: Cambios, lineas_gancho: list[str], png_gancho: Path) -> float:
     ancho, alto, _, _ = medir(original)
-    filtro_v = (f"scale=iw*{cambios.zoom}:ih*{cambios.zoom},"
-                f"crop={ancho}:{alto}:(iw-{ancho})/2:(ih-{alto})*{cambios.desplazar_y},"
-                f"eq=saturation={cambios.saturacion}:contrast={cambios.contraste},"
-                f"setpts=PTS/{cambios.velocidad},{gancho},format=yuv420p")
-    orden = ["ffmpeg", "-y", "-v", "error", "-ss", str(cambios.inicio_s), "-i", str(original),
-             "-vf", filtro_v, "-af", f"atempo={cambios.velocidad}",
+    dibujar_gancho(lineas_gancho, ancho, png_gancho)
+    x, y = int(ancho * ZONA_SEGURA_LADO), int(alto * ZONA_SEGURA_ARRIBA) + 8
+    filtro = (f"[0:v]scale=iw*{cambios.zoom}:ih*{cambios.zoom},"
+              f"crop={ancho}:{alto}:(iw-{ancho})/2:(ih-{alto})*{cambios.desplazar_y},"
+              f"eq=saturation={cambios.saturacion}:contrast={cambios.contraste},"
+              f"setpts=PTS/{cambios.velocidad}[base];"
+              f"[base][1:v]overlay={x}:{y}:enable='between(t,0,{SEGUNDOS_GANCHO})',format=yuv420p[v]")
+    orden = ["ffmpeg", "-y", "-v", "error", "-ss", str(cambios.inicio_s), "-i", str(original), "-i", str(png_gancho),
+             "-filter_complex", filtro, "-map", "[v]", "-map", "0:a:0?", "-af", f"atempo={cambios.velocidad}",
              "-map_metadata", "-1", "-c:v", "libx264", "-preset", "medium", "-crf", "20",
              "-profile:v", "high", "-c:a", "aac", "-b:a", "128k", "-ar", "48000",
              "-movflags", "+faststart", "-use_editlist", "0", str(destino)]
@@ -233,7 +255,7 @@ def montar_ficha(ficha: dict) -> None:
     clave = archivo.rsplit("-", 1)[1].removesuffix(".mp4")
     PUBLICO.mkdir(parents=True, exist_ok=True)
     segundos = montar(carpeta(media_id) / "original.mp4", PUBLICO / archivo, Cambios(**ficha["cambios"]),
-                      filtro_gancho(ficha["gancho"], carpeta(media_id)))
+                      ficha["gancho"], carpeta(media_id) / f"gancho_{clave}.png")
     vista = carpeta(media_id) / f"vista_{clave}.png"
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "1", "-i", str(PUBLICO / archivo),
                     "-frames:v", "1", str(vista)], check=True)
