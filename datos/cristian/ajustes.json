@@ -1,5 +1,5 @@
 {
- "autopilot": false,
+ "autopilot": true,
  "zona": "Europe/Madrid",
  "huecos": [
   {
