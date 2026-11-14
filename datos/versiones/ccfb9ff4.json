@@ -1,0 +1,21 @@
+{
+ "origen": "18107396678277689",
+ "archivo": "18107396678277689-f3-ccfb9ff4.mp4",
+ "clave": "ccfb9ff4",
+ "semilla": 2777331798,
+ "cambios": {
+  "zoom": 1.07,
+  "desplazar_y": 0.444,
+  "velocidad": 1.037,
+  "saturacion": 1.056,
+  "contraste": 1.03,
+  "inicio_s": 0.0
+ },
+ "gancho": [
+  "Así Claude Code",
+  "nunca se detiene"
+ ],
+ "pie": "Esta herramienta salta sola de Claude Code a Gemini, Kimi o GLM cuando se te acaban los tokens, y también funciona con Cursor y Codex. Comenta CÓDIGO y te paso la guía de configuración paso a paso 👇 #ClaudeCode #InteligenciaArtificial #Programacion #Productividad",
+ "palabra": "CÓDIGO",
+ "creada": "2026-11-14T11:02:13.580536+00:00"
+}
