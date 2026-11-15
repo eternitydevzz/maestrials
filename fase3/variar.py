@@ -129,10 +129,60 @@ Devuelve dos textos:
 - gancho: frase que se verá en pantalla durante los primeros {SEGUNDOS_GANCHO:.0f} segundos, encima del vídeo.
   Como mucho {LETRAS_POR_LINEA * LINEAS_GANCHO - 8} caracteres, contando espacios. Sin emojis, sin comillas y sin hashtags.
   Tiene que dar curiosidad y ser fiel a lo que dice el vídeo: no prometas nada que el vídeo no cuente.
-  Que sea distinto de los ganchos ya usados.
+  Que sea distinto de los ganchos ya usados.{f'''
+  Nunca uses en el gancho estas palabras (ni sus variantes): {", ".join(cuenta.GANCHO_SIN)}.''' if cuenta.GANCHO_SIN else ""}
 - pie: el pie original reescrito con otras palabras, en 1 o 2 frases y de 3 a 5 hashtags relacionados.
   Mantén la llamada a la acción con la palabra clave EXACTA y en mayúsculas, con el mismo verbo que el original
-  (por ejemplo "escribe API"). Puedes cambiar los emojis. Como mucho 300 caracteres."""
+  (por ejemplo "escribe API"). Puedes cambiar los emojis. Como mucho 300 caracteres.
+
+Si te paso EJEMPLOS de esta cuenta (ganchos con sus visitas a las 24 h y cómo empiezan sus vídeos más virales), aprende
+de ellos: imita la estructura y el tono de lo que más visitas sacó y evita el estilo de lo que menos. No los copies
+palabra por palabra. Hasta ahora han funcionado mejor los ganchos que enfrentan algo con una marca conocida
+("supera a Claude", "acaba de matar a...", "clonaron...") que los que solo describen la herramienta."""
+
+# Ejemplos para el gancho (decisión de Jose, 15-nov): se calculan en cada versión con los datos reales de la cuenta.
+MIN_TRIALS_EJEMPLOS = 5           # con menos trials medidos a 24 h no se pasan ejemplos de ganchos
+MEJORES_EJEMPLOS = 6
+PEORES_EJEMPLOS = 4
+ARRANQUES_VIRALES = 6
+LETRAS_ARRANQUE = 150
+
+
+def ejemplos_de_ganchos() -> str:
+    """Los ganchos de esta cuenta que más y menos visitas sacaron a las 24 h."""
+    por_archivo = {f["archivo"]: f for f in todas_las_fichas()}
+    medidos = sorted(((p["metricas_24h"].get("views", 0), " ".join(por_archivo[p["archivo"]]["gancho"]))
+                      for p in leer_registro() if "metricas_24h" in p and p["archivo"] in por_archivo), reverse=True)
+    if len(medidos) < MIN_TRIALS_EJEMPLOS:
+        return ""
+    mejores = medidos[:MEJORES_EJEMPLOS]
+    peores = [m for m in medidos[-PEORES_EJEMPLOS:] if m not in mejores]
+    linea = lambda m: f"- {m[1]} ({m[0]:,} visitas)"   # noqa: E731
+    return ("GANCHOS QUE MÁS VISITAS SACARON (24 h):\n" + "\n".join(map(linea, mejores)) +
+            "\n\nGANCHOS QUE MENOS SACARON:\n" + "\n".join(map(linea, peores)))
+
+
+def arranques_virales() -> str:
+    """Cómo empiezan a hablar los vídeos de la cuenta con más visitas (su gancho original)."""
+    archivo = cuenta.DATOS / "ganadores.json"
+    if not archivo.exists():
+        return ""
+    vistos, lineas = set(), []
+    for v in sorted(json.loads(archivo.read_text(encoding="utf-8"))["videos"], key=lambda v: -v["mejores_visitas"]):
+        texto = TRANSCRIPCIONES / f"{v['mejor_id']}.txt"
+        if not texto.exists():
+            continue
+        frase = re.split(r"(?<=[.!?])\s", texto.read_text(encoding="utf-8").strip(), maxsplit=1)[0][:LETRAS_ARRANQUE]
+        if frase[:40].lower() in vistos:   # el mismo vídeo subido varias veces
+            continue
+        vistos.add(frase[:40].lower())
+        lineas.append(f"- {frase} ({v['mejores_visitas']:,} visitas)")
+        if len(lineas) == ARRANQUES_VIRALES:
+            break
+    if not lineas:
+        return ""
+    return ("ASÍ EMPIEZAN A HABLAR LOS VÍDEOS MÁS VIRALES DE LA CUENTA (transcripción automática: "
+            "'Cloud' suele ser 'Claude'):\n" + "\n".join(lineas))
 
 ESQUEMA_TEXTOS = {
     "type": "object",
@@ -145,8 +195,10 @@ ESQUEMA_TEXTOS = {
 def pedir_textos(transcripcion: str, pie: str, palabra: str, ganchos_usados: list[str]) -> tuple[list[str], str]:
     import anthropic
     cliente = anthropic.Anthropic(api_key=leer_env()["ANTHROPIC_API_KEY"])
+    ejemplos = "\n\n".join(e for e in (ejemplos_de_ganchos(), arranques_virales()) if e)
     peticion = (f"TRANSCRIPCIÓN:\n{transcripcion}\n\nPIE ORIGINAL:\n{pie}\n\n"
-                f"PALABRA CLAVE: {palabra}\n\nGANCHOS YA USADOS: {ganchos_usados or 'ninguno'}")
+                f"PALABRA CLAVE: {palabra}\n\nGANCHOS YA USADOS: {ganchos_usados or 'ninguno'}"
+                + (f"\n\nEJEMPLOS DE ESTA CUENTA:\n{ejemplos}" if ejemplos else ""))
     for intento in range(1, INTENTOS_CLAUDE + 1):
         try:
             respuesta = cliente.beta.messages.create(
@@ -163,10 +215,12 @@ def pedir_textos(transcripcion: str, pie: str, palabra: str, ganchos_usados: lis
         datos = json.loads(next(b.text for b in respuesta.content if b.type == "text"))
         lineas = partir_gancho(datos["gancho"])
         palabra_ok = re.search(rf"\b{re.escape(palabra)}\b", datos["pie"]) is not None
-        if lineas and palabra_ok:
+        prohibidas = [p for p in cuenta.GANCHO_SIN if p in datos["gancho"].lower()]
+        if lineas and palabra_ok and not prohibidas:
             return lineas, datos["pie"].strip()
         motivo = [] if lineas else [f"gancho de {len(datos['gancho'])} letras no cabe: {datos['gancho']!r}"]
         motivo += [] if palabra_ok else [f"el pie no lleva {palabra}: {datos['pie']!r}"]
+        motivo += [f"el gancho lleva {', '.join(prohibidas)}: {datos['gancho']!r}"] if prohibidas else []
         print(f"  intento {intento} rechazado ({'; '.join(motivo)}); repito")
     raise SystemExit(f"Claude no devolvió textos válidos en {INTENTOS_CLAUDE} intentos")
 
