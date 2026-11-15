@@ -11,13 +11,17 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 URL_BASE = "https://maestrials.vercel.app/v/"
+# Proyecto "maestrials" de Supabase (15-nov). La URL no es secreta; la clave va en SUPABASE_SECRET_KEY.
+SUPABASE_URL = "https://ihjjzhfjrsctobwvpzbt.supabase.co"
 CUENTAS = {
     "jose": {"arroba": "@josenews.ai", "carpeta": "", "ig_id": "17841438323050307",
-             "idioma": "en español neutro", "ubicacion_id": None},
+             "idioma": "en español neutro", "ubicacion_id": None, "videos_en_supabase": False},
     # Cristian (decisión de Jose, 13-nov): público de España → español de España y ubicación Madrid
     "cristian": {"arroba": "@cristianews.ai", "carpeta": "cristian", "ig_id": "17841431048478322",
                  "idioma": "en español de España (palabras de España como ordenador, móvil o vale; tutea al lector)",
-                 "ubicacion_id": "112446056797834"},   # página de lugar "Madrid" (Instagram la aceptó el 13-nov)
+                 "ubicacion_id": "112446056797834",   # página de lugar "Madrid" (Instagram la aceptó el 13-nov)
+                 # 15-nov: sus vídeos van a Supabase Storage, no al repo (con 10 al día el repo crecería ~4 GB/mes)
+                 "videos_en_supabase": True},
 }
 
 NOMBRE = (os.environ.get("MT_CUENTA") or "jose").strip().lower()
@@ -29,7 +33,12 @@ IDIOMA = _CUENTA["idioma"]
 UBICACION_ID = _CUENTA["ubicacion_id"]
 DATOS = RAIZ / "datos" / _CUENTA["carpeta"]
 VIDEOS = RAIZ / "public" / "v" / _CUENTA["carpeta"]
-URL_VIDEOS = URL_BASE + (f"{_CUENTA['carpeta']}/" if _CUENTA["carpeta"] else "")
+VIDEOS_EN_SUPABASE = _CUENTA["videos_en_supabase"]
+CARPETA = _CUENTA["carpeta"]
+if VIDEOS_EN_SUPABASE:   # bucket público "videos", una carpeta por cuenta
+    URL_VIDEOS = f"{SUPABASE_URL}/storage/v1/object/public/videos/{CARPETA}/"
+else:
+    URL_VIDEOS = URL_BASE + (f"{CARPETA}/" if CARPETA else "")
 
 
 def _leer_dot_env() -> dict[str, str]:

@@ -39,6 +39,7 @@ jobs:
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           IG_TOKEN_CRISTIAN: ${{ secrets.IG_TOKEN_CRISTIAN }}
           IG_USER_ID_CRISTIAN: ${{ secrets.IG_USER_ID_CRISTIAN }}
+          SUPABASE_SECRET_KEY: ${{ secrets.SUPABASE_SECRET_KEY }}   # vídeos de Cristian (Supabase Storage)
           GRAPH_BASE: ${{ secrets.GRAPH_BASE }}
       - name: Guardar en el repo
         if: always()              # lo publicado se guarda aunque algo falle después

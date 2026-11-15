@@ -27,6 +27,7 @@ sys.path.insert(0, str(RAIZ / "fase1"))
 sys.path.append(str(RAIZ / "automatico"))
 import cuenta  # noqa: E402
 import niveles  # noqa: E402
+import supabase_videos  # noqa: E402
 from pasada import (PUBLICO, TRABAJO, api, carpeta, descargar,  # noqa: E402
                     esperar_procesado, leer_env, medir)
 
@@ -260,7 +261,10 @@ def montar_ficha(ficha: dict) -> None:
     subprocess.run(["ffmpeg", "-y", "-v", "error", "-ss", "1", "-i", str(PUBLICO / archivo),
                     "-frames:v", "1", str(vista)], check=True)
     _, _, _, duracion = medir(PUBLICO / archivo)
-    print(f"[{media_id}] versión: public/v/{archivo} ({duracion:.1f} s, ffmpeg {segundos:.0f} s)")
+    if cuenta.VIDEOS_EN_SUPABASE:   # el vídeo va a Supabase y no se queda en el repo (decisión de Jose, 15-nov)
+        supabase_videos.subir(PUBLICO / archivo, archivo)
+        (PUBLICO / archivo).unlink()
+    print(f"[{media_id}] versión: {URL_PUBLICA}{archivo} ({duracion:.1f} s, ffmpeg {segundos:.0f} s)")
     print(f"  cambios: {ficha['cambios']}")
     print(f"  gancho:  {' / '.join(ficha['gancho'])}")
     print(f"  pie:     {ficha['pie']}")
@@ -291,7 +295,7 @@ def comprobar_url(url: str) -> None:
             if r.status == 200:
                 return
     except Exception as e:  # noqa: BLE001 — cualquier fallo de red significa "no está publicada"
-        raise SystemExit(f"El vídeo no está en la URL pública ({url}): {e}. ¿Hiciste commit + push?")
+        raise SystemExit(f"El vídeo no está en la URL pública ({url}): {e}. ¿Hiciste commit + push (o se subió a Supabase)?")
     raise SystemExit(f"El vídeo no está en la URL pública ({url})")
 
 
@@ -327,6 +331,11 @@ def publicar(media_id: str, archivo: str) -> None:
         REGISTRO.write_text(json.dumps([*anterior, {**entrada, "enlace": enlace}], ensure_ascii=False, indent=1),
                             encoding="utf-8")
     print(f"PUBLICADO como trial reel: {publicado} → {enlace}")
+    if cuenta.VIDEOS_EN_SUPABASE:   # Instagram ya tiene su copia: se libera el espacio
+        try:
+            supabase_videos.borrar(archivo)
+        except SystemExit as e:   # no es grave: solo ocupa sitio en Supabase
+            print(f"  (no se pudo borrar de Supabase: {e})")
 
 
 def main() -> None:
