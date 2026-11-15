@@ -57,6 +57,8 @@ def decidir(ahora: datetime, ajustes: dict, registro: list[dict]) -> Decision:
 
 
 def cola_por_retencion() -> list[dict]:
+    if niveles.ACTIVO:   # con niveles: el orden de seleccion.json (Jose, 15-nov: primero los de más visitas)
+        return sorted(preparar.pendientes(), key=lambda f: niveles.orden_de(f["origen"]))
     retencion = {i: v.get("retencion") or 0 for v in preparar.videos_ganadores() for i in v["ids"]}
     return sorted(preparar.pendientes(), key=lambda f: retencion.get(f["origen"], 0), reverse=True)
 

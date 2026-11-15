@@ -7,7 +7,23 @@
    "nivel": "cualificado"
   },
   {
+   "hora": 10,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 12,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 13,
+   "nivel": "relleno"
+  },
+  {
    "hora": 14,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 16,
    "nivel": "relleno"
   },
   {
@@ -15,12 +31,20 @@
    "nivel": "cualificado"
   },
   {
+   "hora": 19,
+   "nivel": "cualificado"
+  },
+  {
    "hora": 21,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 22,
    "nivel": "relleno"
   }
  ],
  "cuotas": {
-  "cualificado": 2,
-  "relleno": 2
+  "cualificado": 7,
+  "relleno": 3
  }
 }

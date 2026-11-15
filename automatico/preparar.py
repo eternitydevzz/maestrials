@@ -61,7 +61,7 @@ def elegir(ahora: datetime, nivel: str | None = None) -> list[dict]:
     limite = ahora + timedelta(hours=HORIZONTE_H) - timedelta(days=variar.DIAS_MINIMOS)
     aptos = [v for v in videos
              if not set(v["ids"]) & en_cola and ultima_publicacion(v, registro) <= limite]
-    if nivel == "relleno":   # el relleno va en el orden de seleccion.json (primero los dudosos, luego los de gratis)
+    if nivel:   # con niveles: el orden de seleccion.json (Jose, 15-nov: primero los de más visitas)
         return sorted(aptos, key=lambda v: v["orden"])
     return sorted(aptos, key=lambda v: v["retencion"] or 0, reverse=True)
 

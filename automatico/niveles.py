@@ -37,6 +37,16 @@ def nivel_de(media_id: str) -> str | None:
     return next((n for n in NIVELES if grupo & set(_SELECCION.get(n, []))), None)
 
 
+def orden_de(media_id: str) -> int:
+    """Puesto del vídeo dentro de su lista en seleccion.json (0 = el primero); los que no están, al final."""
+    grupo = hermanos(media_id)
+    for nivel in NIVELES:
+        for puesto, otro in enumerate(_SELECCION.get(nivel, [])):
+            if otro in grupo:
+                return puesto
+    return 10**6
+
+
 def videos_elegibles(todos: list[dict]) -> list[dict]:
     """Un vídeo por cada id de la selección, con los ids y la última publicación de todo su grupo."""
     elegibles = []
