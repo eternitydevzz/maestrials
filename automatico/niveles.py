@@ -17,7 +17,10 @@ ARCHIVO = cuenta.DATOS / "seleccion.json"
 ACTIVO = ARCHIVO.exists()
 _SELECCION = json.loads(ARCHIVO.read_text(encoding="utf-8")) if ACTIVO else {}
 NIVELES = ("cualificado", "relleno")
-RETRASO_MAX_H = 2   # si el autopilot llega más tarde, el hueco no se recupera (fallo del 11-nov: 4 trials en 3 h)
+# Si el autopilot llega más tarde, el hueco no se recupera. Fallo del 11-nov: 4 trials en 3 h (había 2 h sin límite).
+# 15-nov: con 2 h, una ejecución con retraso publicaba el hueco anterior y bloqueaba el siguiente (30 min entre subidas).
+# Con 20 min: lo más tarde que sale un hueco es ~:30 (20 + ~10 de proceso) y el siguiente empieza a la :01 → 31 min.
+RETRASO_MAX_MIN = 20
 
 
 @dataclass(frozen=True)
@@ -75,8 +78,8 @@ def hueco_actual(ahora: datetime, ajustes: dict, registro: list[dict]) -> Hueco:
         return Hueco(False, f"aún no toca ({local:%H:%M}; primer hueco a las {ajustes['huecos'][0]['hora']}:00)")
     hueco = pasados[-1]
     inicio = local.replace(hour=hueco["hora"], minute=0, second=0, microsecond=0)
-    if local - inicio >= timedelta(hours=RETRASO_MAX_H):
-        return Hueco(False, f"el hueco de las {hueco['hora']}:00 ya pasó hace más de {RETRASO_MAX_H} h; no se recupera")
+    if local - inicio >= timedelta(minutes=RETRASO_MAX_MIN):
+        return Hueco(False, f"el hueco de las {hueco['hora']}:00 ya pasó hace más de {RETRASO_MAX_MIN} min; no se recupera")
     if any(datetime.fromisoformat(p["publicado_en"]).astimezone(zona) >= inicio for p in registro):
         return Hueco(False, f"hueco de las {hueco['hora']}:00 ({hueco['nivel']}) ya cubierto")
     return Hueco(True, f"toca: hueco de las {hueco['hora']}:00 ({hueco['nivel']}, {local:%H:%M} hora local)",

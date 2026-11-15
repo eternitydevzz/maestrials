@@ -15,7 +15,8 @@ URL_BASE = "https://maestrials.vercel.app/v/"
 SUPABASE_URL = "https://ihjjzhfjrsctobwvpzbt.supabase.co"
 CUENTAS = {
     "jose": {"arroba": "@josenews.ai", "carpeta": "", "ig_id": "17841438323050307",
-             "idioma": "en español neutro", "ubicacion_id": None, "videos_en_supabase": False, "gancho_sin": []},
+             "idioma": "en español neutro", "ubicacion_id": None, "videos_en_supabase": False, "gancho_sin": [],
+             "minutos_entre_subidas": 45},
     # Cristian (decisión de Jose, 13-nov): público de España → español de España y ubicación Madrid
     "cristian": {"arroba": "@cristianews.ai", "carpeta": "cristian", "ig_id": "17841431048478322",
                  "idioma": "en español de España (palabras de España como ordenador, móvil o vale; tutea al lector)",
@@ -23,7 +24,9 @@ CUENTAS = {
                  # 15-nov: sus vídeos van a Supabase Storage, no al repo (con 10 al día el repo crecería ~4 GB/mes)
                  "videos_en_supabase": True,
                  # 15-nov: sin "gratis" en el gancho (Jose quiere tráfico cualificado, aunque con "gratis" hubo más visitas)
-                 "gancho_sin": ["gratis", "gratuit"]},
+                 "gancho_sin": ["gratis", "gratuit"],
+                 # 15-nov: con 10 huecos de hora en hora, 45 min bloqueaba el hueco siguiente si uno salía con retraso
+                 "minutos_entre_subidas": 30},
 }
 
 NOMBRE = (os.environ.get("MT_CUENTA") or "jose").strip().lower()
@@ -33,6 +36,7 @@ _CUENTA = CUENTAS[NOMBRE]
 ARROBA = _CUENTA["arroba"]
 IDIOMA = _CUENTA["idioma"]
 UBICACION_ID = _CUENTA["ubicacion_id"]
+MINUTOS_ENTRE_SUBIDAS = _CUENTA["minutos_entre_subidas"]
 GANCHO_SIN = _CUENTA["gancho_sin"]   # palabras que el gancho no puede llevar (en minúsculas, se buscan dentro)
 DATOS = RAIZ / "datos" / _CUENTA["carpeta"]
 VIDEOS = RAIZ / "public" / "v" / _CUENTA["carpeta"]

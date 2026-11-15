@@ -34,7 +34,7 @@ from pasada import (PUBLICO, TRABAJO, api, carpeta, descargar,  # noqa: E402
 URL_PUBLICA = cuenta.URL_VIDEOS
 REGISTRO = cuenta.DATOS / "publicaciones.json"   # en el repo: lo leen y escriben el PC y GitHub Actions
 DIAS_MINIMOS = 4                  # decisión de Jose: mínimo 4 días entre publicaciones del mismo vídeo
-MINUTOS_ENTRE_SUBIDAS = 45
+MINUTOS_ENTRE_SUBIDAS = cuenta.MINUTOS_ENTRE_SUBIDAS   # Jose 45; Cristian 30 (10 huecos de hora en hora)
 
 MODELO_CLAUDE = "claude-opus-5-5"
 INTENTOS_CLAUDE = 3
