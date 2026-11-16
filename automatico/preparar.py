@@ -58,7 +58,7 @@ def elegir(ahora: datetime, nivel: str | None = None) -> list[dict]:
     videos = [v for v in videos_ganadores() if nivel is None or v.get("nivel") == nivel]
     registro = variar.leer_registro()
     en_cola = {f["origen"] for f in pendientes()}
-    limite = ahora + timedelta(hours=HORIZONTE_H) - timedelta(days=variar.DIAS_MINIMOS)
+    limite = ahora + timedelta(hours=HORIZONTE_H) - variar.SEPARACION_MINIMA
     aptos = [v for v in videos
              if not set(v["ids"]) & en_cola and ultima_publicacion(v, registro) <= limite]
     if nivel:   # con niveles: el orden de seleccion.json (Jose, 15-nov: primero los de más visitas)

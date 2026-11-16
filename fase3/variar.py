@@ -34,6 +34,10 @@ from pasada import (PUBLICO, TRABAJO, api, carpeta, descargar,  # noqa: E402
 URL_PUBLICA = cuenta.URL_VIDEOS
 REGISTRO = cuenta.DATOS / "publicaciones.json"   # en el repo: lo leen y escriben el PC y GitHub Actions
 DIAS_MINIMOS = 4                  # decisión de Jose: mínimo 4 días entre publicaciones del mismo vídeo
+# 16-nov (Jose): margen de 1 h. El mismo hueco 4 días después llegaba 1-2 min antes de cumplir los 4 días exactos,
+# se bloqueaba (email en rojo) y salía 1 h tarde.
+MARGEN_REGLA_H = 1
+SEPARACION_MINIMA = timedelta(days=DIAS_MINIMOS) - timedelta(hours=MARGEN_REGLA_H)
 MINUTOS_ENTRE_SUBIDAS = cuenta.MINUTOS_ENTRE_SUBIDAS   # Jose 45; Cristian 30 (10 huecos de hora en hora)
 
 MODELO_CLAUDE = "claude-opus-5-5"
@@ -335,7 +339,7 @@ def comprobar_reglas(media_id: str) -> None:
     registro = leer_registro()
     mismo_video = niveles.hermanos(media_id)   # el mismo vídeo publicado con otros ids también cuenta
     del_video = [datetime.fromisoformat(r["publicado_en"]) for r in registro if r["origen"] in mismo_video]
-    if del_video and ahora - max(del_video) < timedelta(days=DIAS_MINIMOS):
+    if del_video and ahora - max(del_video) < SEPARACION_MINIMA:
         raise SystemExit(f"Regla de {DIAS_MINIMOS} días: {media_id} salió el {max(del_video):%d-%b %H:%M} UTC")
     todas = [datetime.fromisoformat(r["publicado_en"]) for r in registro]
     if todas and ahora - max(todas) < timedelta(minutes=MINUTOS_ENTRE_SUBIDAS):
