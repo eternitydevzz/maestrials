@@ -39,7 +39,7 @@ def _pedir(metodo: str, ruta: str, cuerpo: bytes | None, tipo: str, extra: dict 
 
 
 def nombre(archivo: str) -> str:
-    return f"{cuenta.CARPETA}/{archivo}"
+    return f"{cuenta.CARPETA_SUPABASE}/{archivo}"
 
 
 def subir(local: Path, archivo: str) -> None:

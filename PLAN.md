@@ -249,6 +249,24 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - **Arreglos 15-16 nov:** (1) Cristian: un hueco solo se publica en sus primeros 20 min y 30 min entre subidas (una ejecución de respaldo con retraso publicó el hueco de las 16:00 a las 17:56 y bloqueó el de las 18:00). (2) Regla de 4 días con **margen de 1 h** en las dos cuentas (decisión de Jose, 16-nov; reinicia su B5): el mismo hueco 4 días después se bloqueaba por 1-2 min → email en rojo y trial 1 h tarde. (3) Visto el 16-nov: GitHub tardó 30 min en dar máquina a la ejecución de las 12:01 UTC (sin otra ejecución bloqueando) y se perdió el relleno de las 13:00 de Cristian. Jose: vigilar, sin cambios.
 - Riesgos: minutos de Actions ≈ 1.600/mes con dos cuentas (límite 2.000, plan sin verificar) y el repo crece ≈ 1,6 GB/mes con los vídeos.
 
+### Fase 7 — 10 al día en @josenews.ai ⏳ EN MARCHA (17-nov)
+**Punto de partida (17-nov, `datos/`):** 24 trials de solo 11 vídeos (los 12 ganadores, regla de 4 días ≈ 3 al día). Mediana a 24 h 1.315; 6 de 21 con ≤ 300. `ganadores.json` tiene 63 vídeos: 49 con 300+ visitas, con ~15 parejas que parecen el mismo vídeo (mismo pie o palabra; **sin verificar**). Estimación: ~35 vídeos distintos con 300+ → **8-9 al día**; algunos huecos saldrán vacíos.
+
+**Decisiones de Jose (17-nov):**
+- Horario de **Madrid, igual que Cristian** (10 huecos: cualificado 9, 10, 12, 14, 18, 19, 21; relleno 13, 16, 22; cuotas 7 + 3). Aviso dado: las dos cuentas salen a la vez y pueden competir por el mismo público.
+- **Público de España**: español de España y ubicación Madrid en cada trial. Gancho **sin "gratis"**.
+- **Solo vídeos con 300+ visitas** (los muertos fuera).
+- **Cualificado / relleno**: cualificado = **IA para trabajo o negocio** (Claude Code, skills, agentes, n8n…); relleno = curiosidades, noticias y "gratis". Propuesta de Claude por transcripción; Jose la revisa.
+- **De golpe a 10.** Hueco vacío: como Cristian (cualificado vacío = email en rojo; relleno vacío = se salta sin email).
+
+**Pasos (uno cada vez y con comprobación):**
+1. Transcribir los vídeos con 300+ visitas que falten, juntar los repetidos (`mismo_video`) y proponer `datos/seleccion.json` ordenado por visitas → **Jose lo revisa**.
+2. `cuenta.py`: la cuenta de Jose con vídeos en Supabase (carpeta `jose/`), 30 min entre subidas, español de España, ubicación Madrid y sin "gratis".
+3. `datos/ajustes.json`: zona Madrid, 10 huecos con nivel y cuotas. Revisar que `publicar.py`, `preparar.py` y el panel del PC aceptan la cuenta de Jose con niveles.
+4. Simular en el PC (huecos, cuotas, regla de 4 días) → 1 día real → Jose lo comprueba. El B5 de Jose vuelve a empezar.
+
+**Riesgos:** minutos de Actions (cupo sin verificar; el montaje ya tarda 4-7 min por ejecución); 3 veces más DMs por "Comenta PALABRA" justo cuando acaba el bloqueo de DMs de Jose (17-nov); al cambiar de NY a Madrid, la regla de 4 días puede dejar vacíos algunos huecos los primeros días.
+
 ---
 
 ## 6. Riesgos

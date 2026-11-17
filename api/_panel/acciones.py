@@ -15,8 +15,11 @@ from .config import RAIZ
 
 sys.path.insert(0, str(RAIZ / "fase3"))
 sys.path.insert(0, str(RAIZ / "automatico"))
+import cuenta  # noqa: E402
+import niveles  # noqa: E402
 import preparar  # noqa: E402
 import publicar as autopilot  # noqa: E402
+import supabase_videos  # noqa: E402
 import variar  # noqa: E402
 
 AJUSTES = RAIZ / "datos" / "ajustes.json"
@@ -54,6 +57,14 @@ def proximo_hueco(ahora: datetime, ajustes: dict, registro: list[dict]) -> str |
     """Próximo hueco en el que el autopilot publicaría de verdad (salta los de días que ya tienen su cupo)."""
     zona = ZoneInfo(ajustes["zona"])
     ny = ahora.astimezone(zona)
+    if niveles.ACTIVO:   # 17-nov: con niveles hay un trial por hueco, así que el próximo es el siguiente que llega
+        for dias in range(2):
+            dia = (ny + timedelta(days=dias)).date()
+            for hueco in ajustes["huecos"]:
+                momento = datetime(dia.year, dia.month, dia.day, hueco["hora"], tzinfo=zona)
+                if momento > ny:
+                    return momento.isoformat()
+        return None
     for dias in range(3):
         dia = (ny + timedelta(days=dias)).date()
         hechas = sum(1 for p in registro if datetime.fromisoformat(p["publicado_en"]).astimezone(zona).date() == dia)
@@ -67,7 +78,16 @@ def proximo_hueco(ahora: datetime, ajustes: dict, registro: list[dict]) -> str |
 def _resumen(ficha: dict, titulos: dict[str, str]) -> dict:
     return {"archivo": ficha["archivo"], "origen": ficha["origen"], "titulo": titulos.get(ficha["origen"], ""),
             "gancho": ficha["gancho"], "pie": ficha["pie"], "palabra": ficha["palabra"],
-            "cambios": ficha["cambios"], "video": f"/v/{ficha['archivo']}", "creada": ficha.get("creada")}
+            "cambios": ficha["cambios"], "creada": ficha.get("creada"),
+            # con Supabase el vídeo ya no está en public/v/: se ve desde su enlace público
+            "video": (cuenta.URL_VIDEOS if cuenta.VIDEOS_EN_SUPABASE else "/v/") + ficha["archivo"]}
+
+
+def _huecos(ajustes: dict) -> tuple[list[str], str]:
+    """Horas de publicación para el texto del panel y su zona."""
+    if niveles.ACTIVO:
+        return [f"{h['hora']}:00 ({h['nivel']})" for h in ajustes["huecos"]], ajustes["zona"]
+    return [f"{h}:00" for h in ajustes["huecos_ny"]], ajustes["zona"]
 
 
 def versiones() -> dict:
@@ -81,7 +101,8 @@ def versiones() -> dict:
                            "gancho": ficha.get("gancho", []), "publicado_en": p["publicado_en"], "enlace": p.get("enlace"),
                            "visitas_24h": (p.get("metricas_24h") or {}).get("views"),
                            "visitas": (p.get("metricas_ultimas") or {}).get("views")})
-    return {"autopilot": ajustes["autopilot"], "huecos_ny": ajustes["huecos_ny"],
+    huecos, zona = _huecos(ajustes)
+    return {"autopilot": ajustes["autopilot"], "huecos": huecos, "zona": zona,
             "proximo_hueco": proximo_hueco(datetime.now(timezone.utc), ajustes, variar.leer_registro()),
             "cola": [_resumen(f, titulos) for f in autopilot.cola_por_retencion()], "publicadas": publicadas}
 
@@ -101,6 +122,11 @@ def descartar(archivo: str, subir: bool = True) -> None:
     _pendiente(archivo)
     (variar.VERSIONES / f"{_clave(archivo)}.json").unlink(missing_ok=True)
     (variar.PUBLICO / archivo).unlink(missing_ok=True)
+    if cuenta.VIDEOS_EN_SUPABASE:   # 17-nov: el vídeo vive en Supabase, no en public/v/
+        try:
+            supabase_videos.borrar(archivo)
+        except SystemExit as e:
+            raise ErrorAccion(f"Versión descartada, pero no se pudo borrar su vídeo de Supabase: {e}") from None
     if subir:
         repo.guardar("panel: descartar versión", ["datos", "public/v"])
 

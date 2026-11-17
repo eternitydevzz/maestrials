@@ -14,9 +14,13 @@ URL_BASE = "https://maestrials.vercel.app/v/"
 # Proyecto "maestrials" de Supabase (15-nov). La URL no es secreta; la clave va en SUPABASE_SECRET_KEY.
 SUPABASE_URL = "https://ihjjzhfjrsctobwvpzbt.supabase.co"
 CUENTAS = {
+    # Jose (17-nov, Fase 7): 10 al día como Cristian → público de España, ubicación Madrid, sin "gratis",
+    # vídeos en Supabase (carpeta "jose/") y 30 min entre subidas. Sus datos siguen en datos/ (carpeta "").
     "jose": {"arroba": "@josenews.ai", "carpeta": "", "ig_id": "17841438323050307",
-             "idioma": "en español neutro", "ubicacion_id": None, "videos_en_supabase": False, "gancho_sin": [],
-             "minutos_entre_subidas": 45},
+             "idioma": "en español de España (palabras de España como ordenador, móvil o vale; tutea al lector)",
+             "ubicacion_id": "112446056797834",   # página de lugar "Madrid" (la misma que Cristian)
+             "videos_en_supabase": True, "gancho_sin": ["gratis", "gratuit"],
+             "minutos_entre_subidas": 30},
     # Cristian (decisión de Jose, 13-nov): público de España → español de España y ubicación Madrid
     "cristian": {"arroba": "@cristianews.ai", "carpeta": "cristian", "ig_id": "17841431048478322",
                  "idioma": "en español de España (palabras de España como ordenador, móvil o vale; tutea al lector)",
@@ -42,8 +46,10 @@ DATOS = RAIZ / "datos" / _CUENTA["carpeta"]
 VIDEOS = RAIZ / "public" / "v" / _CUENTA["carpeta"]
 VIDEOS_EN_SUPABASE = _CUENTA["videos_en_supabase"]
 CARPETA = _CUENTA["carpeta"]
+# En Supabase cada cuenta tiene su carpeta, también la de Jose (cuyos datos van en la raíz de datos/).
+CARPETA_SUPABASE = CARPETA or NOMBRE
 if VIDEOS_EN_SUPABASE:   # bucket público "videos", una carpeta por cuenta
-    URL_VIDEOS = f"{SUPABASE_URL}/storage/v1/object/public/videos/{CARPETA}/"
+    URL_VIDEOS = f"{SUPABASE_URL}/storage/v1/object/public/videos/{CARPETA_SUPABASE}/"
 else:
     URL_VIDEOS = URL_BASE + (f"{CARPETA}/" if CARPETA else "")
 

@@ -334,13 +334,14 @@ async function vistaVersiones() {
   const proximo = datos.proximo_hueco ? fechaHora.format(new Date(datos.proximo_hueco)) : "—";
   const con24 = datos.publicadas.filter((p) => p.visitas_24h != null);
   const media24 = con24.length ? numero.format(Math.round(con24.reduce((s, p) => s + p.visitas_24h, 0) / con24.length)) : "—";
-  const huecos = datos.huecos_ny.map((h) => `${h}:00`).join(", ");
+  const huecos = datos.huecos.join(", ");
+  const zona = datos.zona === "Europe/Madrid" ? "hora de Madrid" : `hora de ${datos.zona}`;
   const cola = datos.cola.length
     ? con(el("section", "cola"), ...datos.cola.map((v, i) => tarjetaVersion(v, i + 1)))
     : el("div", "aviso", "No hay versiones en cola. GitHub prepara las del día a las 11:05 UTC.");
   contenido.replaceChildren(
     titular("Versiones", datos.autopilot
-      ? `El autopilot publica la primera de la cola en cada hueco: ${huecos} (hora de Nueva York).`
+      ? `El autopilot publica la primera de la cola en cada hueco: ${huecos} (${zona}).`
       : "El autopilot está apagado: no se publica nada solo. Puedes publicar a mano con «Publicar ahora»."),
     con(el("section", "resumen"),
       cifra(datos.cola.length, "versiones en cola", true),

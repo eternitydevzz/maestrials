@@ -1,15 +1,51 @@
 {
  "autopilot": true,
- "zona": "America/New_York",
- "ventana_ny": [
-  9,
-  22
+ "zona": "Europe/Madrid",
+ "huecos": [
+  {
+   "hora": 9,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 10,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 12,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 13,
+   "nivel": "relleno"
+  },
+  {
+   "hora": 14,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 16,
+   "nivel": "relleno"
+  },
+  {
+   "hora": 18,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 19,
+   "nivel": "relleno"
+  },
+  {
+   "hora": 21,
+   "nivel": "cualificado"
+  },
+  {
+   "hora": 22,
+   "nivel": "relleno"
+  }
  ],
- "huecos_ny": [
-  10,
-  14,
-  19
- ],
- "maximo_dia": 3,
+ "cuotas": {
+  "cualificado": 6,
+  "relleno": 4
+ },
  "token_cron_caduca": "2027-02-09"
 }
