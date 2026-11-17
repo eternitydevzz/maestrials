@@ -265,6 +265,16 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 3. `datos/ajustes.json`: zona Madrid, 10 huecos con nivel y cuotas. Revisar que `publicar.py`, `preparar.py` y el panel del PC aceptan la cuenta de Jose con niveles.
 4. Simular en el PC (huecos, cuotas, regla de 4 días) → 1 día real → Jose lo comprueba. El B5 de Jose vuelve a empezar.
 
+**Hecho (17-nov):**
+- Paso 1: 63 de 63 vídeos transcritos (ninguno falló). Repetidos por transcripción (trigramas, parecido 0,49-0,91; el resto ≤ 0,25): 16 parejas. **43 vídeos distintos con 300+** (la estimación de ~35 era mala). `datos/seleccion.json`: 23 cualificados + 19 relleno (aprobado por Jose tal cual; bolsa y NVIDIA en relleno). Fuera "Claude en WhatsApp" (pie con "Responde", el código solo acepta Comenta/Escribe). Las masterclass y todas las palabras siguen activas (Jose).
+- **Reparto 6 + 4** (decisión de Jose, sustituye a 7 + 3): el hueco de las 19 h es relleno. Con 23 cualificados y 6 al día (hacen falta 24), ~1 día de cada 4 un cualificado saldrá vacío (email en rojo).
+- Paso 2: `cuenta.py` (Jose: Supabase `videos/jose/` con `CARPETA_SUPABASE`, 30 min, España, Madrid, sin "gratis"). Cristian sale igual.
+- Paso 3: `datos/ajustes.json` en Madrid con 10 huecos y cuotas 6 + 4. **Panel arreglado** (fallo encontrado: leía `huecos_ny`/`maximo_dia` y el vídeo de `public/v/`): huecos con nivel y zona, próximo hueco, vídeo desde Supabase y Descartar borra de Supabase. Probado llamando a `acciones.versiones()` (sin abrir el navegador) y `node --check`.
+- Las 2 versiones que había en cola (español neutro; NVIDIA lleva "gratis") salen tal cual (Jose): subidas a Supabase a mano.
+- Paso 4: commit 9e9d61e; `preparar` solo de Jose (run 44146535608, 6,5 min) montó 6 cualificados + 2 relleno en Supabase, 0 vídeos en el repo. Simulación: a las 21:00 de hoy saldría SLIDES ("China acaba de matar a PowerPoint"). **Falta:** el primer día real (18-nov) y que Jose lo compruebe. B5 de Jose reiniciado el 17-nov.
+
+**Pendientes encontrados (sin arreglar):** (a) la simulación con `--ahora` calcula la regla de 4 días con la hora real (`comprobar_reglas` usa `datetime.now`); (b) la versión de Cristian `17969370929964017-f3-a31b6793` (montada el 16-nov) no está en Supabase (400): el autopilot se la salta; (c) `preparar` diario con 10 + 10 versiones y un límite de 50 min, sin medir; (d) los vídeos nuevos de Jose que ganen no entran solos en `seleccion.json`.
+
 **Riesgos:** minutos de Actions (cupo sin verificar; el montaje ya tarda 4-7 min por ejecución); 3 veces más DMs por "Comenta PALABRA" justo cuando acaba el bloqueo de DMs de Jose (17-nov); al cambiar de NY a Madrid, la regla de 4 días puede dejar vacíos algunos huecos los primeros días.
 
 ---
