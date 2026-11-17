@@ -1,0 +1,21 @@
+{
+ "origen": "17901761979341450",
+ "archivo": "17901761979341450-f3-4391761a.mp4",
+ "clave": "4391761a",
+ "semilla": 3047614021,
+ "cambios": {
+  "zoom": 1.073,
+  "desplazar_y": 0.422,
+  "velocidad": 1.016,
+  "saturacion": 1.068,
+  "contraste": 1.02,
+  "inicio_s": 0.279
+ },
+ "gancho": [
+  "NVIDIA y Groq te",
+  "dan su API gratis"
+ ],
+ "pie": "🔑 Un repositorio reúne proveedores de IA que te dan claves de API sin costo para tus agentes y proyectos. Si lo quieres para empezar a probar, escribe API 👇 #InteligenciaArtificial #APIs #ClaudeCode #AgentesIA #Programacion",
+ "palabra": "API",
+ "creada": "2026-11-17T11:03:08.683280+00:00"
+}
