@@ -1,14 +1,14 @@
 {
- "corte_percentil": 3122.2,
+ "corte_percentil": 3132.2,
  "umbral_fijo": null,
- "generado_en": "2026-11-11T13:35:04.719454+00:00",
+ "generado_en": "2026-11-18T19:25:44.787239+00:00",
  "videos": [
   {
    "clave": "18129515419637342",
    "mejor_id": "18129515419637342",
    "mejor_enlace": "https://www.instagram.com/reel/Db9CxQXIlcs/",
-   "mejores_visitas": 119992,
-   "comentarios_mejor": 8664,
+   "mejores_visitas": 120860,
+   "comentarios_mejor": 8693,
    "publicaciones": 5,
    "alguna_en_feed": true,
    "pie": "La IA que está cambiando la forma de analizar la bolsa ya está al alcance de cua",
@@ -22,14 +22,14 @@
    ],
    "ultima_publicacion": "2026-10-06T10:06:03+00:00",
    "duracion_s": 56.0,
-   "retencion": 0.49
+   "retencion": 0.489
   },
   {
    "clave": "17942022420269999",
    "mejor_id": "17942022420269999",
    "mejor_enlace": "https://www.instagram.com/reel/DbZPk4_og68/",
-   "mejores_visitas": 44416,
-   "comentarios_mejor": 1468,
+   "mejores_visitas": 44446,
+   "comentarios_mejor": 1470,
    "publicaciones": 2,
    "alguna_en_feed": true,
    "pie": "Si quieres acceder a la plataforma y probar sus modelos, escribe API 👇  #Intelig",
@@ -46,7 +46,7 @@
    "clave": "18455251525186564",
    "mejor_id": "18455251525186564",
    "mejor_enlace": "https://www.instagram.com/reel/DcWU1uFusA6/",
-   "mejores_visitas": 26423,
+   "mejores_visitas": 26462,
    "comentarios_mejor": 722,
    "publicaciones": 4,
    "alguna_en_feed": true,
@@ -60,14 +60,14 @@
    ],
    "ultima_publicacion": "2026-10-28T01:36:36+00:00",
    "duracion_s": 37.5,
-   "retencion": 0.315
+   "retencion": 0.316
   },
   {
    "clave": "17901761979341450",
    "mejor_id": "17901761979341450",
    "mejor_enlace": "https://www.instagram.com/reel/DcaJeKAOOy2/",
-   "mejores_visitas": 25390,
-   "comentarios_mejor": 1227,
+   "mejores_visitas": 25499,
+   "comentarios_mejor": 1232,
    "publicaciones": 3,
    "alguna_en_feed": true,
    "pie": "👉 Si quieres el repositorio para empezar a probar estas APIs, escribe API 👇 #Int",
@@ -85,8 +85,8 @@
    "clave": "18024659621894106",
    "mejor_id": "18024659621894106",
    "mejor_enlace": "https://www.instagram.com/reel/DbwLN94oLmG/",
-   "mejores_visitas": 21894,
-   "comentarios_mejor": 1253,
+   "mejores_visitas": 22328,
+   "comentarios_mejor": 1267,
    "publicaciones": 3,
    "alguna_en_feed": true,
    "pie": "👉 Si quieres instalar las 5 skills y convertir Claude en tu agencia creativa, es",
@@ -104,7 +104,7 @@
    "clave": "18024470732899991",
    "mejor_id": "18024470732899991",
    "mejor_enlace": "https://www.instagram.com/reel/Db06WkVu1S9/",
-   "mejores_visitas": 14635,
+   "mejores_visitas": 14639,
    "comentarios_mejor": 340,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -121,7 +121,7 @@
    "clave": "18120551185869581",
    "mejor_id": "18120551185869581",
    "mejor_enlace": "https://www.instagram.com/reel/DcHmZthIFcp/",
-   "mejores_visitas": 13035,
+   "mejores_visitas": 13043,
    "comentarios_mejor": 449,
    "publicaciones": 3,
    "alguna_en_feed": true,
@@ -140,7 +140,7 @@
    "clave": "18007610888765552",
    "mejor_id": "18007610888765552",
    "mejor_enlace": "https://www.instagram.com/reel/DcPdU-vsRaD/",
-   "mejores_visitas": 7823,
+   "mejores_visitas": 7831,
    "comentarios_mejor": 1288,
    "publicaciones": 2,
    "alguna_en_feed": true,
@@ -158,8 +158,8 @@
    "clave": "18142471342497807",
    "mejor_id": "18142471342497807",
    "mejor_enlace": "https://www.instagram.com/reel/Dcxa2heObQB/",
-   "mejores_visitas": 5802,
-   "comentarios_mejor": 356,
+   "mejores_visitas": 5828,
+   "comentarios_mejor": 357,
    "publicaciones": 2,
    "alguna_en_feed": true,
    "pie": "👉 Comenta N8N y te doy acceso al repositorio completo con las más de 4.000 autom",
@@ -176,7 +176,7 @@
    "clave": "18107396678277689",
    "mejor_id": "18107396678277689",
    "mejor_enlace": "https://www.instagram.com/reel/Dbb5p-jIHbe/",
-   "mejores_visitas": 5031,
+   "mejores_visitas": 5033,
    "comentarios_mejor": 245,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -193,8 +193,8 @@
    "clave": "17962178814179273",
    "mejor_id": "17962178814179273",
    "mejor_enlace": "https://www.instagram.com/reel/DcSEVJbMe8Y/",
-   "mejores_visitas": 4697,
-   "comentarios_mejor": 147,
+   "mejores_visitas": 4713,
+   "comentarios_mejor": 150,
    "publicaciones": 1,
    "alguna_en_feed": true,
    "pie": "👉 Si quieres instalar Graphify y optimizar tu uso de Claude Code, escribe GRAPHI",
@@ -204,13 +204,13 @@
    ],
    "ultima_publicacion": "2026-08-21T00:39:01+00:00",
    "duracion_s": 25.9,
-   "retencion": 0.342
+   "retencion": 0.343
   },
   {
    "clave": "18131449474633312",
    "mejor_id": "18131449474633312",
    "mejor_enlace": "https://www.instagram.com/reel/DcMmDuroAYA/",
-   "mejores_visitas": 3211,
+   "mejores_visitas": 3221,
    "comentarios_mejor": 110,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -227,7 +227,7 @@
    "clave": "18265659250305830",
    "mejor_id": "18265659250305830",
    "mejor_enlace": "https://www.instagram.com/reel/Dc3i2_buUlX/",
-   "mejores_visitas": 3100,
+   "mejores_visitas": 3110,
    "comentarios_mejor": 27,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -244,8 +244,8 @@
    "clave": "18153358894531182",
    "mejor_id": "18153358894531182",
    "mejor_enlace": "https://www.instagram.com/reel/De2ve4bo-PW/",
-   "mejores_visitas": 3017,
-   "comentarios_mejor": 47,
+   "mejores_visitas": 3046,
+   "comentarios_mejor": 48,
    "publicaciones": 2,
    "alguna_en_feed": false,
    "pie": "Alguien acaba de construir la librería de prompts más grande de mundo totalmente",
@@ -262,7 +262,7 @@
    "clave": "17956076292232200",
    "mejor_id": "17956076292232200",
    "mejor_enlace": "https://www.instagram.com/reel/DceR2elo4ra/",
-   "mejores_visitas": 2849,
+   "mejores_visitas": 2860,
    "comentarios_mejor": 115,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -279,7 +279,7 @@
    "clave": "17994050957825368",
    "mejor_id": "17994050957825368",
    "mejor_enlace": "https://www.instagram.com/reel/DchqQ6is0H-/",
-   "mejores_visitas": 2603,
+   "mejores_visitas": 2613,
    "comentarios_mejor": 81,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -293,10 +293,28 @@
    "retencion": 0.286
   },
   {
+   "clave": "17999392893006985",
+   "mejor_id": "17999392893006985",
+   "mejor_enlace": "https://www.instagram.com/reel/DdtyMOsuRX7/",
+   "mejores_visitas": 2335,
+   "comentarios_mejor": 6,
+   "publicaciones": 2,
+   "alguna_en_feed": false,
+   "pie": "Nunca publiques una app hecha con IA sin revisar su seguridad primero. 🔐  Crear ",
+   "ganador": false,
+   "ids": [
+    "18096664595288916",
+    "17999392893006985"
+   ],
+   "ultima_publicacion": "2026-09-25T22:53:17+00:00",
+   "duracion_s": 31.3,
+   "retencion": 0.332
+  },
+  {
    "clave": "18098140685629364",
    "mejor_id": "18098140685629364",
    "mejor_enlace": "https://www.instagram.com/reel/DcCaeRqoeyH/",
-   "mejores_visitas": 2327,
+   "mejores_visitas": 2331,
    "comentarios_mejor": 50,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -310,28 +328,10 @@
    "retencion": 0.209
   },
   {
-   "clave": "17999392893006985",
-   "mejor_id": "17999392893006985",
-   "mejor_enlace": "https://www.instagram.com/reel/DdtyMOsuRX7/",
-   "mejores_visitas": 2314,
-   "comentarios_mejor": 6,
-   "publicaciones": 2,
-   "alguna_en_feed": false,
-   "pie": "Nunca publiques una app hecha con IA sin revisar su seguridad primero. 🔐  Crear ",
-   "ganador": false,
-   "ids": [
-    "18096664595288916",
-    "17999392893006985"
-   ],
-   "ultima_publicacion": "2026-09-25T22:53:17+00:00",
-   "duracion_s": 31.3,
-   "retencion": 0.328
-  },
-  {
    "clave": "18108089927114080",
    "mejor_id": "18108089927114080",
    "mejor_enlace": "https://www.instagram.com/reel/DbmEJ6-Itx5/",
-   "mejores_visitas": 2281,
+   "mejores_visitas": 2282,
    "comentarios_mejor": 48,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -348,7 +348,7 @@
    "clave": "18095644676394168",
    "mejor_id": "18095644676394168",
    "mejor_enlace": "https://www.instagram.com/reel/DdAM2iyI_p7/",
-   "mejores_visitas": 2147,
+   "mejores_visitas": 2163,
    "comentarios_mejor": 16,
    "publicaciones": 2,
    "alguna_en_feed": false,
@@ -360,13 +360,13 @@
    ],
    "ultima_publicacion": "2026-09-07T22:39:34+00:00",
    "duracion_s": 47.2,
-   "retencion": 0.231
+   "retencion": 0.234
   },
   {
    "clave": "17915124531449724",
    "mejor_id": "17915124531449724",
    "mejor_enlace": "https://www.instagram.com/reel/DcmcWb1IIjm/",
-   "mejores_visitas": 1972,
+   "mejores_visitas": 1978,
    "comentarios_mejor": 23,
    "publicaciones": 2,
    "alguna_en_feed": false,
@@ -378,13 +378,13 @@
    ],
    "ultima_publicacion": "2026-08-28T22:33:29+00:00",
    "duracion_s": 39.3,
-   "retencion": 0.225
+   "retencion": 0.226
   },
   {
    "clave": "18426522385148658",
    "mejor_id": "18426522385148658",
    "mejor_enlace": "https://www.instagram.com/reel/DdP7cxBMzgU/",
-   "mejores_visitas": 1859,
+   "mejores_visitas": 1876,
    "comentarios_mejor": 71,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -395,30 +395,13 @@
    ],
    "ultima_publicacion": "2026-09-14T01:14:23+00:00",
    "duracion_s": 40.1,
-   "retencion": 0.246
-  },
-  {
-   "clave": "18129678151736584",
-   "mejor_id": "18129678151736584",
-   "mejor_enlace": "https://www.instagram.com/reel/Dcj87s2IHn1/",
-   "mejores_visitas": 1829,
-   "comentarios_mejor": 31,
-   "publicaciones": 1,
-   "alguna_en_feed": false,
-   "pie": "👉 Si quieres la lista completa con las 15 herramientas y sus links, escribe GOOG",
-   "ganador": false,
-   "ids": [
-    "18129678151736584"
-   ],
-   "ultima_publicacion": "2026-08-27T23:20:32+00:00",
-   "duracion_s": 44.1,
-   "retencion": 0.22
+   "retencion": 0.251
   },
   {
    "clave": "18342597352250037",
    "mejor_id": "18342597352250037",
    "mejor_enlace": "https://www.instagram.com/reel/DdVa_yMOrGt/",
-   "mejores_visitas": 1818,
+   "mejores_visitas": 1842,
    "comentarios_mejor": 74,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -429,7 +412,24 @@
    ],
    "ultima_publicacion": "2026-09-16T04:25:51+00:00",
    "duracion_s": 41.0,
-   "retencion": 0.325
+   "retencion": 0.327
+  },
+  {
+   "clave": "18129678151736584",
+   "mejor_id": "18129678151736584",
+   "mejor_enlace": "https://www.instagram.com/reel/Dcj87s2IHn1/",
+   "mejores_visitas": 1833,
+   "comentarios_mejor": 31,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "👉 Si quieres la lista completa con las 15 herramientas y sus links, escribe GOOG",
+   "ganador": false,
+   "ids": [
+    "18129678151736584"
+   ],
+   "ultima_publicacion": "2026-08-27T23:20:32+00:00",
+   "duracion_s": 44.1,
+   "retencion": 0.219
   },
   {
    "clave": "18096315269526868",
@@ -486,7 +486,7 @@
    "clave": "18070934237711242",
    "mejor_id": "18070934237711242",
    "mejor_enlace": "https://www.instagram.com/reel/Db_oMEZKawT/",
-   "mejores_visitas": 1409,
+   "mejores_visitas": 1414,
    "comentarios_mejor": 46,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -497,13 +497,30 @@
    ],
    "ultima_publicacion": "2026-08-13T20:49:04+00:00",
    "duracion_s": 61.9,
-   "retencion": 0.192
+   "retencion": 0.191
+  },
+  {
+   "clave": "17918171970242454",
+   "mejor_id": "17918171970242454",
+   "mejor_enlace": "https://www.instagram.com/reel/Ddcynnfszln/",
+   "mejores_visitas": 1356,
+   "comentarios_mejor": 38,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "👉 Comenta HARNESS y te comparto el enlace para que pruebe hoy mismo esta IA Chin",
+   "ganador": false,
+   "ids": [
+    "17918171970242454"
+   ],
+   "ultima_publicacion": "2026-09-19T01:07:07+00:00",
+   "duracion_s": 31.8,
+   "retencion": 0.331
   },
   {
    "clave": "18008218955978474",
    "mejor_id": "18008218955978474",
    "mejor_enlace": "https://www.instagram.com/reel/DcxarM7O1mQ/",
-   "mejores_visitas": 1334,
+   "mejores_visitas": 1335,
    "comentarios_mejor": 46,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -517,27 +534,10 @@
    "retencion": 0.238
   },
   {
-   "clave": "17918171970242454",
-   "mejor_id": "17918171970242454",
-   "mejor_enlace": "https://www.instagram.com/reel/Ddcynnfszln/",
-   "mejores_visitas": 1326,
-   "comentarios_mejor": 38,
-   "publicaciones": 1,
-   "alguna_en_feed": false,
-   "pie": "👉 Comenta HARNESS y te comparto el enlace para que pruebe hoy mismo esta IA Chin",
-   "ganador": false,
-   "ids": [
-    "17918171970242454"
-   ],
-   "ultima_publicacion": "2026-09-19T01:07:07+00:00",
-   "duracion_s": 31.8,
-   "retencion": 0.328
-  },
-  {
    "clave": "18018528287933265",
    "mejor_id": "18018528287933265",
    "mejor_enlace": "https://www.instagram.com/reel/DdT2WgiuZKB/",
-   "mejores_visitas": 1254,
+   "mejores_visitas": 1268,
    "comentarios_mejor": 5,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -554,7 +554,7 @@
    "clave": "17970220830174113",
    "mejor_id": "17970220830174113",
    "mejor_enlace": "https://www.instagram.com/reel/De9IZRWOFqk/",
-   "mejores_visitas": 1231,
+   "mejores_visitas": 1258,
    "comentarios_mejor": 4,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -565,14 +565,14 @@
    ],
    "ultima_publicacion": "2026-10-26T11:04:40+00:00",
    "duracion_s": 54.9,
-   "retencion": 0.134
+   "retencion": 0.136
   },
   {
    "clave": "18135123439724980",
    "mejor_id": "18135123439724980",
    "mejor_enlace": "https://www.instagram.com/reel/DdytNuTRL-0/",
-   "mejores_visitas": 1170,
-   "comentarios_mejor": 21,
+   "mejores_visitas": 1186,
+   "comentarios_mejor": 19,
    "publicaciones": 1,
    "alguna_en_feed": false,
    "pie": "👉 Comenta “CODEX” y te mando el link para que puedas probarlo   #inteligenciaart",
@@ -582,13 +582,13 @@
    ],
    "ultima_publicacion": "2026-09-27T13:23:11+00:00",
    "duracion_s": 29.8,
-   "retencion": 0.314
+   "retencion": 0.315
   },
   {
    "clave": "18257799184307752",
    "mejor_id": "18257799184307752",
    "mejor_enlace": "https://www.instagram.com/reel/DczPvokom4v/",
-   "mejores_visitas": 1119,
+   "mejores_visitas": 1128,
    "comentarios_mejor": 10,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -622,7 +622,7 @@
    "clave": "18092408789639431",
    "mejor_id": "18092408789639431",
    "mejor_enlace": "https://www.instagram.com/reel/Dcb_kPhoqvI/",
-   "mejores_visitas": 937,
+   "mejores_visitas": 941,
    "comentarios_mejor": 52,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -633,13 +633,30 @@
    ],
    "ultima_publicacion": "2026-08-24T21:09:31+00:00",
    "duracion_s": 36.4,
-   "retencion": 0.31
+   "retencion": 0.309
+  },
+  {
+   "clave": "17891143155678648",
+   "mejor_id": "17891143155678648",
+   "mejor_enlace": "https://www.instagram.com/reel/DdaWW1tMYmS/",
+   "mejores_visitas": 837,
+   "comentarios_mejor": 14,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "👉 Responde WHATSAPP en los comentarios y te doy acceso al grupo donde haré la ma",
+   "ganador": false,
+   "ids": [
+    "17891143155678648"
+   ],
+   "ultima_publicacion": "2026-09-18T02:21:24+00:00",
+   "duracion_s": 37.6,
+   "retencion": 0.226
   },
   {
    "clave": "18112055581826270",
    "mejor_id": "18112055581826270",
    "mejor_enlace": "https://www.instagram.com/reel/Dcpr945u-Gt/",
-   "mejores_visitas": 833,
+   "mejores_visitas": 837,
    "comentarios_mejor": 52,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -650,30 +667,13 @@
    ],
    "ultima_publicacion": "2026-08-30T04:47:56+00:00",
    "duracion_s": 49.9,
-   "retencion": 0.301
-  },
-  {
-   "clave": "17891143155678648",
-   "mejor_id": "17891143155678648",
-   "mejor_enlace": "https://www.instagram.com/reel/DdaWW1tMYmS/",
-   "mejores_visitas": 827,
-   "comentarios_mejor": 16,
-   "publicaciones": 1,
-   "alguna_en_feed": false,
-   "pie": "👉 Responde WHATSAPP en los comentarios y te doy acceso al grupo donde haré la ma",
-   "ganador": false,
-   "ids": [
-    "17891143155678648"
-   ],
-   "ultima_publicacion": "2026-09-18T02:21:24+00:00",
-   "duracion_s": 37.6,
-   "retencion": 0.225
+   "retencion": 0.302
   },
   {
    "clave": "18133980712622610",
    "mejor_id": "18133980712622610",
    "mejor_enlace": "https://www.instagram.com/reel/Db3s_9WoDW8/",
-   "mejores_visitas": 821,
+   "mejores_visitas": 824,
    "comentarios_mejor": 50,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -690,7 +690,7 @@
    "clave": "18139699306627881",
    "mejor_id": "18139699306627881",
    "mejor_enlace": "https://www.instagram.com/reel/Dey249iRb_N/",
-   "mejores_visitas": 779,
+   "mejores_visitas": 799,
    "comentarios_mejor": 4,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -701,13 +701,13 @@
    ],
    "ultima_publicacion": "2026-10-22T11:19:24+00:00",
    "duracion_s": 40.2,
-   "retencion": 0.273
+   "retencion": 0.268
   },
   {
    "clave": "18109408409134147",
    "mejor_id": "18109408409134147",
    "mejor_enlace": "https://www.instagram.com/reel/Dcr99DXsKud/",
-   "mejores_visitas": 676,
+   "mejores_visitas": 681,
    "comentarios_mejor": 17,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -718,13 +718,13 @@
    ],
    "ultima_publicacion": "2026-08-31T02:03:20+00:00",
    "duracion_s": 43.3,
-   "retencion": 0.186
+   "retencion": 0.185
   },
   {
    "clave": "17991859958827105",
    "mejor_id": "17991859958827105",
    "mejor_enlace": "https://www.instagram.com/reel/DbtH9_sOAyo/",
-   "mejores_visitas": 653,
+   "mejores_visitas": 655,
    "comentarios_mejor": 30,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -741,8 +741,8 @@
    "clave": "18084472841299819",
    "mejor_id": "18084472841299819",
    "mejor_enlace": "https://www.instagram.com/reel/DdDFl8hMhCZ/",
-   "mejores_visitas": 548,
-   "comentarios_mejor": 13,
+   "mejores_visitas": 559,
+   "comentarios_mejor": 14,
    "publicaciones": 1,
    "alguna_en_feed": false,
    "pie": "👉 Comenta LEADS si quieres copiar este sistema completo",
@@ -752,13 +752,13 @@
    ],
    "ultima_publicacion": "2026-09-09T01:32:34+00:00",
    "duracion_s": 38.5,
-   "retencion": 0.239
+   "retencion": 0.242
   },
   {
    "clave": "17904446562327385",
    "mejor_id": "17904446562327385",
    "mejor_enlace": "https://www.instagram.com/reel/DczPfXYo47D/",
-   "mejores_visitas": 465,
+   "mejores_visitas": 466,
    "comentarios_mejor": 4,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -769,7 +769,7 @@
    ],
    "ultima_publicacion": "2026-09-02T21:52:05+00:00",
    "duracion_s": 51.5,
-   "retencion": 0.168
+   "retencion": 0.167
   },
   {
    "clave": "18398662123162177",
