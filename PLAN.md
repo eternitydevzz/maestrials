@@ -279,6 +279,11 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 
 ---
 
+### Incidente 19-20 nov: GitHub Actions parado por facturación
+- Desde el 19-nov a las 14:01 UTC GitHub no arrancó ninguna ejecución (autopilot ni preparar): *"The job was not started because recent account payments have failed or your spending limit needs to be increased"*. Unos 15 huecos perdidos por cuenta. Causa probable (sin verificar, la API no deja ver la facturación): repo privado con 2.000 min/mes gratis y ~2.500-3.300 min/mes con las dos cuentas a 10 al día.
+- **Decisión de Jose (20-nov): repo PÚBLICO** (Actions gratis en repos públicos). Antes se revisaron los 301 commits: ningún token ni clave en el historial y `.env` nunca subido; ningún workflow se lanza con `pull_request`. Jose aceptó que se vean los datos de Cristian. Probado: autopilot (run 44744822363) y preparar (run 44744958975) vuelven a funcionar.
+- **cron-job.org:** el autopilot ya no corre cada hora, solo a las **9, 10, 12, 13, 14, 16, 18, 19, 21, 22 y 23 h** (zona Europe/Paris = Madrid). Las 23 h son para medir a 24 h los trials de las 22 h. El horario de respaldo de GitHub (`7 * * * *`) sigue igual.
+
 ## 6. Riesgos
 - **R1.** Instagram puede bajar el alcance o desactivar los Trial Reels si se abusa (lo avisan las condiciones de TrialPilot). Por eso se empieza con 3 al día.
 - **R2.** Que las variaciones no superen la huella de Instagram → versiones en 0. Se mide en la Fase 3.
