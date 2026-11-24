@@ -1,0 +1,21 @@
+{
+ "origen": "18086278985202012",
+ "archivo": "18086278985202012-f3-bdc1bb45.mp4",
+ "clave": "bdc1bb45",
+ "semilla": 2351711800,
+ "cambios": {
+  "zoom": 1.067,
+  "desplazar_y": 0.448,
+  "velocidad": 1.041,
+  "saturacion": 1.005,
+  "contraste": 1.027,
+  "inicio_s": 0.249
+ },
+ "gancho": [
+  "Un genio rompió los",
+  "tokens de Claude"
+ ],
+ "pie": "🧠 Graphify crea un mapa de todo tu proyecto para que Claude Code no tenga que releerlo cada vez y gaste muchos menos tokens. Escribe REPO y te paso el enlace para instalarlo 👇 #ClaudeCode #InteligenciaArtificial #Programacion #GitHub #Productividad",
+ "palabra": "REPO",
+ "creada": "2026-11-24T11:01:49.702739+00:00"
+}
