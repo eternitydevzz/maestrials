@@ -1,14 +1,14 @@
 {
- "corte_percentil": 3132.2,
+ "corte_percentil": 2668.4,
  "umbral_fijo": null,
- "generado_en": "2026-11-18T19:25:44.787239+00:00",
+ "generado_en": "2026-11-25T20:31:33.668822+00:00",
  "videos": [
   {
    "clave": "18129515419637342",
    "mejor_id": "18129515419637342",
    "mejor_enlace": "https://www.instagram.com/reel/Db9CxQXIlcs/",
-   "mejores_visitas": 120860,
-   "comentarios_mejor": 8693,
+   "mejores_visitas": 121585,
+   "comentarios_mejor": 8723,
    "publicaciones": 5,
    "alguna_en_feed": true,
    "pie": "La IA que está cambiando la forma de analizar la bolsa ya está al alcance de cua",
@@ -28,7 +28,7 @@
    "clave": "17942022420269999",
    "mejor_id": "17942022420269999",
    "mejor_enlace": "https://www.instagram.com/reel/DbZPk4_og68/",
-   "mejores_visitas": 44446,
+   "mejores_visitas": 44475,
    "comentarios_mejor": 1470,
    "publicaciones": 2,
    "alguna_en_feed": true,
@@ -46,7 +46,7 @@
    "clave": "18455251525186564",
    "mejor_id": "18455251525186564",
    "mejor_enlace": "https://www.instagram.com/reel/DcWU1uFusA6/",
-   "mejores_visitas": 26462,
+   "mejores_visitas": 26484,
    "comentarios_mejor": 722,
    "publicaciones": 4,
    "alguna_en_feed": true,
@@ -66,8 +66,8 @@
    "clave": "17901761979341450",
    "mejor_id": "17901761979341450",
    "mejor_enlace": "https://www.instagram.com/reel/DcaJeKAOOy2/",
-   "mejores_visitas": 25499,
-   "comentarios_mejor": 1232,
+   "mejores_visitas": 25561,
+   "comentarios_mejor": 1234,
    "publicaciones": 3,
    "alguna_en_feed": true,
    "pie": "👉 Si quieres el repositorio para empezar a probar estas APIs, escribe API 👇 #Int",
@@ -79,14 +79,14 @@
    ],
    "ultima_publicacion": "2026-10-22T10:46:56+00:00",
    "duracion_s": 29.9,
-   "retencion": 0.416
+   "retencion": 0.417
   },
   {
    "clave": "18024659621894106",
    "mejor_id": "18024659621894106",
    "mejor_enlace": "https://www.instagram.com/reel/DbwLN94oLmG/",
-   "mejores_visitas": 22328,
-   "comentarios_mejor": 1267,
+   "mejores_visitas": 22610,
+   "comentarios_mejor": 1282,
    "publicaciones": 3,
    "alguna_en_feed": true,
    "pie": "👉 Si quieres instalar las 5 skills y convertir Claude en tu agencia creativa, es",
@@ -98,13 +98,13 @@
    ],
    "ultima_publicacion": "2026-10-06T10:08:16+00:00",
    "duracion_s": 55.0,
-   "retencion": 0.404
+   "retencion": 0.405
   },
   {
    "clave": "18024470732899991",
    "mejor_id": "18024470732899991",
    "mejor_enlace": "https://www.instagram.com/reel/Db06WkVu1S9/",
-   "mejores_visitas": 14639,
+   "mejores_visitas": 14648,
    "comentarios_mejor": 340,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -121,7 +121,7 @@
    "clave": "18120551185869581",
    "mejor_id": "18120551185869581",
    "mejor_enlace": "https://www.instagram.com/reel/DcHmZthIFcp/",
-   "mejores_visitas": 13043,
+   "mejores_visitas": 13054,
    "comentarios_mejor": 449,
    "publicaciones": 3,
    "alguna_en_feed": true,
@@ -134,13 +134,13 @@
    ],
    "ultima_publicacion": "2026-10-08T12:31:58+00:00",
    "duracion_s": 55.0,
-   "retencion": 0.268
+   "retencion": 0.269
   },
   {
    "clave": "18007610888765552",
    "mejor_id": "18007610888765552",
    "mejor_enlace": "https://www.instagram.com/reel/DcPdU-vsRaD/",
-   "mejores_visitas": 7831,
+   "mejores_visitas": 7834,
    "comentarios_mejor": 1288,
    "publicaciones": 2,
    "alguna_en_feed": true,
@@ -158,7 +158,7 @@
    "clave": "18142471342497807",
    "mejor_id": "18142471342497807",
    "mejor_enlace": "https://www.instagram.com/reel/Dcxa2heObQB/",
-   "mejores_visitas": 5828,
+   "mejores_visitas": 5848,
    "comentarios_mejor": 357,
    "publicaciones": 2,
    "alguna_en_feed": true,
@@ -176,7 +176,7 @@
    "clave": "18107396678277689",
    "mejor_id": "18107396678277689",
    "mejor_enlace": "https://www.instagram.com/reel/Dbb5p-jIHbe/",
-   "mejores_visitas": 5033,
+   "mejores_visitas": 5037,
    "comentarios_mejor": 245,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -193,7 +193,7 @@
    "clave": "17962178814179273",
    "mejor_id": "17962178814179273",
    "mejor_enlace": "https://www.instagram.com/reel/DcSEVJbMe8Y/",
-   "mejores_visitas": 4713,
+   "mejores_visitas": 4718,
    "comentarios_mejor": 150,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -210,7 +210,7 @@
    "clave": "18131449474633312",
    "mejor_id": "18131449474633312",
    "mejor_enlace": "https://www.instagram.com/reel/DcMmDuroAYA/",
-   "mejores_visitas": 3221,
+   "mejores_visitas": 3223,
    "comentarios_mejor": 110,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -227,12 +227,12 @@
    "clave": "18265659250305830",
    "mejor_id": "18265659250305830",
    "mejor_enlace": "https://www.instagram.com/reel/Dc3i2_buUlX/",
-   "mejores_visitas": 3110,
+   "mejores_visitas": 3114,
    "comentarios_mejor": 27,
    "publicaciones": 1,
    "alguna_en_feed": false,
    "pie": "👉 Escribe SLIDES y te mando el enlace de esta herramienta IA",
-   "ganador": false,
+   "ganador": true,
    "ids": [
     "18265659250305830"
    ],
@@ -244,30 +244,30 @@
    "clave": "18153358894531182",
    "mejor_id": "18153358894531182",
    "mejor_enlace": "https://www.instagram.com/reel/De2ve4bo-PW/",
-   "mejores_visitas": 3046,
-   "comentarios_mejor": 48,
+   "mejores_visitas": 3062,
+   "comentarios_mejor": 49,
    "publicaciones": 2,
    "alguna_en_feed": false,
    "pie": "Alguien acaba de construir la librería de prompts más grande de mundo totalmente",
-   "ganador": false,
+   "ganador": true,
    "ids": [
     "18153358894531182",
     "18062451209562479"
    ],
    "ultima_publicacion": "2026-10-23T23:31:11+00:00",
    "duracion_s": 31.0,
-   "retencion": 0.265
+   "retencion": 0.266
   },
   {
    "clave": "17956076292232200",
    "mejor_id": "17956076292232200",
    "mejor_enlace": "https://www.instagram.com/reel/DceR2elo4ra/",
-   "mejores_visitas": 2860,
+   "mejores_visitas": 2870,
    "comentarios_mejor": 115,
    "publicaciones": 1,
    "alguna_en_feed": true,
    "pie": "👉 Si quieres la guía completa para instalarlo, escribe MODELOS 👇  #InteligenciaA",
-   "ganador": false,
+   "ganador": true,
    "ids": [
     "17956076292232200"
    ],
@@ -279,7 +279,7 @@
    "clave": "17994050957825368",
    "mejor_id": "17994050957825368",
    "mejor_enlace": "https://www.instagram.com/reel/DchqQ6is0H-/",
-   "mejores_visitas": 2613,
+   "mejores_visitas": 2618,
    "comentarios_mejor": 81,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -290,13 +290,47 @@
    ],
    "ultima_publicacion": "2026-08-27T01:58:47+00:00",
    "duracion_s": 42.3,
-   "retencion": 0.286
+   "retencion": 0.287
+  },
+  {
+   "clave": "18437978266179770",
+   "mejor_id": "18437978266179770",
+   "mejor_enlace": "https://www.instagram.com/reel/DgAE3dCgoZU/",
+   "mejores_visitas": 2508,
+   "comentarios_mejor": 116,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "La skill gratis que le da a Claude todo el sistema de diseño de Apple 🍎  01 Crea",
+   "ganador": false,
+   "ids": [
+    "18437978266179770"
+   ],
+   "ultima_publicacion": "2026-11-21T11:02:18+00:00",
+   "duracion_s": 46.4,
+   "retencion": 0.196
+  },
+  {
+   "clave": "18098140685629364",
+   "mejor_id": "18098140685629364",
+   "mejor_enlace": "https://www.instagram.com/reel/DcCaeRqoeyH/",
+   "mejores_visitas": 2338,
+   "comentarios_mejor": 50,
+   "publicaciones": 1,
+   "alguna_en_feed": true,
+   "pie": "Estás usando Claude AI y probablemente no estás aprovechando todo su potencial. ",
+   "ganador": false,
+   "ids": [
+    "18098140685629364"
+   ],
+   "ultima_publicacion": "2026-08-14T22:44:51+00:00",
+   "duracion_s": 47.6,
+   "retencion": 0.209
   },
   {
    "clave": "17999392893006985",
    "mejor_id": "17999392893006985",
    "mejor_enlace": "https://www.instagram.com/reel/DdtyMOsuRX7/",
-   "mejores_visitas": 2335,
+   "mejores_visitas": 2336,
    "comentarios_mejor": 6,
    "publicaciones": 2,
    "alguna_en_feed": false,
@@ -311,27 +345,10 @@
    "retencion": 0.332
   },
   {
-   "clave": "18098140685629364",
-   "mejor_id": "18098140685629364",
-   "mejor_enlace": "https://www.instagram.com/reel/DcCaeRqoeyH/",
-   "mejores_visitas": 2331,
-   "comentarios_mejor": 50,
-   "publicaciones": 1,
-   "alguna_en_feed": true,
-   "pie": "Estás usando Claude AI y probablemente no estás aprovechando todo su potencial. ",
-   "ganador": false,
-   "ids": [
-    "18098140685629364"
-   ],
-   "ultima_publicacion": "2026-08-14T22:44:51+00:00",
-   "duracion_s": 47.6,
-   "retencion": 0.209
-  },
-  {
    "clave": "18108089927114080",
    "mejor_id": "18108089927114080",
    "mejor_enlace": "https://www.instagram.com/reel/DbmEJ6-Itx5/",
-   "mejores_visitas": 2282,
+   "mejores_visitas": 2284,
    "comentarios_mejor": 48,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -345,10 +362,27 @@
    "retencion": 0.308
   },
   {
+   "clave": "18384359848241604",
+   "mejor_id": "18384359848241604",
+   "mejor_enlace": "https://www.instagram.com/reel/DgGMTfFlD-8/",
+   "mejores_visitas": 2214,
+   "comentarios_mejor": 38,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "5 skills de Claude para estar por delante del 99% de las personas 🧠  01 Marketin",
+   "ganador": false,
+   "ids": [
+    "18384359848241604"
+   ],
+   "ultima_publicacion": "2026-11-23T20:03:03+00:00",
+   "duracion_s": 91.2,
+   "retencion": 0.168
+  },
+  {
    "clave": "18095644676394168",
    "mejor_id": "18095644676394168",
    "mejor_enlace": "https://www.instagram.com/reel/DdAM2iyI_p7/",
-   "mejores_visitas": 2163,
+   "mejores_visitas": 2167,
    "comentarios_mejor": 16,
    "publicaciones": 2,
    "alguna_en_feed": false,
@@ -366,7 +400,7 @@
    "clave": "17915124531449724",
    "mejor_id": "17915124531449724",
    "mejor_enlace": "https://www.instagram.com/reel/DcmcWb1IIjm/",
-   "mejores_visitas": 1978,
+   "mejores_visitas": 1979,
    "comentarios_mejor": 23,
    "publicaciones": 2,
    "alguna_en_feed": false,
@@ -384,7 +418,7 @@
    "clave": "18426522385148658",
    "mejor_id": "18426522385148658",
    "mejor_enlace": "https://www.instagram.com/reel/DdP7cxBMzgU/",
-   "mejores_visitas": 1876,
+   "mejores_visitas": 1882,
    "comentarios_mejor": 71,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -401,7 +435,7 @@
    "clave": "18342597352250037",
    "mejor_id": "18342597352250037",
    "mejor_enlace": "https://www.instagram.com/reel/DdVa_yMOrGt/",
-   "mejores_visitas": 1842,
+   "mejores_visitas": 1863,
    "comentarios_mejor": 74,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -412,13 +446,13 @@
    ],
    "ultima_publicacion": "2026-09-16T04:25:51+00:00",
    "duracion_s": 41.0,
-   "retencion": 0.327
+   "retencion": 0.329
   },
   {
    "clave": "18129678151736584",
    "mejor_id": "18129678151736584",
    "mejor_enlace": "https://www.instagram.com/reel/Dcj87s2IHn1/",
-   "mejores_visitas": 1833,
+   "mejores_visitas": 1837,
    "comentarios_mejor": 31,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -435,7 +469,7 @@
    "clave": "18096315269526868",
    "mejor_id": "18096315269526868",
    "mejor_enlace": "https://www.instagram.com/reel/DchqbvjsSz4/",
-   "mejores_visitas": 1747,
+   "mejores_visitas": 1748,
    "comentarios_mejor": 22,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -452,7 +486,7 @@
    "clave": "18074502818704387",
    "mejor_id": "18074502818704387",
    "mejor_enlace": "https://www.instagram.com/reel/DbjXcOEoVOC/",
-   "mejores_visitas": 1563,
+   "mejores_visitas": 1564,
    "comentarios_mejor": 14,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -464,6 +498,23 @@
    "ultima_publicacion": "2026-08-02T21:25:53+00:00",
    "duracion_s": 47.3,
    "retencion": 0.259
+  },
+  {
+   "clave": "17954544657053580",
+   "mejor_id": "17954544657053580",
+   "mejor_enlace": "https://www.instagram.com/reel/DgFOdAVm_q2/",
+   "mejores_visitas": 1506,
+   "comentarios_mejor": 24,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Cómo hacer que Claude diseñe páginas web mejor que muchas agencias: 3 skills y 1",
+   "ganador": false,
+   "ids": [
+    "17954544657053580"
+   ],
+   "ultima_publicacion": "2026-11-23T11:02:33+00:00",
+   "duracion_s": 53.3,
+   "retencion": 0.153
   },
   {
    "clave": "18097029287029257",
@@ -486,7 +537,7 @@
    "clave": "18070934237711242",
    "mejor_id": "18070934237711242",
    "mejor_enlace": "https://www.instagram.com/reel/Db_oMEZKawT/",
-   "mejores_visitas": 1414,
+   "mejores_visitas": 1419,
    "comentarios_mejor": 46,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -503,7 +554,7 @@
    "clave": "17918171970242454",
    "mejor_id": "17918171970242454",
    "mejor_enlace": "https://www.instagram.com/reel/Ddcynnfszln/",
-   "mejores_visitas": 1356,
+   "mejores_visitas": 1359,
    "comentarios_mejor": 38,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -514,7 +565,7 @@
    ],
    "ultima_publicacion": "2026-09-19T01:07:07+00:00",
    "duracion_s": 31.8,
-   "retencion": 0.331
+   "retencion": 0.33
   },
   {
    "clave": "18008218955978474",
@@ -534,27 +585,27 @@
    "retencion": 0.238
   },
   {
-   "clave": "18018528287933265",
-   "mejor_id": "18018528287933265",
-   "mejor_enlace": "https://www.instagram.com/reel/DdT2WgiuZKB/",
-   "mejores_visitas": 1268,
-   "comentarios_mejor": 5,
+   "clave": "18056662238811494",
+   "mejor_id": "18056662238811494",
+   "mejor_enlace": "https://www.instagram.com/reel/DgGMPM8k_1E/",
+   "mejores_visitas": 1294,
+   "comentarios_mejor": 17,
    "publicaciones": 1,
    "alguna_en_feed": false,
-   "pie": "👉 Comenta MASTERCLASS y te doy acceso al grupo en donde haré la clase privada",
+   "pie": "DaVinci Resolve estrena servidor MCP oficial y ya puedes editar tus vídeos con C",
    "ganador": false,
    "ids": [
-    "18018528287933265"
+    "18056662238811494"
    ],
-   "ultima_publicacion": "2026-09-15T13:46:23+00:00",
-   "duracion_s": 38.8,
-   "retencion": 0.232
+   "ultima_publicacion": "2026-11-23T20:02:37+00:00",
+   "duracion_s": 39.8,
+   "retencion": 0.243
   },
   {
    "clave": "17970220830174113",
    "mejor_id": "17970220830174113",
    "mejor_enlace": "https://www.instagram.com/reel/De9IZRWOFqk/",
-   "mejores_visitas": 1258,
+   "mejores_visitas": 1272,
    "comentarios_mejor": 4,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -565,13 +616,30 @@
    ],
    "ultima_publicacion": "2026-10-26T11:04:40+00:00",
    "duracion_s": 54.9,
-   "retencion": 0.136
+   "retencion": 0.223
+  },
+  {
+   "clave": "18018528287933265",
+   "mejor_id": "18018528287933265",
+   "mejor_enlace": "https://www.instagram.com/reel/DdT2WgiuZKB/",
+   "mejores_visitas": 1272,
+   "comentarios_mejor": 5,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "👉 Comenta MASTERCLASS y te doy acceso al grupo en donde haré la clase privada",
+   "ganador": false,
+   "ids": [
+    "18018528287933265"
+   ],
+   "ultima_publicacion": "2026-09-15T13:46:23+00:00",
+   "duracion_s": 38.8,
+   "retencion": 0.231
   },
   {
    "clave": "18135123439724980",
    "mejor_id": "18135123439724980",
    "mejor_enlace": "https://www.instagram.com/reel/DdytNuTRL-0/",
-   "mejores_visitas": 1186,
+   "mejores_visitas": 1188,
    "comentarios_mejor": 19,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -588,7 +656,7 @@
    "clave": "18257799184307752",
    "mejor_id": "18257799184307752",
    "mejor_enlace": "https://www.instagram.com/reel/DczPvokom4v/",
-   "mejores_visitas": 1128,
+   "mejores_visitas": 1131,
    "comentarios_mejor": 10,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -599,7 +667,7 @@
    ],
    "ultima_publicacion": "2026-09-02T21:53:44+00:00",
    "duracion_s": 51.5,
-   "retencion": 0.236
+   "retencion": 0.235
   },
   {
    "clave": "17898687645351723",
@@ -639,7 +707,7 @@
    "clave": "17891143155678648",
    "mejor_id": "17891143155678648",
    "mejor_enlace": "https://www.instagram.com/reel/DdaWW1tMYmS/",
-   "mejores_visitas": 837,
+   "mejores_visitas": 839,
    "comentarios_mejor": 14,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -650,13 +718,13 @@
    ],
    "ultima_publicacion": "2026-09-18T02:21:24+00:00",
    "duracion_s": 37.6,
-   "retencion": 0.226
+   "retencion": 0.227
   },
   {
    "clave": "18112055581826270",
    "mejor_id": "18112055581826270",
    "mejor_enlace": "https://www.instagram.com/reel/Dcpr945u-Gt/",
-   "mejores_visitas": 837,
+   "mejores_visitas": 838,
    "comentarios_mejor": 52,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -667,13 +735,13 @@
    ],
    "ultima_publicacion": "2026-08-30T04:47:56+00:00",
    "duracion_s": 49.9,
-   "retencion": 0.302
+   "retencion": 0.301
   },
   {
    "clave": "18133980712622610",
    "mejor_id": "18133980712622610",
    "mejor_enlace": "https://www.instagram.com/reel/Db3s_9WoDW8/",
-   "mejores_visitas": 824,
+   "mejores_visitas": 827,
    "comentarios_mejor": 50,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -684,13 +752,13 @@
    ],
    "ultima_publicacion": "2026-08-10T18:54:58+00:00",
    "duracion_s": 57.4,
-   "retencion": 0.244
+   "retencion": 0.243
   },
   {
    "clave": "18139699306627881",
    "mejor_id": "18139699306627881",
    "mejor_enlace": "https://www.instagram.com/reel/Dey249iRb_N/",
-   "mejores_visitas": 799,
+   "mejores_visitas": 803,
    "comentarios_mejor": 4,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -701,13 +769,30 @@
    ],
    "ultima_publicacion": "2026-10-22T11:19:24+00:00",
    "duracion_s": 40.2,
-   "retencion": 0.268
+   "retencion": 0.267
+  },
+  {
+   "clave": "18290460985288539",
+   "mejor_id": "18290460985288539",
+   "mejor_enlace": "https://www.instagram.com/reel/Df74-fiigzr/",
+   "mejores_visitas": 692,
+   "comentarios_mejor": 17,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Superpowers: el repo gratis que todo el que usa Claude Code, Codex o Cursor debe",
+   "ganador": false,
+   "ids": [
+    "18290460985288539"
+   ],
+   "ultima_publicacion": "2026-11-19T20:01:49+00:00",
+   "duracion_s": 41.9,
+   "retencion": 0.264
   },
   {
    "clave": "18109408409134147",
    "mejor_id": "18109408409134147",
    "mejor_enlace": "https://www.instagram.com/reel/Dcr99DXsKud/",
-   "mejores_visitas": 681,
+   "mejores_visitas": 682,
    "comentarios_mejor": 17,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -724,7 +809,7 @@
    "clave": "17991859958827105",
    "mejor_id": "17991859958827105",
    "mejor_enlace": "https://www.instagram.com/reel/DbtH9_sOAyo/",
-   "mejores_visitas": 655,
+   "mejores_visitas": 657,
    "comentarios_mejor": 30,
    "publicaciones": 1,
    "alguna_en_feed": true,
@@ -735,13 +820,13 @@
    ],
    "ultima_publicacion": "2026-08-06T16:19:09+00:00",
    "duracion_s": 47.1,
-   "retencion": 0.247
+   "retencion": 0.248
   },
   {
    "clave": "18084472841299819",
    "mejor_id": "18084472841299819",
    "mejor_enlace": "https://www.instagram.com/reel/DdDFl8hMhCZ/",
-   "mejores_visitas": 559,
+   "mejores_visitas": 562,
    "comentarios_mejor": 14,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -752,7 +837,7 @@
    ],
    "ultima_publicacion": "2026-09-09T01:32:34+00:00",
    "duracion_s": 38.5,
-   "retencion": 0.242
+   "retencion": 0.241
   },
   {
    "clave": "17904446562327385",
@@ -775,7 +860,7 @@
    "clave": "18398662123162177",
    "mejor_id": "18398662123162177",
    "mejor_enlace": "https://www.instagram.com/reel/Dd__lMiRCND/",
-   "mejores_visitas": 452,
+   "mejores_visitas": 453,
    "comentarios_mejor": 0,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -809,7 +894,7 @@
    "clave": "18166159396472550",
    "mejor_id": "18166159396472550",
    "mejor_enlace": "https://www.instagram.com/reel/DdrboSbROT7/",
-   "mejores_visitas": 392,
+   "mejores_visitas": 393,
    "comentarios_mejor": 5,
    "publicaciones": 1,
    "alguna_en_feed": false,
@@ -840,6 +925,40 @@
    "retencion": 0.114
   },
   {
+   "clave": "17921575521531518",
+   "mejor_id": "17921575521531518",
+   "mejor_enlace": "https://www.instagram.com/reel/Df9gOtWEvL5/",
+   "mejores_visitas": 355,
+   "comentarios_mejor": 4,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Cómo usar Claude Code casi gratis y sin límite: OmniRoute, la herramienta gratis",
+   "ganador": false,
+   "ids": [
+    "17921575521531518"
+   ],
+   "ultima_publicacion": "2026-11-20T11:04:25+00:00",
+   "duracion_s": 49.1,
+   "retencion": 0.184
+  },
+  {
+   "clave": "18061779788559909",
+   "mejor_id": "18061779788559909",
+   "mejor_enlace": "https://www.instagram.com/reel/Df-Je_rDaJY/",
+   "mejores_visitas": 338,
+   "comentarios_mejor": 10,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "ChatGPT abrió su propio Google My Business: cómo registrar negocios y cobrar por",
+   "ganador": false,
+   "ids": [
+    "18061779788559909"
+   ],
+   "ultima_publicacion": "2026-11-20T17:04:31+00:00",
+   "duracion_s": 42.8,
+   "retencion": 0.171
+  },
+  {
    "clave": "18020893949718565",
    "mejor_id": "18020893949718565",
    "mejor_enlace": "https://www.instagram.com/reel/DdT2ivUuHmq/",
@@ -855,6 +974,57 @@
    "ultima_publicacion": "2026-09-15T13:48:00+00:00",
    "duracion_s": 38.8,
    "retencion": 0.143
+  },
+  {
+   "clave": "18057566996593505",
+   "mejor_id": "18057566996593505",
+   "mejor_enlace": "https://www.instagram.com/reel/DgAuQuMFeWL/",
+   "mejores_visitas": 298,
+   "comentarios_mejor": 2,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Cómo juntar Claude y Codex para que tu plan no se acabe en 3 días 🤝  01 Claude h",
+   "ganador": false,
+   "ids": [
+    "18057566996593505"
+   ],
+   "ultima_publicacion": "2026-11-21T17:05:34+00:00",
+   "duracion_s": 41.0,
+   "retencion": 0.212
+  },
+  {
+   "clave": "18486392773112826",
+   "mejor_id": "18486392773112826",
+   "mejor_enlace": "https://www.instagram.com/reel/Df7kugblZ3t/",
+   "mejores_visitas": 292,
+   "comentarios_mejor": 0,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Cómo analizar los datos de tu Whoop con Claude y mejorar tu salud con un solo pr",
+   "ganador": false,
+   "ids": [
+    "18486392773112826"
+   ],
+   "ultima_publicacion": "2026-11-19T17:05:41+00:00",
+   "duracion_s": 47.5,
+   "retencion": 0.1
+  },
+  {
+   "clave": "18047724905838786",
+   "mejor_id": "18047724905838786",
+   "mejor_enlace": "https://www.instagram.com/reel/DgBCqsmATMg/",
+   "mejores_visitas": 280,
+   "comentarios_mejor": 0,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Cómo conectar Claude a tu Instagram gratis y que te analice la cuenta en 30 segu",
+   "ganador": false,
+   "ids": [
+    "18047724905838786"
+   ],
+   "ultima_publicacion": "2026-11-21T20:02:41+00:00",
+   "duracion_s": 59.6,
+   "retencion": 0.1
   },
   {
    "clave": "18141374590588192",
@@ -874,6 +1044,57 @@
    "retencion": 0.114
   },
   {
+   "clave": "18119405939109757",
+   "mejor_id": "18119405939109757",
+   "mejor_enlace": "https://www.instagram.com/reel/DgDngvrCJQh/",
+   "mejores_visitas": 261,
+   "comentarios_mejor": 16,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "La biblioteca de prompts más grande del mundo es gratis y se conecta a Claude Co",
+   "ganador": false,
+   "ids": [
+    "18119405939109757"
+   ],
+   "ultima_publicacion": "2026-11-22T20:04:09+00:00",
+   "duracion_s": 34.9,
+   "retencion": 0.168
+  },
+  {
+   "clave": "17891037948488283",
+   "mejor_id": "17891037948488283",
+   "mejor_enlace": "https://www.instagram.com/reel/DgDSvtspQDP/",
+   "mejores_visitas": 256,
+   "comentarios_mejor": 2,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Le pedí a Claude que aplicara a 500 trabajos por mí: el paso a paso con Claude f",
+   "ganador": false,
+   "ids": [
+    "17891037948488283"
+   ],
+   "ultima_publicacion": "2026-11-22T17:01:32+00:00",
+   "duracion_s": 62.7,
+   "retencion": 0.089
+  },
+  {
+   "clave": "18119411126276029",
+   "mejor_id": "18119411126276029",
+   "mejor_enlace": "https://www.instagram.com/reel/Df-d6HPDxII/",
+   "mejores_visitas": 227,
+   "comentarios_mejor": 0,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Cómo humanizar textos con Claude para que nadie note que los escribió una AI ✍️ ",
+   "ganador": false,
+   "ids": [
+    "18119411126276029"
+   ],
+   "ultima_publicacion": "2026-11-20T20:03:28+00:00",
+   "duracion_s": 64.1,
+   "retencion": 0.121
+  },
+  {
    "clave": "18116204921073007",
    "mejor_id": "18116204921073007",
    "mejor_enlace": "https://www.instagram.com/reel/DdcyYFDMEpe/",
@@ -891,6 +1112,23 @@
    "retencion": 0.156
   },
   {
+   "clave": "17906326599438262",
+   "mejor_id": "17906326599438262",
+   "mejor_enlace": "https://www.instagram.com/reel/DgF3qUHjPi0/",
+   "mejores_visitas": 209,
+   "comentarios_mejor": 0,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Claude for Small Business: 43 automatizaciones incluidas en tu plan de $20 que c",
+   "ganador": false,
+   "ids": [
+    "17906326599438262"
+   ],
+   "ultima_publicacion": "2026-11-23T17:02:41+00:00",
+   "duracion_s": 69.6,
+   "retencion": 0.068
+  },
+  {
    "clave": "18147102868543323",
    "mejor_id": "18147102868543323",
    "mejor_enlace": "https://www.instagram.com/reel/DcxUO5lOdIQ/",
@@ -906,6 +1144,23 @@
    "ultima_publicacion": "2026-09-02T03:54:12+00:00",
    "duracion_s": 54.6,
    "retencion": 0.054
+  },
+  {
+   "clave": "17917361517552440",
+   "mejor_id": "17917361517552440",
+   "mejor_enlace": "https://www.instagram.com/reel/DgCpi6tGThn/",
+   "mejores_visitas": 206,
+   "comentarios_mejor": 0,
+   "publicaciones": 1,
+   "alguna_en_feed": false,
+   "pie": "Plan de 6 días para montar tu agencia de AI antes de 2027: sin carrera y sin más",
+   "ganador": false,
+   "ids": [
+    "17917361517552440"
+   ],
+   "ultima_publicacion": "2026-11-22T11:01:15+00:00",
+   "duracion_s": 51.2,
+   "retencion": 0.078
   },
   {
    "clave": "18185381470409602",
