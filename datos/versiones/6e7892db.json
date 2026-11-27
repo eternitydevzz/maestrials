@@ -1,0 +1,21 @@
+{
+ "origen": "17942022420269999",
+ "archivo": "17942022420269999-f3-6e7892db.mp4",
+ "clave": "6e7892db",
+ "semilla": 1654078389,
+ "cambios": {
+  "zoom": 1.082,
+  "desplazar_y": 0.378,
+  "velocidad": 1.044,
+  "saturacion": 1.021,
+  "contraste": 1.016,
+  "inicio_s": 0.099
+ },
+ "gancho": [
+  "Ni Claude ni",
+  "ChatGPT: mira NVIDIA"
+ ],
+ "pie": "NVIDIA ha reunido más de 80 modelos de IA, como DeepSeek, Kimi, Minimax o GLM, en una sola plataforma, y puedes conectarlos a Claude Code o a tus proyectos en segundos. Si quieres acceder y probarlos, escribe API 👇 #InteligenciaArtificial #NVIDIA #ClaudeCode #Programacion #Automatizacion",
+ "palabra": "API",
+ "creada": "2026-11-27T19:54:26.795652+00:00"
+}
