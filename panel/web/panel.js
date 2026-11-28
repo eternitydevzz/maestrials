@@ -346,7 +346,7 @@ async function vistaVersiones() {
     con(el("section", "resumen"),
       cifra(datos.cola.length, "versiones en cola", true),
       cifra(datos.autopilot ? proximo : "Apagado", "próxima publicación (tu hora)"),
-      cifra(datos.publicadas.length, "trials publicados"),
+      cifra(datos.total_publicadas ?? datos.publicadas.length, "trials publicados"),
       cifra(media24, "visitas a las 24 h (media)")),
     el("h2", "seccion-titulo", "En cola"), cola,
     el("h2", "seccion-titulo", "Publicadas"), con(el("section", "publicadas"), ...datos.publicadas.map(filaPublicada)));
@@ -386,7 +386,31 @@ document.getElementById("sincronizar").addEventListener("click", (evento) => {
 });
 window.addEventListener("hashchange", () => irA(location.hash.slice(1)));
 
+// 28-nov: un panel por cuenta (Jose 8787, Cristian 8788). La cabecera dice cuál es y enlaza a la otra.
+async function pintarCuenta() {
+  try {
+    const r = await fetch("/cuenta.json", { cache: "no-store" });
+    if (!r.ok) return;
+    const info = await r.json();
+    document.getElementById("cuenta").textContent = info.arroba;
+    document.title = `MaesTrials · ${info.arroba}`;
+    const otra = (info.otras || [])[0];
+    if (otra) {
+      const enlace = document.getElementById("otra-cuenta");
+      enlace.textContent = `Ir a ${otra.arroba} →`;
+      enlace.href = otra.url + location.hash;
+      // misma pestaña en la otra cuenta: el hash se lee al hacer clic, no al cargar
+      enlace.addEventListener("click", () => { enlace.href = otra.url + location.hash; });
+      enlace.hidden = false;
+    }
+  } catch { /* sin /cuenta.json la cabecera queda sin @, el resto funciona */ }
+}
+
 (async function arrancar() {
+  pintarCuenta();
+  // el interruptor se pinta en cualquier pestaña (antes solo al abrir Versiones y salía "apagado")
+  pedir("estado").then((d) => pintarAutopilot(d.autopilot))
+    .catch((e) => avisar(`No se pudo leer el estado del autopilot: ${e.message}`, true));
   try { await enviar("sincronizar"); } catch (e) { avisar(`No se pudo sincronizar con GitHub: ${e.message}`, true); }
   irA(location.hash.slice(1));
 })();

@@ -51,6 +51,8 @@ a { color: inherit; }
   background: var(--texto); color: var(--fondo); font: 400 20px/1 var(--fuente-titulos);
 }
 .cuenta { color: var(--suave); font-weight: 500; font-size: 13px; }
+.otra-cuenta { text-decoration: none; border-bottom: 1px dashed currentColor; }
+.otra-cuenta:hover { color: inherit; }
 .pestanas { display: flex; gap: 2px; background: #eceae4; padding: 3px; border-radius: 12px; }
 .pestanas button {
   border: 0; background: transparent; color: var(--suave);

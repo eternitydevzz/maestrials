@@ -4,12 +4,17 @@ De dónde salen: hoy, de los archivos de trabajo/ del PC (AlmacenLocal). En Verc
 con la misma forma; las funciones `ganadores` y `resultados` no cambian.
 """
 import json
+import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from .config import RAIZ
 from .instagram import portadas
 
+sys.path.insert(0, str(RAIZ / "automatico"))
+import cuenta  # noqa: E402  (28-nov: cada cuenta lee su carpeta; Jose datos/, Cristian datos/cristian/)
+
+DATOS = cuenta.DATOS
 TRABAJO = RAIZ / "trabajo"
 DIAS_MINIMOS = 4                                   # decisión de Jose
 CAMBIOS_FASE1 = {"velocidad": 1.05, "inicio_s": 0.0}   # la versión de la bolsa (fase1/pasada.py)
@@ -27,17 +32,17 @@ def _fecha(iso: str) -> datetime:
 class AlmacenLocal:
     def videos(self) -> tuple[float | None, list[dict]]:
         """Todos los vídeos de fase2/ganadores.py + los ganadores añadidos a mano (sin repetir)."""
-        datos = _leer(RAIZ / "datos" / "ganadores.json", {"corte_percentil": None, "videos": []})
-        manuales = _leer(RAIZ / "datos" / "manuales.json", [])
+        datos = _leer(DATOS / "ganadores.json", {"corte_percentil": None, "videos": []})
+        manuales = _leer(DATOS / "manuales.json", [])
         ganadores_auto = {i for v in datos["videos"] if v["ganador"] for i in v["ids"]}
         return datos["corte_percentil"], datos["videos"] + [m for m in manuales if not set(m["ids"]) & ganadores_auto]
 
     def publicaciones(self) -> list[dict]:
-        registro = list(_leer(RAIZ / "datos" / "publicaciones.json", []))   # registro único (Fase 1 incluida)
+        registro = list(_leer(DATOS / "publicaciones.json", []))   # registro único (Fase 1 incluida)
         return sorted(registro, key=lambda r: r["publicado_en"], reverse=True)
 
     def ficha(self, origen: str, archivo: str) -> dict | None:
-        for ruta in (RAIZ / "datos" / "versiones").glob("*.json"):
+        for ruta in (DATOS / "versiones").glob("*.json"):
             datos = _leer(ruta, {})
             if datos.get("origen") == origen and datos.get("archivo") == archivo:
                 return datos

@@ -22,7 +22,7 @@ import publicar as autopilot  # noqa: E402
 import supabase_videos  # noqa: E402
 import variar  # noqa: E402
 
-AJUSTES = RAIZ / "datos" / "ajustes.json"
+AJUSTES = cuenta.DATOS / "ajustes.json"   # 28-nov: el interruptor es el de la cuenta de este panel
 URL_REEL = re.compile(r"instagram\.com/(?:[\w.]+/)?(?:reel|reels|p)/([A-Za-z0-9_-]+)")
 MAX_PIE = 2200            # límite de Instagram para el pie
 PAGINAS_BUSQUEDA = 5      # 5 × 50 = las últimas 250 publicaciones de la cuenta
@@ -103,8 +103,14 @@ def versiones() -> dict:
                            "visitas": (p.get("metricas_ultimas") or {}).get("views")})
     huecos, zona = _huecos(ajustes)
     return {"autopilot": ajustes["autopilot"], "huecos": huecos, "zona": zona,
+            "total_publicadas": len(variar.leer_registro()),   # la lista se corta en 30; el total es este
             "proximo_hueco": proximo_hueco(datetime.now(timezone.utc), ajustes, variar.leer_registro()),
             "cola": [_resumen(f, titulos) for f in autopilot.cola_por_retencion()], "publicadas": publicadas}
+
+
+def estado() -> dict:
+    """Lo mínimo para la cabecera (interruptor del autopilot), sin montar la cola entera."""
+    return {"autopilot": bool(_leer_ajustes()["autopilot"])}
 
 
 def publicar_ahora(archivo: str) -> dict:

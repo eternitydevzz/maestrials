@@ -12,7 +12,8 @@ from .config import entorno
 from .instagram import ErrorInstagram
 
 ESPERA_CLAVE_MALA_S = 1.0   # frena a quien pruebe contraseñas
-SOLO_PC = {"versiones", "sincronizar", "publicar", "descartar", "editar", "rehacer", "autopilot", "anadir"}
+SOLO_PC = {"versiones", "estado", "sincronizar", "publicar", "descartar", "editar", "rehacer", "autopilot", "anadir"}
+LECTURAS_PC = {"versiones", "estado"}   # rutas del PC que se piden con GET (no cambian nada)
 
 
 @dataclass(frozen=True)
@@ -63,6 +64,8 @@ def _accion(acciones: object, ruta: str, peticion: dict) -> object:
     archivo = _texto(peticion, "archivo")
     if ruta == "versiones":
         return acciones.versiones()
+    if ruta == "estado":
+        return acciones.estado()
     if ruta == "sincronizar":
         acciones.repo.sincronizar()
         return {"ok": True}
@@ -97,7 +100,7 @@ def responder(metodo: str, ruta: str, cookies: dict[str, str], cuerpo: bytes, se
             return _json(200, datos.ganadores(env, datos.almacen(env)))
         if ruta == "resultados" and metodo == "GET":
             return _json(200, datos.resultados(env, datos.almacen(env)))
-        if ruta in SOLO_PC and (metodo == "POST" or ruta == "versiones"):
+        if ruta in SOLO_PC and (metodo == "POST" or ruta in LECTURAS_PC):
             return _accion_pc(ruta, cuerpo)
     except ErrorInstagram as e:
         return _json(502, {"error": str(e)})
