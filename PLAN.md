@@ -290,6 +290,7 @@ Base de datos: una Postgres gratis del Marketplace de Vercel (Neon). Los límite
 - **Fallo arreglado:** `api/_panel/datos.py` y `acciones.py` leían siempre `datos/` (la carpeta de Jose); ahora `cuenta.DATOS`. Arrancado como Cristian, el interruptor del autopilot habría cambiado el de Jose.
 - **Arreglos de paso:** el interruptor sale bien en cualquier pestaña (ruta nueva `estado`; antes solo al abrir Versiones y si no salía "apagado"); en Versiones, "trials publicados" es el total (antes ponía 30, el tope de la lista).
 - **Probado con datos reales:** Jose 118 publicaciones y 6 en cola; Cristian 133 y 7 en cola; autopilot encendido en los dos igual que su `ajustes.json`; cada panel trae miniaturas con su token.
+- **Fallo de subida arreglado (opción B de Jose):** el panel subía a GitHub con la cuenta activa de `gh` (`jsegomeez-collab`) y GitHub daba 403, así que los cambios del panel no llegaban al autopilot. Ahora `api/_panel/repo.py` usa siempre el token de `eternitydevzz` (sin cambiar la cuenta activa de `gh`). Probado con `git push --dry-run`: antes 403, después permitido.
 - **Sin probar:** Publicar ahora, Editar, Rehacer, Descartar, Añadir ganador e interruptor en el panel de Cristian; los dos paneles haciendo cambios a la vez (los dos usan git en el mismo repo).
 
 ## 6. Riesgos

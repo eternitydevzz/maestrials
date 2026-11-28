@@ -3,7 +3,13 @@ import subprocess
 
 from .config import RAIZ
 
-CREDENCIAL = ["-c", "credential.helper=", "-c", "credential.helper=!gh auth git-credential"]
+# 28-nov (decisión de Jose, opción B): siempre con la cuenta dueña del repo, sea cual sea la cuenta activa de gh.
+# Con la activa (jsegomeez-collab) GitHub devolvía 403 y los cambios del panel no llegaban al autopilot.
+# El token lo da gh en cada llamada: no se guarda en disco ni se imprime.
+CUENTA_GITHUB = "eternitydevzz"
+CREDENCIAL = ["-c", "credential.helper=", "-c",
+              "credential.helper=!f() { echo username=" + CUENTA_GITHUB + "; "
+              "echo \"password=$(gh auth token --user " + CUENTA_GITHUB + ")\"; }; f"]
 ESPERA_S = 120
 
 
